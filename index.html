@@ -510,6 +510,28 @@ header .countdown strong {
   line-height: 1.4;
 }
 
+/* Hotel link wrapper — makes hotel card clickable as a whole */
+.hotel-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease;
+}
+.hotel-link:hover .hotel-card {
+  background: var(--accent);
+  color: var(--bg);
+}
+.hotel-link:hover .hotel-dates,
+.hotel-link:hover .hotel-addr {
+  color: rgba(255,255,255,0.85);
+}
+.hotel-link-arrow {
+  margin-left: auto;
+  font-size: 18px;
+  color: var(--text-dim);
+  font-weight: 700;
+}
+
 /* Flight cards */
 .flight {
   background: linear-gradient(135deg, #1e40af, #312e81);
@@ -1526,7 +1548,18 @@ const CITY_LANDMARKS = {
          {period: '六甲ケーブ 平日', every: '每 15-20 min'},
          {period: '摩耶ケーブ + 摩耶ロープウェー', every: '每 15-20 min (連續轉乘)'}
        ],
-       note: '🔴 7/29 (三) 暑假 — 摩耶山夜景日落約 19:08，建議 17:30 上山睓 magic hour'}}
+       note: '🔴 7/29 (三) 暑假 — 摩耶山夜景日落約 19:08，建議 17:30 上山睓 magic hour'}},
+    {from: '摩耶山掬星台', to: 'USJ Oriental (環球影城東方酒店)', mode: '纜車 + JR + 夢咲線', line: '摩耶ケーブル + JR 神戶線 + JR 夢咲線', duration: '90 min', fare: '¥1,700',
+     steps: ['掬星台 搭 摩耶ロープウェー → 摩耶ケーブル下 (20 分 ¥480)', '步行 5 分到 摩耶ケーブル駅 → 搭 摩耶ケーブル → 六甲ケーブル下 (10 分)', '步行 5 分到 六甲道駅', '搭 JR 神戶線 → 三ノ宮駅 (4 分 ¥160) → JR 大阪方向搭新快速 → 西九条駅 (21 分 ¥410)', '西九条駅 同月台轉 JR ゆめ咲線 → ユニバーサルシティ駅 (5 分 ¥160)', '步行 2 分到 USJ Oriental 酒店'],
+     payment: 'IC卡 (ICOCA) / 現金',
+     realtime: 'https://www.jorudan.co.jp/norikae/cgi/nori.cgi?eki1=%E6%91%A9%E8%80%B6%E5%B1%B1&eki2=%E3%83%A6%E3%83%8B%E3%83%90%E3%83%BC%E3%82%B5%E3%83%AB%E3%82%B7%E3%83%86%E3%82%A3',
+     schedule: {first: '摩耶ロープウェー 06:30', last: 'JR 西九条 23:50',
+       frequency: [
+         {period: 'JR 神戶線 新快速 17:00-21:00', every: '每 10-15 min (新快速直達西九条)'},
+         {period: 'JR 夢咲線 (Universal City)', every: '每 7-10 min'},
+         {period: 'JR 西九条 尾班車', every: '23:50 (趕唔切就 call 的士)'}
+       ],
+       note: '🔴 7/29 (三) — 摩耶山日落 19:08，建議 17:30 上山睓 magic hour → 19:30 落山 → 21:00 到 USJ Oriental check-in'}}
   ], places: [
     {name: '三宮駅 (一日券)', lat: 34.6943, lng: 135.1972, tips: {
       must: ['六甲・摩耶一日券 ¥1,500 (來回纜車)'],
@@ -1548,22 +1581,27 @@ const CITY_LANDMARKS = {
     }}
   ], zoom: 11},
     'day-4': {city: 'namba', transit: [
-    {from: 'GRIDS PREMIUM 難波 (酒店)', to: 'USJ (日本環球影城)', mode: 'JR + 夢咲線', line: 'JR 大阪環狀線 + ゆめ咲線', duration: '25 min', fare: '¥200',
-     steps: ['酒店步行 5 分到 JR 難波駅 (OCAT 大樓地下)', '搭 JR 大阪環狀線 (外環/內環) → 西九条駅 (10 分 ¥160)', '同月台轉乘 JR ゆめ咲線 (夢咲線) → ユニバーサルシティ駅 (5 分 ¥160 / 1 程 IC卡收費約 ¥200)', '出閘 → 步行 3 分到 USJ 入口'],
+    {from: '環球影城東方酒店 (USJ Oriental)', to: 'USJ (日本環球影城)', mode: '步行', line: 'USJ 駅前直結', duration: '3 min', fare: '免費',
+     steps: ['USJ Oriental 1F 大堂直出 Universal CityWalk 連接廊', '步行 3 分到 USJ 入口閘機', '出示 Studio Pass + Express Pass 入園'],
+     payment: '—',
+     realtime: '',
+     schedule: {first: 'USJ 8:30 開園', last: 'USJ 21:00 閉園',
+       frequency: [
+         {period: 'USJ 8:00-9:30 開園時段', every: '人流最多 8:30-9:30 (Express Pass 必備)'},
+         {period: 'USJ 21:00 閉園', every: '夜場 Fireworks 19:30 + Close Show 20:30 (Donkey Kong Country 限定)'}
+       ],
+       note: '🔴 7/30 (四) 暑假平日 — Studio Pass 預先 Klook 買，Express Pass 必備'}},
+    {from: 'USJ (日本環球影城)', to: '大阪難波格利茲酒店 (GRIDS)', mode: 'JR ゆめ咲線 + JR', line: '夢咲線 + JR 大阪環狀線', duration: '25 min', fare: '¥200',
+     steps: ['USJ 出口行 3 分到 ユニバーサルシティ駅', '搭 JR ゆめ咲線 → 西九条駅 (5 分)', '同月台轉 JR 大阪環狀線 (內環) → 難波駅 (10 分)', '出閘 → 步行 5 分到 GRIDS 酒店 (難波 5-1-3)'],
      payment: 'IC卡 (ICOCA) / 現金',
-     realtime: 'https://www.jorudan.co.jp/norikae/cgi/nori.cgi?eki1=%E9%9B%A3%E6%B3%A2&eki2=%E3%83%A6%E3%83%8B%E3%83%90%E3%83%BC%E3%82%B5%E3%83%AB%E3%82%B7%E3%83%86%E3%82%A3',
+     realtime: 'https://www.jorudan.co.jp/norikae/cgi/nori.cgi?eki1=%E3%83%A6%E3%83%8B%E3%83%90%E3%83%BC%E3%82%B5%E3%83%AB%E3%82%B7%E3%83%86%E3%82%A3&eki2=%E9%9B%A3%E6%B3%A2',
      schedule: {first: '05:00', last: '00:30',
        frequency: [
-         {period: 'JR 大阪環狀線 7:00-10:00', every: '每 4-7 min'},
-         {period: 'JR 大阪環狀線 10:00-17:00', every: '每 6-10 min'},
-         {period: 'ゆめ咲線 (Universal City)', every: '每 7-10 min (加密!)'},
-         {period: 'USJ 散場時段 21:00-23:00', every: '夢咲線每 4-6 min (因有演出人潮)'}
+         {period: 'JR 大阪環狀線 21:00-23:00 散場', every: '每 6-10 min'},
+         {period: 'ゆめ咲線 (Universal City)', every: '每 4-6 min (USJ 散場加密)'},
+         {period: 'USJ 閉園 21:00 後', every: '夢咲線每 3-5 min (因有演出人潮)'}
        ],
-       note: '7/30 (四) USJ 暑假平日 — Studio Pass 預先 Klook 買，Express Pass 必備 (瑪利歐整理券系統)'}},
-    {from: 'USJ (日本環球影城)', to: 'GRIDS PREMIUM 難波 (酒店)', mode: 'JR ゆめ咲線 + JR', line: '夢咲線 + JR 大阪環狀線', duration: '25 min', fare: '¥200',
-     steps: ['USJ 出口行 3 分到 ユニバーサルシティ駅', '搭 JR ゆめ咲線 → 西九条駅 (5 分)', '同月台轉 JR 大阪環狀線 (內環) → 難波駅 (10 分)', '出閘 → 步行 5 分到酒店'],
-     payment: 'IC卡 (ICOCA) / 現金',
-     realtime: 'https://www.jorudan.co.jp/norikae/cgi/nori.cgi?eki1=%E3%83%A6%E3%83%8B%E3%83%90%E3%83%BC%E3%82%B5%E3%83%AB%E3%82%B7%E3%83%86%E3%82%A3&eki2=%E9%9B%A3%E6%B3%A2'}
+       note: '🔴 7/30 (四) USJ 21:00 閉園 — 出 USJ 21:30 → GRIDS 22:00 check-in'}}
   ], places: [
     {name: '日本環球影城 (USJ)', lat: 34.6654, lng: 135.4319, must: true, tips: {
       must: ['🎯 7/1-8/31 USJ 25 週年慶典 (限定表演 + 限定 Food)', '瑪利歐 5 週年 (Super Star 限定 Cake / Plaza 限定 meet-up)', '必玩順序：Mario Kart → Donkey Kong → Yoshi → Harry Potter → Flying Dinosaur → Jurassic Park'],
@@ -1575,12 +1613,12 @@ const CITY_LANDMARKS = {
       food: ['551蓬萊 豚饅 ¥200 x 6 (南海難波駅內)', 'MUMI PANCAKE 鬆餅 ¥1,200', '麺屋丈六 大阪拉麵 ¥900'],
       notes: ['4 個站換乘時標名清楚，唔好行錯出口', '南海 Rapi:t 預約：暑假 5:50-9:00 易滿']
     }},
-    {name: 'GRIDS PREMIUM 難波', lat: 34.6644, lng: 135.5030, tips: {
+    {name: '大阪難波格利茲酒店', lat: 34.6644, lng: 135.5030, tips: {
       notes: ['7/30 晚大阪住宿']
     }}
   ], zoom: 12},
   'day-5': {city: 'nara', transit: [
-    {from: 'GRIDS PREMIUM 難波 (酒店)', to: '近鐵奈良駅', mode: '近鐵', line: '近鉄奈良線 急行', duration: '35 min', fare: '¥620',
+    {from: '大阪難波格利茲酒店 (酒店)', to: '近鐵奈良駅', mode: '近鐵', line: '近鉄奈良線 急行', duration: '35 min', fare: '¥620',
      steps: ['酒店步行 5 分到 近鉄難波駅 (B1F/2F)', '搭 近鉄奈良線 急行 (往奈良) — 唔使轉車直達 (唔好搭普通)', '近鐵奈良駅西口出 → 旅遊案內所攞中文地圖'],
      payment: 'IC卡 (ICOCA) / 現金 / 近鉄周遊券 (KINTETSU RAIL PASS 1-day ¥1,800)',
      realtime: 'https://www.kintetsu.co.jp/senden/TrainTime/',
@@ -1621,7 +1659,7 @@ const CITY_LANDMARKS = {
          {period: '生駒ケーブル 週末 7-8 月', every: '每 5-10 min (極密)'}
        ],
        note: '🔴 7/31 (五) 平日 — 生駒纜車極少人，建議 16:00 前上山睓日落 (日落 18:50)'}},
-    {from: '生駒山上遊樂園', to: 'GRIDS PREMIUM 難波 (酒店)', mode: '近鐵', line: '近鉄生駒線 + 近鉄奈良線', duration: '45 min', fare: '¥1,200',
+    {from: '生駒山上遊樂園', to: '大阪難波格利茲酒店 (酒店)', mode: '近鐵', line: '近鉄生駒線 + 近鉄奈良線', duration: '45 min', fare: '¥1,200',
      steps: ['生駒山上駅 搭 生駒ケーブル → 鳥居前駅 (8 分 ¥500)', '步行 3 分到 近鉄生駒駅', '搭 近鉄奈良線 急行 → 近鉄難波駅 (25 分 ¥700)', '步行 5 分到酒店'],
      payment: 'IC卡 (ICOCA) / 現金',
      realtime: 'https://www.kintetsu.co.jp/senden/TrainTime/',
@@ -1668,7 +1706,7 @@ const CITY_LANDMARKS = {
     }}
   ], zoom: 12},
   'day-6': {city: 'namba', transit: [
-    {from: 'GRIDS PREMIUM 難波 (酒店)', to: '難波八阪神社', mode: 'Metro', line: 'Osaka Metro 御堂筋線 + 四橋線', duration: '15 min', fare: '¥230',
+    {from: '大阪難波格利茲酒店 (酒店)', to: '難波八阪神社', mode: 'Metro', line: 'Osaka Metro 御堂筋線 + 四橋線', duration: '15 min', fare: '¥230',
      steps: ['酒店步行 5 分到 Osaka Metro なんば駅 (B1F/2F)', '搭 御堂筋線 1 站到 大国町駅 (3 分 ¥180)', '同月台/步行 30 秒轉 四橋線 1 站到 難波駅 (另一個出口)', 'JR 難波駅南口出 → 步行 6-8 分到難波八阪神社 (元堀 1-25-12)'],
      payment: 'IC卡 (ICOCA) / 現金 / Osaka Metro 1-day pass ¥820',
      realtime: 'https://www.osakametro.co.jp/',
@@ -2012,7 +2050,7 @@ function buildPinLegend(meta, dayId) {
   <div class="day-header"><span class="date">7/27 Day 1 (一)</span><span class="city">神戶</span></div>
   <div>🚐 澳門 → 香港機場 → 台北 T2 → 神戶空港 (UKB) (✈️ 長榮 BR 2 段)</div>
   <div>🚠 神戶空港 → Port Liner → 三宮 (18 min)</div>
-  <div>🏨 Daiwa Roynet Hotel 神戶三宮 PREMIER</div>
+  <div>🏨 Daiwa Roynet 神戶三宮 PREMIER</div>
   <div class="alert danger">🍽 神户牛烤肉加虎 (預約) ⏰ 必到</div>
 </div>
 
@@ -2038,7 +2076,8 @@ function buildPinLegend(meta, dayId) {
   <div class="day-header"><span class="date">7/30 Day 4 (四)</span><span class="city">USJ</span></div>
   <div>🎬 環球影城 (8:30 — 21:00 全日)</div>
   <div class="alert">💡 Express Pass 強烈建議 (特別係 Donkey Kong / Super Nintendo World)</div>
-  <div>🏨 大阪難波 GRIDS PREMIUM 連住</div>
+  <div>🏨 USJ Oriental 連住 (下午退房寄存行李 → USJ 玩 → 21:00 後取行李轉 GRIDS)</div>
+  <div>🚊 USJ → 大阪難波格利茲酒店 (JR 夢咲線 + JR 環狀線 25 min)</div>
 </div>
 
 <div class="day-card nara">
@@ -2048,7 +2087,7 @@ function buildPinLegend(meta, dayId) {
   <div>🍴 釜飯 奈良屋 (午餐)</div>
   <div>🎢 生駒山上遊樂園 (纜車 + 12 項目套票 ¥3500)</div>
   <div class="alert success">🌅 暑假延長到 19:00 — 可睇日落</div>
-  <div>🏨 大阪難波 GRIDS PREMIUM (已經 check-in, 不用再 check-in)</div>
+  <div>🏨 大阪難波格利茲酒店 (已經 check-in, 不用再 check-in)</div>
 </div>
 
 <div class="day-card osaka">
@@ -2073,40 +2112,55 @@ function buildPinLegend(meta, dayId) {
   <div>✈️ 台北 16:40 → 澳門 18:35</div>
 </div>
 
-<div class="section-title">🏨 住宿一覽</div>
+<div class="section-title">🏨 住宿一覽 (點擊酒店 → 官網)</div>
 
-<div class="hotel-card">
-  <div class="hotel-icon">🏨</div>
-  <div>
-    <div class="hotel-name">Daiwa Roynet 神戶三宮 PREMIER</div>
-    <div class="hotel-dates">7/27 - 7/30 (3 晚)</div>
+<a href="https://www.daiwaroynet.jp/en/hotel/kobe/sannomiya-premier/" target="_blank" rel="noopener" class="hotel-link">
+  <div class="hotel-card">
+    <div class="hotel-icon">🏨</div>
+    <div>
+      <div class="hotel-name">Daiwa Roynet 神戶三宮 PREMIER</div>
+      <div class="hotel-dates">7/27 - 7/29 (2 晚) · Day 1-3 check-out</div>
+      <div class="hotel-addr">📍 神戶市中央區旭通 5-1-1 (三宮駅北口 5 分鐘)</div>
+    </div>
+    <div class="hotel-link-arrow">↗</div>
   </div>
-</div>
+</a>
 
-<div class="hotel-card">
-  <div class="hotel-icon">🏨</div>
-  <div>
-    <div class="hotel-name">環球影城東方酒店</div>
-    <div class="hotel-dates">7/30 check in</div>
+<a href="https://www.universalorientalhotel.com/" target="_blank" rel="noopener" class="hotel-link">
+  <div class="hotel-card">
+    <div class="hotel-icon">🏨</div>
+    <div>
+      <div class="hotel-name">環球影城東方酒店 (Universal Oriental Hotel)</div>
+      <div class="hotel-dates">7/29 - 7/30 (1 晚) · Day 3 check-in, Day 4 check-out</div>
+      <div class="hotel-addr">📍 大阪市此花區櫻島 6-2-78 (USJ 駅前)</div>
+    </div>
+    <div class="hotel-link-arrow">↗</div>
   </div>
-</div>
+</a>
 
-<div class="hotel-card">
-  <div class="hotel-icon">🏨</div>
-  <div>
-    <div class="hotel-name">大阪難波 GRIDS PREMIUM</div>
-    <div class="hotel-dates">7/30 - 8/1 (2 晚)</div>
+<a href="https://grids-osaka-namba.com/" target="_blank" rel="noopener" class="hotel-link">
+  <div class="hotel-card">
+    <div class="hotel-icon">🏨</div>
+    <div>
+      <div class="hotel-name">大阪難波格利茲酒店 (Hotel Gracery Osaka Namba)</div>
+      <div class="hotel-dates">7/30 - 8/1 (2 晚) · Day 4 check-in, Day 6 check-out</div>
+      <div class="hotel-addr">📍 大阪市中央區難波 5-1-3 (難波駅 5 分鐘)</div>
+    </div>
+    <div class="hotel-link-arrow">↗</div>
   </div>
-</div>
+</a>
 
-<div class="hotel-card">
-  <div class="hotel-icon">🏨</div>
-  <div>
-    <div class="hotel-name">君品酒店 Palais de Chine</div>
-    <div class="hotel-dates">8/1 - 8/3 (2 晚)</div>
-    <div class="hotel-addr">📍 台北市大同區承德路一段 3 號 (京站 Q-Square 上方, 台北車站直結)</div>
+<a href="https://www.palaisdechine.com/" target="_blank" rel="noopener" class="hotel-link">
+  <div class="hotel-card">
+    <div class="hotel-icon">🏨</div>
+    <div>
+      <div class="hotel-name">君品酒店 Palais de Chine</div>
+      <div class="hotel-dates">8/1 - 8/3 (2 晚) · Day 6 check-in, Day 8 check-out</div>
+      <div class="hotel-addr">📍 台北市大同區承德路一段 3 號 (京站 Q-Square 上方, 台北車站直結)</div>
+    </div>
+    <div class="hotel-link-arrow">↗</div>
   </div>
-</div>
+</a>
 
 <div class="section-title">🚨 緊急聯絡</div>
 
