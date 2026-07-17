@@ -1352,8 +1352,10 @@ async function refreshWeatherFromButton() {
   if (data) {
     liveWeather = data;
     liveWeatherMeta = { fetched_at: data.meta.fetched_at, source: data.meta.source, is_stale: false };
-    updateWeatherStatus();
+    // IMPORTANT: re-render FIRST (which inserts fresh status divs with default text),
+    // THEN updateWeatherStatus overwrites them all
     await refreshAllWeatherPanels();
+    updateWeatherStatus();
     const ageMin = Math.floor((Date.now() - new Date(data.meta.fetched_at).getTime()) / 60000);
     const sourceShort = data.meta.source.includes('climate') ? '氣候模型' : '實時預報';
     if (statusEl) statusEl.textContent = `✅ ${ageMin < 1 ? '剛剛' : ageMin + ' 分鐘前'} · ${sourceShort}`;
