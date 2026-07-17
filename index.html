@@ -689,6 +689,70 @@ header .countdown strong {
   gap: 14px;
 }
 
+/* Check-in panel — for hotel booking confirmation PDF */
+.checkin-panel {
+  background: linear-gradient(135deg, #065f46 0%, #10b981 100%);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 8px 0 14px 0;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.2);
+}
+.checkin-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  opacity: 0.95;
+}
+.checkin-panel-header .checkin-icon {
+  font-size: 18px;
+}
+.checkin-panel-body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.checkin-hotel-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.checkin-pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.15s ease;
+}
+.checkin-pdf-btn:hover {
+  background: rgba(255, 255, 255, 0.32);
+}
+.checkin-pdf-btn:active {
+  background: rgba(255, 255, 255, 0.45);
+}
+.checkin-pdf-btn .pdf-icon {
+  font-size: 16px;
+}
+.checkin-pdf-hint {
+  width: 100%;
+  font-size: 11px;
+  opacity: 0.75;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
 .weather-panel .now {
   display: flex;
   flex-direction: column;
@@ -3595,9 +3659,11 @@ function renderDayWidgets() {
     const date = el.dataset.date;
     const meta = CITY_LANDMARKS[id];
     if (!meta) return;
+    const dayIdx = parseInt(id.replace('day-', ''));
 
     el.innerHTML = `
       ${renderWeather(cityKey, date)}
+      ${renderCheckinPanel(dayIdx)}
       <div class="map-header">
         <span class="map-title">📍 ${WEATHER_DATA.cities[meta.city].zh} 路線圖 (${(meta.places||[]).length} 個景點)</span>
         <a href="https://www.google.com/maps?q=${WEATHER_DATA.cities[meta.city].lat},${WEATHER_DATA.cities[meta.city].lng}&hl=zh-Hant&z=12" target="_blank" class="map-link">Google Maps ↗</a>
@@ -3607,6 +3673,56 @@ function renderDayWidgets() {
     `;
   });
   renderDayMaps();
+}
+
+// Hotel check-in info — keyed by day index (1-based)
+const HOTEL_CHECKINS = {
+  1: {
+    name: 'Daiwa Roynet 神戶三宮 PREMIER',
+    pdf: 'pdfs/daiwa-roynet-kobe.pdf',
+    dates: '7/27 (一) check-in'
+  },
+  3: {
+    name: '環球影城東方酒店 (Universal Oriental Hotel)',
+    pdf: 'pdfs/usj-oriental.pdf',
+    dates: '7/29 (三) check-in'
+  },
+  4: {
+    name: '大阪難波格利茲酒店 (Hotel Gracery Osaka Namba)',
+    pdf: 'pdfs/grids-osaka-namba.pdf',
+    dates: '7/30 (四) check-in'
+  },
+  6: {
+    name: '君品酒店 Palais de Chine',
+    pdf: 'pdfs/palais-de-chine.pdf',
+    dates: '8/1 (六) check-in'
+  }
+};
+
+// Render check-in panel for days 1, 3, 4, 6 (only when there's a check-in)
+// On iPhone Safari, tapping the PDF button will:
+//   1. Open PDF in browser
+//   2. User taps Share → "Save to Files" → saved to Files app
+// This IS how iOS Safari's "Files app" workflow works (no direct file:// scheme for PWA)
+function renderCheckinPanel(dayIdx) {
+  const info = HOTEL_CHECKINS[dayIdx];
+  if (!info) return '';
+  return `
+    <div class="checkin-panel">
+      <div class="checkin-panel-header">
+        <span class="checkin-icon">🔑</span>
+        <span>今日 check-in · ${info.dates}</span>
+      </div>
+      <div class="checkin-panel-body">
+        <span class="checkin-hotel-name">🏨 ${info.name}</span>
+        <a href="${info.pdf}" target="_blank" rel="noopener" class="checkin-pdf-btn" download>
+          <span class="pdf-icon">📄</span>
+          <span>開 PDF (→ Files)</span>
+        </a>
+      </div>
+      <div class="checkin-pdf-hint">💡 Tap 開 PDF → iPhone Share → 「Save to Files」即可保存到 Apple Files app</div>
+    </div>
+  `;
 }
 
 // Re-add renderDayMaps() — uses Google Maps iframe + HTML pin legend
