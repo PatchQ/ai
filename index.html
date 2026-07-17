@@ -1289,12 +1289,12 @@ async function refreshWeather() {
     const activeDay = document.querySelector('.day-page.active');
     if (activeDay) {
       const dayIdx = parseInt(activeDay.id.replace('day-', ''));
-      // Trigger showDay to re-render — but avoid flicker by toggling active twice
       const dayId = activeDay.id;
-      // Simple: just reload the page's weather panel inline
       const meta = CITY_LANDMARKS['day-' + dayIdx];
       if (meta) {
-        const dayDate = computeDateForDay ? computeDateForDay(dayIdx) : null;
+        // Read date from data-day-render element instead of relying on computeDateForDay()
+        const renderEl = activeDay.querySelector('[data-day-render]');
+        const dayDate = renderEl ? renderEl.dataset.date : null;
         const newHtml = renderWeather(meta.city, dayDate);
         // Replace existing weather-panel if any
         const existing = activeDay.querySelector('.weather-panel');
@@ -1312,12 +1312,12 @@ async function refreshWeather() {
 
 // Re-render ALL day pages (used by manual button refresh)
 async function refreshAllWeatherPanels() {
-  document.querySelectorAll('.day-page').forEach(page => {
-    const dayIdx = parseInt(page.id.replace('day-', ''));
+  document.querySelectorAll('[data-day-render]').forEach(el => {
+    const dayIdx = parseInt((el.dataset.dayId || '').replace('day-', ''));
     const meta = CITY_LANDMARKS['day-' + dayIdx];
     if (!meta) return;
-    const dayDate = computeDateForDay ? computeDateForDay(dayIdx) : null;
-    const existing = page.querySelector('.weather-panel');
+    const dayDate = el.dataset.date || null;  // e.g. "2026-07-27"
+    const existing = el.querySelector('.weather-panel');
     if (existing) {
       const newHtml = renderWeather(meta.city, dayDate);
       if (newHtml) {
