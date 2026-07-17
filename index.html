@@ -1310,7 +1310,11 @@ async function refreshWeather() {
           const oldStatus = parent.querySelector('.weather-status');
           if (oldStatus) oldStatus.remove();
           // Insert new wrapper children at end of parent
-          while (wrapper.firstChild) parent.appendChild(wrapper.firstChild);
+          // Insert new children at existing's position (preserves DOM order)
+          const newKids = Array.from(wrapper.children);
+          for (let i = newKids.length - 1; i >= 0; i--) {
+            parent.insertBefore(newKids[i], existing);
+          }
         }
       }
     });
@@ -1336,7 +1340,11 @@ async function refreshAllWeatherPanels() {
         existing.remove();
         const oldStatus = parent.querySelector('.weather-status');
         if (oldStatus) oldStatus.remove();
-        while (wrapper.firstChild) parent.appendChild(wrapper.firstChild);
+        // Insert new children at existing's position (preserves DOM order)
+          const newKids = Array.from(wrapper.children);
+          for (let i = newKids.length - 1; i >= 0; i--) {
+            parent.insertBefore(newKids[i], existing);
+          }
       }
     }
   });
@@ -3387,7 +3395,11 @@ async function initWeather() {
           existing.remove();
           const oldStatus = parent.querySelector('.weather-status');
           if (oldStatus) oldStatus.remove();
-          while (wrapper.firstChild) parent.appendChild(wrapper.firstChild);
+          // Insert new children at existing's position (preserves DOM order)
+          const newKids = Array.from(wrapper.children);
+          for (let i = newKids.length - 1; i >= 0; i--) {
+            parent.insertBefore(newKids[i], existing);
+          }
         }
       }
     });
@@ -3417,7 +3429,11 @@ async function initWeather() {
             existing.remove();
             const oldStatus = parent.querySelector('.weather-status');
             if (oldStatus) oldStatus.remove();
-            while (wrapper.firstChild) parent.appendChild(wrapper.firstChild);
+            // Insert new children at existing's position (preserves DOM order)
+          const newKids = Array.from(wrapper.children);
+          for (let i = newKids.length - 1; i >= 0; i--) {
+            parent.insertBefore(newKids[i], existing);
+          }
           }
         }
       });
