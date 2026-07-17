@@ -3366,8 +3366,7 @@ async function initWeather() {
   if (cached) {
     liveWeather = cached;
     liveWeatherMeta = { fetched_at: cached.meta.fetched_at, source: cached.meta.source, is_stale: true };
-    updateWeatherStatus();
-    // Re-render all day pages so weather panels pick up cached data
+    // Re-render first (inserts fresh status divs with default text), then updateStatus overwrites
     document.querySelectorAll('.day-page').forEach(page => {
       const meta = CITY_LANDMARKS[page.id];
       if (!meta) return;
@@ -3392,6 +3391,8 @@ async function initWeather() {
         }
       }
     });
+    // After re-render, overwrite default status text on all 8 day pages
+    updateWeatherStatus();
   }
   // 2. Fetch fresh in background
   try {
@@ -3399,7 +3400,7 @@ async function initWeather() {
     if (data) {
       liveWeather = data;
       liveWeatherMeta = { fetched_at: data.meta.fetched_at, source: data.meta.source, is_stale: false };
-      updateWeatherStatus();
+      // Re-render first (inserts fresh status divs), then updateStatus overwrites
       // Re-render all day pages
       document.querySelectorAll('.day-page').forEach(page => {
         const meta = CITY_LANDMARKS[page.id];
@@ -3420,6 +3421,8 @@ async function initWeather() {
           }
         }
       });
+      // After re-render, overwrite default status text on all 8 day pages
+      updateWeatherStatus();
     }
   } catch (e) {
     console.warn('Weather fetch failed:', e);
