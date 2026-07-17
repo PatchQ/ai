@@ -1298,23 +1298,25 @@ async function refreshWeather() {
         const newHtml = renderWeather(meta.city, dayDate);
         if (newHtml) {
           // Replace .weather-panel AND adjacent .weather-status sibling atomically
-          // by wrapping both in a temp, replacing, then unwrapping
           const parent = existing.parentNode;
           const wrapper = document.createElement('div');
           wrapper.innerHTML = newHtml;
-          // Remove old panel
-          existing.remove();
-          // Remove old status sibling if present
-          // (We track via parent + insert position from initial render)
-          // Find any .weather-status that is a child of parent and not in wrapper
-          const oldStatus = parent.querySelector('.weather-status');
-          if (oldStatus) oldStatus.remove();
-          // Insert new wrapper children at end of parent
-          // Insert new children at existing's position (preserves DOM order)
+          // Insert new children BEFORE existing first (preserves position at original slot)
           const newKids = Array.from(wrapper.children);
           for (let i = newKids.length - 1; i >= 0; i--) {
             parent.insertBefore(newKids[i], existing);
           }
+          // Then remove old panel
+          existing.remove();
+          // Remove old status sibling if any (now query AFTER insert to avoid grabbing new one)
+          // Use :scope or first-match that excludes new kids
+          // Simplest: query before children, since new kids have updated content
+          // ... but we already inserted, so query might match new. Use a flag.
+          // Mark new kids with a class temporarily to exclude
+          newKids.forEach(k => { k.dataset.replaced = '1'; });
+          const oldStatus = parent.querySelector('.weather-status:not([data-replaced])');
+          if (oldStatus) oldStatus.remove();
+          newKids.forEach(k => { delete k.dataset.replaced; });
         }
       }
     });
@@ -1337,14 +1339,17 @@ async function refreshAllWeatherPanels() {
         const parent = existing.parentNode;
         const wrapper = document.createElement('div');
         wrapper.innerHTML = newHtml;
+        // Insert new children BEFORE existing first (preserves position)
+        const newKids = Array.from(wrapper.children);
+        for (let i = newKids.length - 1; i >= 0; i--) {
+          parent.insertBefore(newKids[i], existing);
+        }
         existing.remove();
-        const oldStatus = parent.querySelector('.weather-status');
+        // Mark new kids to exclude from oldStatus query
+        newKids.forEach(k => { k.dataset.replaced = '1'; });
+        const oldStatus = parent.querySelector('.weather-status:not([data-replaced])');
         if (oldStatus) oldStatus.remove();
-        // Insert new children at existing's position (preserves DOM order)
-          const newKids = Array.from(wrapper.children);
-          for (let i = newKids.length - 1; i >= 0; i--) {
-            parent.insertBefore(newKids[i], existing);
-          }
+        newKids.forEach(k => { delete k.dataset.replaced; });
       }
     }
   });
@@ -3392,14 +3397,17 @@ async function initWeather() {
           const parent = existing.parentNode;
           const wrapper = document.createElement('div');
           wrapper.innerHTML = newHtml;
-          existing.remove();
-          const oldStatus = parent.querySelector('.weather-status');
-          if (oldStatus) oldStatus.remove();
-          // Insert new children at existing's position (preserves DOM order)
+          // Insert new children BEFORE existing first (preserves position)
           const newKids = Array.from(wrapper.children);
           for (let i = newKids.length - 1; i >= 0; i--) {
             parent.insertBefore(newKids[i], existing);
           }
+          existing.remove();
+          // Mark new kids to exclude from oldStatus query
+          newKids.forEach(k => { k.dataset.replaced = '1'; });
+          const oldStatus = parent.querySelector('.weather-status:not([data-replaced])');
+          if (oldStatus) oldStatus.remove();
+          newKids.forEach(k => { delete k.dataset.replaced; });
         }
       }
     });
@@ -3426,14 +3434,16 @@ async function initWeather() {
             const parent = existing.parentNode;
             const wrapper = document.createElement('div');
             wrapper.innerHTML = newHtml;
+            // Insert new children BEFORE existing first (preserves position)
+            const newKids = Array.from(wrapper.children);
+            for (let i = newKids.length - 1; i >= 0; i--) {
+              parent.insertBefore(newKids[i], existing);
+            }
             existing.remove();
-            const oldStatus = parent.querySelector('.weather-status');
+            newKids.forEach(k => { k.dataset.replaced = '1'; });
+            const oldStatus = parent.querySelector('.weather-status:not([data-replaced])');
             if (oldStatus) oldStatus.remove();
-            // Insert new children at existing's position (preserves DOM order)
-          const newKids = Array.from(wrapper.children);
-          for (let i = newKids.length - 1; i >= 0; i--) {
-            parent.insertBefore(newKids[i], existing);
-          }
+            newKids.forEach(k => { delete k.dataset.replaced; });
           }
         }
       });
