@@ -722,6 +722,15 @@ header .countdown strong {
   font-weight: 600;
   line-height: 1.3;
 }
+.checkin-pdf-btn .pdf-icon {
+  font-size: 16px;
+}
+.checkin-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
 .checkin-pdf-btn {
   display: inline-flex;
   align-items: center;
@@ -736,21 +745,47 @@ header .countdown strong {
   font-weight: 600;
   transition: background 0.15s ease;
 }
-.checkin-pdf-btn:hover {
-  background: rgba(255, 255, 255, 0.32);
+.checkin-shortcut-btn {
+  background: rgba(255, 215, 0, 0.25);
+  border-color: rgba(255, 215, 0, 0.5);
 }
-.checkin-pdf-btn:active {
-  background: rgba(255, 255, 255, 0.45);
+.checkin-shortcut-btn:hover {
+  background: rgba(255, 215, 0, 0.4);
 }
-.checkin-pdf-btn .pdf-icon {
-  font-size: 16px;
-}
-.checkin-pdf-hint {
-  width: 100%;
+.checkin-shortcut-setup {
+  margin-top: 6px;
   font-size: 11px;
-  opacity: 0.75;
-  margin-top: 4px;
-  line-height: 1.4;
+  opacity: 0.85;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+.checkin-shortcut-setup summary {
+  cursor: pointer;
+  font-weight: 600;
+  user-select: none;
+  list-style: none;
+}
+.checkin-shortcut-setup summary::-webkit-details-marker { display: none; }
+.checkin-shortcut-setup summary:before {
+  content: "▶ ";
+  display: inline-block;
+  transition: transform 0.2s;
+}
+.checkin-shortcut-setup[open] summary:before {
+  transform: rotate(90deg);
+}
+.checkin-shortcut-setup ol {
+  margin: 8px 0 4px 18px;
+  padding: 0;
+  line-height: 1.6;
+}
+.checkin-shortcut-setup code {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 10.5px;
+  font-family: ui-monospace, Menlo, monospace;
 }
 
 .weather-panel .now {
@@ -3680,33 +3715,37 @@ const HOTEL_CHECKINS = {
   1: {
     name: 'Daiwa Roynet 神戶三宮 PREMIER',
     pdf: 'pdfs/daiwa-roynet-kobe.pdf',
-    dates: '7/27 (一) check-in'
+    dates: '7/27 (一) check-in',
+    shortcutsName: 'Hotel PDF - Daiwa Roynet Kobe'
   },
   3: {
     name: '環球影城東方酒店 (Universal Oriental Hotel)',
     pdf: 'pdfs/usj-oriental.pdf',
-    dates: '7/29 (三) check-in'
+    dates: '7/29 (三) check-in',
+    shortcutsName: 'Hotel PDF - USJ Oriental'
   },
   4: {
     name: '大阪難波格利茲酒店 (Hotel Gracery Osaka Namba)',
     pdf: 'pdfs/grids-osaka-namba.pdf',
-    dates: '7/30 (四) check-in'
+    dates: '7/30 (四) check-in',
+    shortcutsName: 'Hotel PDF - GRIDS Osaka Namba'
   },
   6: {
     name: '君品酒店 Palais de Chine',
     pdf: 'pdfs/palais-de-chine.pdf',
-    dates: '8/1 (六) check-in'
+    dates: '8/1 (六) check-in',
+    shortcutsName: 'Hotel PDF - Palais de Chine Taipei'
   }
 };
 
 // Render check-in panel for days 1, 3, 4, 6 (only when there's a check-in)
-// On iPhone Safari, tapping the PDF button will:
-//   1. Open PDF in browser
-//   2. User taps Share → "Save to Files" → saved to Files app
-// This IS how iOS Safari's "Files app" workflow works (no direct file:// scheme for PWA)
+// Two PDF access methods supported:
+//   1. Direct PDF (open in Safari → Share → Save to Files)
+//   2. iOS Shortcuts URL (one-tap trigger if Shortcut is pre-installed)
 function renderCheckinPanel(dayIdx) {
   const info = HOTEL_CHECKINS[dayIdx];
   if (!info) return '';
+  const shortcutsUrl = `shortcuts://run-shortcut?name=${encodeURIComponent(info.shortcutsName)}&input=${encodeURIComponent(info.pdf)}`;
   return `
     <div class="checkin-panel">
       <div class="checkin-panel-header">
@@ -3715,12 +3754,28 @@ function renderCheckinPanel(dayIdx) {
       </div>
       <div class="checkin-panel-body">
         <span class="checkin-hotel-name">🏨 ${info.name}</span>
+      </div>
+      <div class="checkin-buttons">
         <a href="${info.pdf}" target="_blank" rel="noopener" class="checkin-pdf-btn" download>
           <span class="pdf-icon">📄</span>
-          <span>開 PDF (→ Files)</span>
+          <span>直接開 PDF</span>
+        </a>
+        <a href="${shortcutsUrl}" class="checkin-pdf-btn checkin-shortcut-btn">
+          <span class="pdf-icon">⚡</span>
+          <span>iOS Shortcut</span>
         </a>
       </div>
-      <div class="checkin-pdf-hint">💡 Tap 開 PDF → iPhone Share → 「Save to Files」即可保存到 Apple Files app</div>
+      <details class="checkin-shortcut-setup">
+        <summary>📋 iOS Shortcut 設置 (一次, 永久用)</summary>
+        <ol>
+          <li>打開 iPhone <strong>Shortcuts</strong> app</li>
+          <li>右上角 <strong>+</strong> → 新增 Shortcut, 命名為 <code>${info.shortcutsName}</code></li>
+          <li>加 Actions: <strong>Get Contents of URL</strong> (URL = 傳入的 input)</li>
+          <li>加 Actions: <strong>Save File</strong> (儲存到 Files / On My iPhone / 創建 folder "Hotel PDFs")</li>
+          <li>Settings 開啟 <strong>"Show in Share Sheet"</strong> + <strong>"Allow Running When Locked"</strong></li>
+          <li>完成! 從此 tap 「⚡ iOS Shortcut」→ 自動下載+存 Files app</li>
+        </ol>
+      </details>
     </div>
   `;
 }
