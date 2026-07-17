@@ -1,0 +1,3448 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>🇯🇵🇹🇼 2026 神戶+大阪+奈良+台北 8 日遊</title>
+<style>
+:root {
+  --bg: #0f172a;
+  --bg-card: #1e293b;
+  --bg-elev: #334155;
+  --text: #f1f5f9;
+  --text-dim: #94a3b8;
+  --border: #475569;
+  --accent: #38bdf8;
+  --accent2: #f472b6;
+  --warn: #fbbf24;
+  --danger: #f87171;
+  --success: #34d399;
+  --kobe: #ff6b6b;
+  --osaka: #4ecdc4;
+  --nara: #ffe66d;
+  --usj: #a78bfa;
+  --taipei: #06b6d4;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+body {
+  padding-bottom: 120px;
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.page {
+  padding-bottom: 40px;
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #7c2d12 100%);
+  padding: 16px 20px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+}
+
+header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+header .countdown {
+  font-size: 13px;
+  color: #cbd5e1;
+  font-variant-numeric: tabular-nums;
+}
+
+header .countdown strong {
+  color: var(--accent);
+  font-size: 16px;
+}
+
+/* Tab bar */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #0b1226;
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 99;
+  max-width: 768px;
+  margin: 0 auto;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tab {
+  flex: 1;
+  padding: 10px 6px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-dim);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.tab .icon {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 2px;
+}
+
+.tab.active {
+  color: var(--accent);
+}
+
+/* Sections */
+.page { display: none; padding: 16px; }
+.page.active { display: block; }
+
+/* Day card */
+.day-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  border-left: 4px solid var(--accent);
+}
+
+.day-card.kobe { border-left-color: var(--kobe); }
+.day-card.osaka { border-left-color: var(--osaka); }
+.day-card.nara { border-left-color: var(--nara); }
+.day-card.usj { border-left-color: var(--usj); }
+.day-card.taipei { border-left-color: var(--taipei); }
+
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--border);
+}
+
+.day-header .date {
+  font-size: 13px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.day-header .city {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--bg-elev);
+  color: var(--accent);
+}
+
+.activity {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.activity:last-child { border-bottom: none; }
+
+.activity input[type=checkbox] {
+  margin-right: 10px;
+  margin-top: 4px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: var(--success);
+}
+
+.activity .body { flex: 1; }
+
+.activity .body .title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.activity .body .desc {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.activity.done .title {
+  text-decoration: line-through;
+  color: var(--text-dim);
+}
+
+.alert {
+  background: rgba(251, 191, 36, 0.12);
+  border-left: 3px solid var(--warn);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #fde68a;
+  margin-top: 6px;
+}
+
+.alert.danger {
+  background: rgba(248, 113, 113, 0.12);
+  border-left-color: var(--danger);
+  color: #fecaca;
+}
+
+.alert.success {
+  background: rgba(52, 211, 153, 0.12);
+  border-left-color: var(--success);
+  color: #a7f3d0;
+}
+
+.icon-line {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #cbd5e1;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.btn-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn:hover { background: #475569; }
+.btn.primary { background: #2563eb; border-color: #1e40af; color: white; }
+.btn.warn { background: #b45309; border-color: #92400e; color: white; }
+.btn.tiny { padding: 4px 8px; font-size: 11px; }
+
+/* Today card */
+.today-card {
+  background: linear-gradient(135deg, #0891b2, #1e40af);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.today-card .today-date {
+  font-size: 13px;
+  color: #bae6fd;
+  margin-bottom: 6px;
+}
+
+.today-card .today-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.today-card .today-summary {
+  font-size: 13px;
+  color: #e0f2fe;
+  line-height: 1.6;
+}
+
+.pulse {
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse 2s infinite;
+  margin-right: 6px;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+/* Budget section */
+.budget-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.budget-card h3 {
+  font-size: 15px;
+  margin-bottom: 12px;
+  color: var(--accent);
+}
+
+.budget-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 14px;
+}
+
+.budget-row:last-child { border-bottom: none; }
+
+.budget-input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: var(--text);
+  width: 90px;
+  text-align: right;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.budget-total {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 2px solid var(--border);
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+/* Checklist */
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px;
+  background: var(--bg-card);
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.check-item input[type=checkbox] {
+  margin-right: 12px;
+  margin-top: 3px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  accent-color: var(--success);
+}
+
+.check-item .body { flex: 1; }
+
+.check-item .body .title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.check-item .body .desc {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.check-item.done .title {
+  text-decoration: line-through;
+  color: var(--text-dim);
+}
+
+/* Emergency */
+.emergency-card {
+  background: linear-gradient(135deg, #991b1b 0%, #7c2d12 100%);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+/* Share row */
+.share-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.share-row-centered {
+  justify-content: center;
+}
+.btn-share {
+  background: #ffffff;
+  color: #047857;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.btn-share-large {
+  padding: 14px 28px;
+  font-size: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  min-width: 200px;
+  justify-content: center;
+}
+.btn-share:hover { background: #ecfdf5; transform: translateY(-1px); }
+.btn-share-large:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.30); }
+.btn-share:disabled { opacity: 0.55; cursor: wait; transform: none; box-shadow: none; }
+.btn-share.gps-error { background: #fbbf24; color: #422006; }
+
+.emergency-card h3 {
+  font-size: 14px;
+  color: #fecaca;
+  margin-bottom: 12px;
+}
+
+.emergency-item {
+  background: rgba(0,0,0,0.3);
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.emergency-item .label {
+  font-size: 12px;
+  color: #fca5a5;
+}
+
+.emergency-item .number {
+  font-size: 18px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: white;
+  margin-top: 2px;
+}
+.emergency-item .number a {
+  color: white;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  margin: -4px -8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+  -webkit-tap-highlight-color: rgba(255,255,255,0.2);
+}
+.emergency-item .number a::after {
+  content: '📞';
+  font-size: 13px;
+  opacity: 0.55;
+  transition: opacity 0.15s;
+}
+.emergency-item .number a:hover,
+.emergency-item .number a:active {
+  background: rgba(255,255,255,0.15);
+  text-decoration: underline;
+}
+.emergency-item .number a:hover::after,
+.emergency-item .number a:active::after {
+  opacity: 1;
+}
+
+/* Hotel cards */
+.hotel-card {
+  background: var(--bg-card);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hotel-icon {
+  font-size: 22px;
+}
+
+.hotel-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.hotel-dates {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.hotel-addr {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 4px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* Flight cards */
+.flight {
+  background: linear-gradient(135deg, #1e40af, #312e81);
+  border-radius: 10px;
+  padding: 14px;
+  margin: 8px 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.flight .code {
+  font-size: 11px;
+  color: #93c5fd;
+  font-variant-numeric: tabular-nums;
+}
+
+.flight .route {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.flight .time {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+/* tabs subtabs */
+.sub-tabs {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin: -16px -16px 16px;
+  padding: 4px 12px;
+  background: #0b1226;
+  border-bottom: 1px solid var(--border);
+}
+
+.sub-tabs::-webkit-scrollbar { display: none; }
+
+.sub-tab {
+  flex: 0 0 auto;
+  padding: 8px 14px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  font-size: 12px;
+  color: var(--text);
+  margin-right: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.sub-tab.active {
+  background: var(--accent);
+  color: #0f172a;
+  font-weight: 600;
+  border-color: var(--accent);
+}
+
+.day-page { display: none; }
+.day-page.active { display: block; }
+
+/* Quick links */
+.quick-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: var(--bg-elev);
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 13px;
+  margin: 4px 0;
+  margin-right: 6px;
+}
+
+.quick-link:hover { background: #475569; }
+
+/* Bookmark */
+.bookmark-bar {
+  position: sticky;
+  top: 78px;
+  z-index: 90;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 8px 0;
+  display: flex;
+  overflow-x: auto;
+  gap: 6px;
+  margin: 0 -16px 12px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.bookmark-bar::-webkit-scrollbar { display: none; }
+
+/* Sub-component: subway/transit info */
+.transit-info {
+  background: rgba(56, 189, 248, 0.1);
+  border-left: 3px solid var(--accent);
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin: 6px 0;
+  font-size: 13px;
+}
+
+/* notes */
+.tips {
+  background: rgba(167, 139, 250, 0.1);
+  border-left: 3px solid var(--usj);
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin: 6px 0;
+  font-size: 13px;
+  color: #c4b5fd;
+}
+
+.section-title {
+  font-size: 14px;
+  color: var(--accent);
+  margin: 16px 0 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* pre-trip */
+.category {
+  font-size: 12px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 14px 8px 6px;
+}
+
+.sub-route-note {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* Weather panel */
+.weather-panel {
+  background: linear-gradient(135deg, #1e40af 0%, #0891b2 100%);
+  border-radius: 12px;
+  padding: 14px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.weather-panel .now {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.weather-panel .icon {
+  font-size: 36px;
+  line-height: 1;
+}
+
+.weather-panel .temp {
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.weather-panel .range {
+  font-size: 12px;
+  color: #bae6fd;
+  font-variant-numeric: tabular-nums;
+}
+
+.weather-panel .meta {
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.weather-panel .city {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.weather-panel .rain {
+  display: inline-block;
+  background: rgba(0,0,0,0.25);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.weather-note {
+  font-size: 11px;
+  color: #fbbf24;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* Mini map */
+.mini-map {
+  width: 100%;
+  border-radius: 12px;
+  overflow: visible;
+  margin: 10px 0;
+  border: 1px solid var(--border);
+}
+.mini-map > iframe {
+  width: 100%;
+  height: 280px;
+  border: 0;
+  display: block;
+  border-radius: 12px;
+}
+
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0 6px;
+}
+
+.map-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.map-link {
+  font-size: 11px;
+  color: var(--accent);
+  text-decoration: none;
+  background: var(--bg-elev);
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.map-link:hover { background: #475569; }
+
+.legend-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  background: var(--bg-elev);
+  padding: 2px 6px;
+  border-radius: 8px;
+  margin-right: 6px;
+  color: var(--text-dim);
+}
+
+.legend-pill .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.legend-pill .dot.red { background: #ef4444; }
+.legend-pill .dot.green { background: #22c55e; }
+.legend-pill .dot.blue { background: #3b82f6; }
+
+/* Leaflet mini map */
+.leaflet-map {
+  width: 100% !important;
+  height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-top: 8px;
+}
+.leaflet-map .leaflet-popup-content {
+  font-family: inherit;
+  font-size: 13px;
+}
+.pin-legend {
+  margin-top: 8px;
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.pin-legend-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.pin-legend-sub {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.pin-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg-card);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.15s;
+}
+
+.pin-card:hover {
+  background: var(--bg-elev);
+  transform: translateX(2px);
+}
+
+.pin-num {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.pin-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pin-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.pin-coord {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.pin-arrow {
+  flex-shrink: 0;
+  font-size: 18px;
+  color: var(--text-dim);
+  opacity: 0.6;
+ }
+
+/* POI tips (expandable inside pin-card) */
+.pin-tips {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text);
+}
+.pin-tips summary {
+  cursor: pointer;
+  font-size: 11px;
+  color: var(--accent);
+  user-select: none;
+  padding: 4px 0;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.pin-tips summary::-webkit-details-marker { display: none; }
+.pin-tips summary::before {
+  content: '💡';
+  font-size: 13px;
+}
+.pin-tips[open] summary::before { content: '💡'; }
+.pin-tips-content {
+  margin-top: 6px;
+  padding: 8px 10px;
+  background: rgba(0,0,0,0.25);
+  border-radius: 6px;
+  border-left: 2px solid var(--accent);
+}
+.pin-tips-section {
+  margin-bottom: 6px;
+}
+.pin-tips-section:last-child { margin-bottom: 0; }
+.pin-tips-label {
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.pin-tips-list {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.pin-tips-list li {
+  margin-bottom: 2px;
+  list-style: none;
+}
+.pin-tips-list li::before {
+  content: '•';
+  color: var(--text-dim);
+  margin-right: 4px;
+}
+.pin-tips-note {
+  font-size: 11px;
+  color: var(--warn);
+  font-style: italic;
+  margin-top: 4px;
+  padding: 4px 6px;
+  background: rgba(251, 191, 36, 0.08);
+  border-radius: 4px;
+}
+
+/* Inter-spot transit card (Day-by-day segment navigation) */
+.transit-segment {
+  background: var(--bg-card);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  border-left: 3px solid var(--accent);
+}
+.transit-segment .seg-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.transit-segment .seg-from, .transit-segment .seg-to {
+  color: var(--accent);
+}
+.transit-segment .seg-arrow {
+  color: var(--text-dim);
+  font-size: 14px;
+}
+.transit-segment .seg-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+.transit-segment .seg-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.transit-segment .seg-meta strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.transit-segment .seg-mode {
+  background: var(--bg-elev);
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 10px;
+  color: var(--text);
+  font-weight: 600;
+}
+.transit-segment .seg-mode.bus { background: rgba(251, 191, 36, 0.18); color: #fde68a; }
+.transit-segment .seg-mode.rail { background: rgba(56, 189, 248, 0.18); color: #bae6fd; }
+.transit-segment .seg-mode.walk { background: rgba(74, 222, 128, 0.18); color: #bbf7d0; }
+.transit-segment .seg-mode.cable { background: rgba(167, 139, 250, 0.18); color: #ddd6fe; }
+.transit-segment .seg-mode.brt { background: rgba(248, 113, 113, 0.18); color: #fecaca; }
+.transit-segment .seg-steps {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+.transit-segment .seg-steps ol {
+  margin: 0;
+  padding-left: 20px;
+}
+.transit-segment .seg-steps li {
+  margin-bottom: 2px;
+}
+.transit-segment .seg-payment {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+.transit-segment .seg-payment strong { color: var(--text); }
+.transit-segment .seg-realtime {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  text-decoration: none;
+  font-weight: 600;
+  -webkit-tap-highlight-color: transparent;
+}
+.transit-segment .seg-realtime:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+.transit-segment .seg-schedule {
+  margin-top: 6px;
+  padding: 6px 8px;
+  background: rgba(56, 189, 248, 0.08);
+  border-radius: 6px;
+  font-size: 11px;
+  border-left: 2px solid var(--accent);
+}
+.transit-segment .seg-schedule-title {
+  font-size: 10px;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.transit-segment .seg-schedule-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 2px 0;
+  color: var(--text);
+}
+.transit-segment .seg-schedule-row strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.transit-segment .seg-schedule-note {
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-top: 4px;
+  font-style: italic;
+}
+ </style>
+</head>
+
+<header>
+  <h1>🇯🇵🇹🇼 2026 神戶 · 奈良 · 大阪 · 台北</h1>
+  <div class="countdown" id="countdown">
+    出發倒數：<strong>--</strong>
+  </div>
+</header>
+
+<script>
+// ============ Embedded Weather Data (fallback) ============
+// Cold-start fallback: if live fetch fails, use these hardcoded values.
+// Normally replaced by fetchWeather() on page load.
+const WEATHER_DATA = {"meta":{"source":"open-meteo climate-api (fallback)","fetched_at":"2026-07-10T09:38:36Z","timezone":"Asia/Tokyo","date_range":{"start":"2026-07-27","end":"2026-08-03"},"fields":["temperature_2m_max","temperature_2m_min","precipitation_sum"],"note":"Hardcoded fallback. Live data fetched on page load."},"cities":{"kobe":{"zh":"神戶","lat":34.6937,"lng":135.5023,"daily":[{"date":"2026-07-27","max":31.3,"min":24.4,"precip":0.95},{"date":"2026-07-28","max":30.4,"min":22.9,"precip":0.00},{"date":"2026-07-29","max":32.8,"min":24.5,"precip":0.47},{"date":"2026-07-30","max":32.3,"min":25.9,"precip":0.12},{"date":"2026-07-31","max":32.1,"min":26.9,"precip":1.42},{"date":"2026-08-01","max":32.5,"min":26.3,"precip":1.90},{"date":"2026-08-02","max":32.8,"min":25.6,"precip":7.72},{"date":"2026-08-03","max":32.1,"min":25.5,"precip":0.59}]},"nara":{"zh":"奈良","lat":34.6851,"lng":135.8048,"daily":[{"date":"2026-07-27","max":31.5,"min":23.7,"precip":1.42},{"date":"2026-07-28","max":29.9,"min":22.3,"precip":0.00},{"date":"2026-07-29","max":31.8,"min":23.0,"precip":0.55},{"date":"2026-07-30","max":31.9,"min":24.9,"precip":0.44},{"date":"2026-07-31","max":31.5,"min":26.3,"precip":1.42},{"date":"2026-08-01","max":31.1,"min":25.9,"precip":2.18},{"date":"2026-08-02","max":32.2,"min":25.4,"precip":4.15},{"date":"2026-08-03","max":31.8,"min":25.2,"precip":0.76}]},"namba":{"zh":"大阪難波","lat":34.666,"lng":135.5014,"daily":[{"date":"2026-07-27","max":31.2,"min":24.3,"precip":0.95},{"date":"2026-07-28","max":30.3,"min":22.8,"precip":0.00},{"date":"2026-07-29","max":32.7,"min":24.4,"precip":0.47},{"date":"2026-07-30","max":32.2,"min":25.8,"precip":0.12},{"date":"2026-07-31","max":32.0,"min":26.8,"precip":1.42},{"date":"2026-08-01","max":32.4,"min":26.3,"precip":1.90},{"date":"2026-08-02","max":32.7,"min":25.5,"precip":7.72},{"date":"2026-08-03","max":32.0,"min":25.5,"precip":0.59}]},"rokko":{"zh":"六甲山","lat":34.7758,"lng":135.2637,"daily":[{"date":"2026-07-27","max":25.6,"min":19.2,"precip":1.05},{"date":"2026-07-28","max":24.7,"min":17.6,"precip":0.00},{"date":"2026-07-29","max":27.1,"min":19.3,"precip":0.52},{"date":"2026-07-30","max":26.6,"min":20.6,"precip":0.13},{"date":"2026-07-31","max":26.4,"min":21.6,"precip":1.58},{"date":"2026-08-01","max":26.8,"min":21.1,"precip":2.10},{"date":"2026-08-02","max":27.1,"min":20.4,"precip":8.56},{"date":"2026-08-03","max":26.4,"min":20.3,"precip":0.66}]},"maya":{"zh":"摩耶山","lat":34.7333,"lng":135.2306,"daily":[{"date":"2026-07-27","max":29.5,"min":23.9,"precip":1.05},{"date":"2026-07-28","max":28.6,"min":22.4,"precip":0.00},{"date":"2026-07-29","max":31.1,"min":24.0,"precip":0.52},{"date":"2026-07-30","max":30.5,"min":25.4,"precip":0.13},{"date":"2026-07-31","max":30.3,"min":26.4,"precip":1.58},{"date":"2026-08-01","max":30.8,"min":25.9,"precip":2.10},{"date":"2026-08-02","max":31.1,"min":25.1,"precip":8.56},{"date":"2026-08-03","max":30.4,"min":25.1,"precip":0.66}]},"taipei":{"zh":"台北","lat":25.033,"lng":121.5654,"daily":[{"date":"2026-07-27","max":30.5,"min":25.3,"precip":0.64},{"date":"2026-07-28","max":30.3,"min":25.1,"precip":0.32},{"date":"2026-07-29","max":30.5,"min":25.9,"precip":6.98},{"date":"2026-07-30","max":30.9,"min":25.6,"precip":2.37},{"date":"2026-07-31","max":31.0,"min":26.0,"precip":1.57},{"date":"2026-08-01","max":31.7,"min":26.6,"precip":0.16},{"date":"2026-08-02","max":33.0,"min":26.9,"precip":0.00},{"date":"2026-08-03","max":32.7,"min":27.0,"precip":0.47}]}}};
+
+// Live weather cache (replaces WEATHER_DATA.cities when fresh)
+let liveWeather = null;
+let liveWeatherMeta = null;  // {source, fetched_at, is_stale}
+const WEATHER_CACHE_KEY = 'weather-data-v1';
+const WEATHER_CACHE_TTL_MS = 60 * 60 * 1000;  // 1 hour
+
+// Weather EMOJI mapping based on precip (no weathercode available)
+function weatherIcon(precip) {
+  if (precip >= 5) return '🌧';
+  if (precip >= 2) return '🌦';
+  if (precip >= 0.5) return '⛅';
+  if (precip > 0) return '⛅';
+  return '☀';
+}
+
+function rainLabel(precip) {
+  if (precip >= 5) return '大雨';
+  if (precip >= 2) return '有雨';
+  if (precip >= 0.5) return '零星雨';
+  return '晴朗';
+}
+
+// Open-Meteo daily fields → our {date, max, min, precip} shape
+function normalizeOMDaily(daily, cityLat, cityLng, source) {
+  const dates = daily.time;
+  const out = [];
+  for (let i = 0; i < dates.length; i++) {
+    out.push({
+      date: dates[i],
+      max: daily.temperature_2m_max ? daily.temperature_2m_max[i] : null,
+      min: daily.temperature_2m_min ? daily.temperature_2m_min[i] : null,
+      precip: daily.precipitation_sum ? daily.precipitation_sum[i] : 0
+    });
+  }
+  return { lat: cityLat, lng: cityLng, daily: out, source };
+}
+
+// Try /v1/forecast first (real forecast, ≤16 day horizon)
+async function tryForecast(cityKey, city) {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lng}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&forecast_days=8&timezone=Asia%2FTokyo`;
+  const res = await fetch(url, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`forecast HTTP ${res.status}`);
+  const data = await res.json();
+  if (!data.daily || !data.daily.time || data.daily.time.length === 0) throw new Error('forecast empty');
+  return { city: cityKey, ...normalizeOMDaily(data.daily, city.lat, city.lng, 'api.open-meteo.com/v1/forecast') };
+}
+
+// Fallback /v1/climate (projection, no horizon limit, but less accurate)
+async function tryClimate(cityKey, city) {
+  const start = '2026-07-27';
+  const end = '2026-08-03';
+  const url = `https://climate-api.open-meteo.com/v1/climate?latitude=${city.lat}&longitude=${city.lng}&start_date=${start}&end_date=${end}&models=EC_Earth3P_HR&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Asia%2FTokyo`;
+  const res = await fetch(url, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`climate HTTP ${res.status}`);
+  const data = await res.json();
+  if (!data.daily || !data.daily.time || data.daily.time.length === 0) throw new Error('climate empty');
+  return { city: cityKey, ...normalizeOMDaily(data.daily, city.lat, city.lng, 'climate-api (projection)') };
+}
+
+// Fetch all 6 cities; returns { cities: {...}, meta: {...} } in same shape as WEATHER_DATA
+async function fetchWeather() {
+  const cityKeys = Object.keys(WEATHER_DATA.cities);
+  const tried = { forecast: false, climate: false, usedCache: false };
+  const cities = {};
+
+  // Build all 6 fetches in parallel
+  const fetchOne = async (key) => {
+    const city = WEATHER_DATA.cities[key];
+    // 1. Try forecast
+    try {
+      const result = await tryForecast(key, city);
+      tried.forecast = true;
+      return result;
+    } catch (e1) {
+      // 2. Fallback to climate
+      try {
+        const result = await tryClimate(key, city);
+        tried.climate = true;
+        return result;
+      } catch (e2) {
+        return null;  // both failed for this city
+      }
+    }
+  };
+
+  const results = await Promise.all(cityKeys.map(fetchOne));
+  let allFailed = true;
+  for (let i = 0; i < cityKeys.length; i++) {
+    const key = cityKeys[i];
+    const r = results[i];
+    if (r) {
+      const { city: _c, ...rest } = r;
+      cities[key] = { zh: WEATHER_DATA.cities[key].zh, ...rest };
+      allFailed = false;
+    } else {
+      // leave null; renderWeather will fallback to WEATHER_DATA
+      cities[key] = null;
+    }
+  }
+
+  if (allFailed) {
+    // Try cache
+    const cached = readWeatherCache();
+    if (cached) {
+      tried.usedCache = true;
+      return cached;
+    }
+    // No cache either — signal failure
+    return null;
+  }
+
+  // At least one city succeeded → merge with WEATHER_DATA for any nulls
+  for (const key of cityKeys) {
+    if (!cities[key]) cities[key] = WEATHER_DATA.cities[key];
+  }
+
+  const source = tried.forecast ? 'api.open-meteo.com/v1/forecast' :
+                 tried.climate ? 'climate-api (projection)' : 'mixed';
+  const result = {
+    meta: {
+      source,
+      fetched_at: new Date().toISOString(),
+      timezone: 'Asia/Tokyo',
+      date_range: { start: '2026-07-27', end: '2026-08-03' },
+      fields: ['temperature_2m_max', 'temperature_2m_min', 'precipitation_sum'],
+      note: tried.forecast ? 'Real forecast data.' : 'Climate projection (forecast horizon exceeded or fetch failed).'
+    },
+    cities
+  };
+
+  // Cache for 1 hour
+  try { localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify(result)); } catch(e) {}
+  return result;
+}
+
+function readWeatherCache() {
+  try {
+    const raw = localStorage.getItem(WEATHER_CACHE_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    // Mark as stale (will be re-fetched on next user action / 1h timer)
+    data.meta = data.meta || {};
+    data.meta.is_stale = true;
+    return data;
+  } catch(e) { return null; }
+}
+
+function isStale(weatherData) {
+  if (!weatherData || !weatherData.meta || !weatherData.meta.fetched_at) return true;
+  const age = Date.now() - new Date(weatherData.meta.fetched_at).getTime();
+  return age > WEATHER_CACHE_TTL_MS;
+}
+
+async function refreshWeather() {
+  const statusEl = document.getElementById('weather-status');
+  if (statusEl) statusEl.textContent = '⏳ 抓緊最新天氣…';
+  const data = await fetchWeather();
+  if (data) {
+    liveWeather = data;
+    liveWeatherMeta = { fetched_at: data.meta.fetched_at, source: data.meta.source, is_stale: data.meta.is_stale || false };
+    updateWeatherStatus();
+    // Re-render the active day page so its weather panel picks up fresh data
+    const activeDay = document.querySelector('.day-page.active');
+    if (activeDay) {
+      const dayIdx = parseInt(activeDay.id.replace('day-', ''));
+      // Trigger showDay to re-render — but avoid flicker by toggling active twice
+      const dayId = activeDay.id;
+      // Simple: just reload the page's weather panel inline
+      const meta = CITY_LANDMARKS['day-' + dayIdx];
+      if (meta) {
+        const dayDate = computeDateForDay ? computeDateForDay(dayIdx) : null;
+        const newHtml = renderWeather(meta.city, dayDate);
+        // Replace existing weather-panel if any
+        const existing = activeDay.querySelector('.weather-panel');
+        if (existing && newHtml) {
+          const wrapper = document.createElement('div');
+          wrapper.innerHTML = newHtml;
+          existing.parentNode.replaceChild(wrapper.firstElementChild, existing);
+        }
+      }
+    }
+  } else {
+    if (statusEl) statusEl.textContent = '❌ Fetch 失敗，請 retry (check 網絡)';
+  }
+}
+
+function updateWeatherStatus() {
+  const statusEl = document.getElementById('weather-status');
+  if (!statusEl || !liveWeatherMeta) return;
+  const ageMin = Math.floor((Date.now() - new Date(liveWeatherMeta.fetched_at).getTime()) / 60000);
+  const ageStr = ageMin < 1 ? '剛剛' : ageMin < 60 ? `${ageMin} 分鐘前` : `${Math.floor(ageMin/60)} 小時前`;
+  const sourceShort = liveWeatherMeta.source.includes('climate') ? '氣候模型' : '實時預報';
+  const staleTag = liveWeatherMeta.is_stale || isStale(liveWeather) ? ' ⚠️可能過時' : '';
+  statusEl.innerHTML = `🔄 最後更新：${ageStr} · 來源：${sourceShort}${staleTag}`;
+}
+
+// ============ Weather + Map Renderer ============
+// Each place can have optional `tips: { must, events, food, notes }` for expandable details
+const CITY_LANDMARKS = {
+  'day-1': {city: 'kobe', transit: [
+    {from: 'UKB 神戶空港', to: '三宮駅', mode: '輕軌', line: 'Port Liner', duration: '18 min', fare: '¥340',
+     steps: ['UKB 1F 入境 → 跟「Port Liner」指標行 5 分鐘到月台', '搭 Port Liner 直達三宮 (唔使轉車)', '三宮站西口出 → 步行 5 分鐘到酒店'],
+     payment: 'IC卡 (Suica/ICOCA) / 現金',
+     realtime: 'https://www.kobe-access.jp/access/port_liner/',
+     schedule: {first: '05:30', last: '23:45',
+       frequency: [
+         {period: '5:30-7:00 清晨', every: '每 12-15 min'},
+         {period: '7:00-10:00 早高峰', every: '每 6-8 min'},
+         {period: '10:00-17:00 日間', every: '每 10-12 min'},
+         {period: '17:00-20:00 晚高峰', every: '每 5-7 min'},
+         {period: '20:00-23:45 晚間', every: '每 12-18 min'}
+       ],
+       note: '7/27 (一) 18:00 抵達時約每 6-7 min 一班，唔使等長龍'}},
+    {from: '三宮駅', to: 'Daiwa Roynet PREMIER', mode: '步行', line: '—', duration: '5 min', fare: '免費',
+     steps: ['三宮駅北口出 → 沿旭通向西行 350m', '經 Don Quijote 旁小路轉右', '到達 Daiwa Roynet PREMIER (旭通5-1)'],
+     payment: '—',
+     realtime: ''}
+  ], places: [
+    {name: '神戶空港 (UKB)', lat: 34.6328, lng: 135.2239, tips: {
+      must: ['4F 展望台 24 小時免費 — 看飛機升降 + 神戶港夜景', 'Edy/Suica 儲值機 (日本少數支援八達通-like 卡)', '7/27 抵達：HKG → TPE T2 → UKB (長榮 BR 2 段轉機)', '8/1 出發：UKB 19:00 → TPE T2 20:55 (長榮 BR)'],
+      food: ['はせがわ (1F) 神戶牛壽司 ¥350-650/件 — 離開前最方便', '中華そば たまや中公園店 拉麵 ¥900'],
+      notes: ['7/27 抵達日：Port Liner 三宮 18 分鐘 ¥340', '網上 check-in 後直接到 UKB，唔使行櫃檯排長龍', '備註：T2 = TPE (台北) Terminal 2 — 神戶空港 (UKB) 細機場冇 Terminal 概念']
+    }},
+    {name: '三宮駅', lat: 34.6943, lng: 135.1972, tips: {
+      must: ['三宮センター街 600m 拱廊商店街', 'Cento Centro 美食地下 (3 商場地下打通)'],
+      food: ['長田本庄軒 ぼっかけ燒そば ¥850 (神戶 B 級麵食)', 'サヴォイ 香料牛肉咖哩 ¥800 (lunch 限定)'],
+      notes: ['地下迷宮 — install Google Map offline', 'JR「三ノ宮」/ 阪急阪神「神戸三宮」/ 地下鐵「三宮」三站唔同']
+    }},
+    {name: 'Daiwa Roynet PREMIER', lat: 34.6946, lng: 135.1985, must: true, tips: {
+      must: ['三宮駅北徒步 5 分', '東門街入口 30 秒 — 夜晚居酒屋三兩步路'],
+      food: ['San Plaza B1 美食地下街 7 個選擇', '酒店早餐 Buffet ¥1,100/大人'],
+      notes: ['小型酒店 — 提早 book', '8/3 退房後行李寄存']
+    }}
+  ], zoom: 12},
+  'day-2': {city: 'kobe', transit: [
+    {from: 'Daiwa Roynet PREMIER (酒店)', to: '三宮駅', mode: '步行', line: '—', duration: '5 min', fare: '免費',
+     steps: ['酒店出 → 沿旭通向東行 350m', '到達三宮駅 (西口/北口)'],
+     payment: '—',
+     realtime: ''},
+    {from: '三宮駅 (Daiwa Roynet)', to: '美利堅公園', mode: '輕軌', line: '港灣人工島線', duration: '12 min', fare: '¥250',
+     steps: ['三宮駅西口 → 步行 3 分到「貿易中心前」站', '搭神戶新交通 港灣人工島線 (PORT ISLAND LINE) → みなと元町站落車', '步行 5 分到美利堅公園 / Port Tower'],
+     payment: 'IC卡 / 現金',
+     realtime: 'https://www.kobe-access.jp/access/port_liner/',
+     schedule: {first: '05:30', last: '23:50',
+       frequency: [
+         {period: '7:00-10:00 早高峰', every: '每 4-6 min'},
+         {period: '10:00-17:00 日間', every: '每 6-8 min'},
+         {period: '17:00-21:00 晚高峰', every: '每 5-7 min'},
+         {period: '21:00-23:50 晚間', every: '每 10-15 min'}
+       ],
+       note: '7/28 (二) 花火日 — 17:00 前去正好避開花火人潮'}},
+    {from: '美利堅公園', to: '面包起人博物館', mode: '步行', line: '—', duration: '5 min', fare: '免費',
+     steps: ['美利堅公園向東行 200m 到 Harborland Mosaic 旁', '穿過 umie 商場 1F 通道', '到達 神戸アンパンマンこどもミュージアム (東川崎町 1-6-2)'],
+     payment: '—',
+     realtime: ''},
+    {from: '面包起人博物館', to: '三宮中心街', mode: 'JR + 步行', line: 'JR 神戶線', duration: '15 min', fare: '¥160',
+     steps: ['出 Harborland 步行 8 分到 JR 神戸駅 (山陽/阪急/阪神三宮方向)', '搭 JR 神戶線 1 站到 三ノ宮駅 (2 分)', '三ノ宮東口出 → 步行 3 分到三宮中心街拱廊入口'],
+     payment: 'IC卡 / 現金',
+     realtime: 'https://www.jorudan.co.jp/norikae/cgi/nori.cgi?eki1=%E7%A5%9E%E6%88%B1&eki2=%E4%B8%89%E3%83%8E%E5%AE%AE&via_on=1',
+     schedule: {first: '05:30', last: '00:20',
+       frequency: [
+         {period: '7:00-10:00 早高峰', every: '每 3-5 min (新快速普通混合)'},
+         {period: '10:00-17:00 日間', every: '每 5-7 min'},
+         {period: '17:00-21:00 晚高峰', every: '每 4-6 min'},
+         {period: '21:00-23:30 晚間', every: '每 7-12 min'}
+       ],
+       note: '三ノ宮站 JR 神戶線 + 阪急/阪神/Port Liner 共站，找紫/綠 line'}},
+    {from: '三宮中心街', to: 'Breeze Kobe', mode: '步行', line: '—', duration: '3 min', fare: '免費',
+     steps: ['三宮中心街出北口 → 沿三宮町通向北 200m', '到達 Breeze Kobe (三宮町 1-7-5 一帶)'],
+     payment: '—',
+     realtime: ''}
+  ], places: [
+    {name: '美利堅公園', lat: 34.6844, lng: 135.1883, must: true, tips: {
+      must: ['🔴 7/28 (Tue) 19:30 神戸港ウィークエンド花火 — 完全撞正 Day 2', '🔴 18:00-21:00 元町夜市 (3-5 個分區)'],
+      events: ['🔴 7/28 二重彩：花火 + 元町夜市同時段 (trip-defining)'],
+      food: ['Port Tower 3F 旋轉咖啡廳「Ready go round」紅色糖塔 ¥600', 'バンビーナ (Harborland Mosaic) 神戶布丁 ¥550'],
+      notes: ['雨天/強風取消花火 — check IG @kobehanabi', '7 月夜晚 26°C+ — 帶風扇 + 飲水', '建議 17:00 Meriken Park 影日落 → 19:00 睇花火 → 19:45 步行 5 分到元町夜市']
+    }},
+    {name: '面包起人博物館', lat: 34.6863, lng: 135.1889, tips: {
+      must: ['即「神戸アンパンマンこどもミュージアム」(豆沙包麵包超人館)', 'ジャムおじさんのパン工場：限定角色麵包 (Anpan/Shokupanman 各 ¥480, 神戸限定「ぶたまんまん」¥520)', '虹のすべりだい 5 條彩色滑梯 (大人都可以一齊滑)'],
+      food: ['館內餐廳：兒童定食 + 大人套餐 ¥1,300-1,800'],
+      notes: ['必預約「日時指定 WEB チケット」¥2,000-2,500 — 假日易售罄', 'Harborland 內，Meriken Park 徒步 5 分', '假日劇院 1.5 小時前排隊有座']
+    }},
+    {name: '三宮中心街', lat: 34.6932, lng: 135.1965, tips: {
+      must: ['老舖「たちばな」1956 創業明石燒 ¥780', '元町通逛：古著、手工藝、神戶限定 Armani'],
+      food: ['あぶり肉工房 西村家 三宮店 神戶牛燒肉定食 ¥2,980 起 (14:00 前)', '神戸牛丼 広重 神戶牛牛丼 ¥1,580-3,180 (排隊名店)'],
+      notes: ['元町夜市 7/28 (Tue) 18:00-21:00 Day 2 限定', '周日大店 (大丸系) 晚 8 點關', '退稅要 ¥5,000 同店單次']
+    }},
+    {name: 'Breeze Kobe', lat: 34.6943, lng: 135.1971, tips: {
+      must: ['Breeze 限定 DAISUKI 系列 2026 夏新 (80-150cm 童裝)', 'KOHANA.BABY POP UP (7/14~8 月初現場限定)'],
+      food: ['Breeze 內 ALOHA Cafe 限定 Donut ¥450 + 夏威夷果汁 ¥500'],
+      notes: ['出發前 check IG @breeze_kobe (有臨時休業日)', '退稅滿 ¥5,000 同店', '通常週三定休']
+    }}
+  ], zoom: 13},
+  'day-3': {city: 'kobe', transit: [
+    {from: 'Daiwa Roynet PREMIER (酒店)', to: '三宮駅', mode: '步行', line: '—', duration: '5 min', fare: '免費',
+     steps: ['酒店出 → 沿旭通向東行 350m', '到達三宮駅 (西口)'],
+     payment: '—',
+     realtime: ''},
+    {from: '三宮駅 (Daiwa Roynet)', to: '神戶大學觀景台', mode: 'JR + 巴士', line: 'JR 神戸線 + 神戶市巴士 36 系統', duration: '35 min', fare: '¥430',
+     steps: ['三宮駅搭 JR 神戸線 1 站到 六甲道駅 (4 分 ¥160)', '六甲道駅北口出 → 步行 1 分到 阪急六甲巴士總站', '搭 神戶市巴士 36 系統 (往神大病院深江) → 神戸大学正門前站落車 (15 分 ¥270)', '步行 5 分到百年紀念館觀景台'],
+     payment: 'IC卡 (PiTaPa / ICOCA) / 現金',
+     realtime: 'https://www.jorudan.co.jp/norikae/cgi/nori.cgi?eki1=%E4%B8%89%E3%83%8E%E5%AE%AE&eki2=%E7%A5%9E%E6%88%B1%E5%A4%A7%E5%AD%A6',
+     schedule: {first: '06:00', last: '22:30',
+       frequency: [
+         {period: '7:00-9:00 早高峰 (JR)', every: 'JR 神戶線 每 4-7 min'},
+         {period: '巴士 36 系統 平日', every: '每 12-20 min'},
+         {period: '巴士 36 系統 週末', every: '每 15-25 min'}
+       ],
+       note: '7/29 (三) 平日 — 巴士班次較密，建議 08:00 前出發上神大睓日景'}},
+    {from: '神戶大學觀景台', to: '六甲山牧場', mode: '巴士 + 纜車', line: '市巴士 + 六甲ケーブル + 六甲山上バス', duration: '50 min', fare: '¥1,890',
+     steps: ['神戶大学正門前 搭 36 系統 落 阪急六甲 (回程巴士 ¥270)', '步行 5 分到 六甲ケーブル下站', '搭 六甲ケーブル → 六甲山上駅 (10 分 ¥600)', '轉 六甲山上バス (往牧場/有馬) → 六甲山牧場站落車 (20 分 ¥1,020)'],
+     payment: 'IC卡 / 現金 (山上巴士 only 現金 or 一日券)',
+     realtime: 'https://www.rokkosanbokujo.jp/access/',
+     schedule: {first: '六甲ケーブル 06:30', last: '21:00 (7/20-8/31 延後)',
+       frequency: [
+         {period: '六甲ケーブル 平日', every: '每 15-20 min'},
+         {period: '六甲山上バス 平日', every: '每 20-30 min (4 班/時)'},
+         {period: '六甲山上巴士 旺季 7-8 月', every: '每 15-20 min (加密)'}
+       ],
+       note: '🔴 7/29 (三) 暑假平日 — 用「六甲・摩耶一日券 ¥1,500」包晒所有纜車+巴士，超值'}},
+    {from: '六甲山牧場', to: '摩耶山掬星台', mode: '纜車 + 巴士', line: '六甲山上バス + 六甲ケーブル + 摩耶ケーブル', duration: '55 min', fare: '¥1,800',
+     steps: ['六甲山牧場站 搭 六甲山上バス (往六甲山上駅) → 落六甲山上駅 (15 分 ¥720)', '搭 六甲ケーブル 下山 (10 分 ¥600)', '步行 5 分到 摩耶ケーブル下駅 (轉乘站)', '搭 摩耶ケーブル + 摩耶ロープウェー → 掬星台 (20 分 ¥480)'],
+     payment: '六甲・摩耶一日券 ¥1,500 (包晒纜車+巴士，超值) / 個別 IC卡',
+     realtime: 'https://koberope.jp/',
+     schedule: {first: '六甲ケーブ上 06:30', last: '摩耶ロープウェー 21:00 (7/20-8/31)',
+       frequency: [
+         {period: '山上バス 6:30-21:00', every: '每 15-20 min'},
+         {period: '六甲ケーブ 平日', every: '每 15-20 min'},
+         {period: '摩耶ケーブ + 摩耶ロープウェー', every: '每 15-20 min (連續轉乘)'}
+       ],
+       note: '🔴 7/29 (三) 暑假 — 摩耶山夜景日落約 19:08，建議 17:30 上山睓 magic hour'}}
+  ], places: [
+    {name: '三宮駅 (一日券)', lat: 34.6943, lng: 135.1972, tips: {
+      must: ['六甲・摩耶一日券 ¥1,500 (來回纜車)'],
+      notes: ['去六甲山 / 摩耶山 必買']
+    }},
+    {name: '神戶大學觀景台', lat: 34.7361, lng: 135.2628, tips: {
+      must: ['4F 觀景台：大阪灣 + 神戶港全夜景 + Port Tower (免費)', '1F Starbucks 神戶三大特色 Starbucks 之一'],
+      notes: ['平日 19:00 關 — 日落 19:15 前到達最佳', '夜攝需由「神戸大学正門」左邊人行天梯上', '無停車場 — 必須巴士 / 步行', '大學食堂不對外開放']
+    }},
+    {name: '六甲山牧場', lat: 34.7758, lng: 135.2558, must: true, tips: {
+      must: ['手作り体験：軟雪糕製作 ¥1,960 (2 人一組) / バター ¥600 / ソーセージ ¥1,500', '触れ合い：羊レース (每日 11:00/14:00) / 馬仔騎 ¥400/回 / 牛擠奶 (1 日 3 次)'],
+      food: ['神戶牛奶軟雪糕 ¥400-500 (六甲山限定)', '売店バーガー ¥600'],
+      notes: ['🔴 火曜定休但 7/20-8/31 取消 → 7/29 Wed 完全安全 ✅', '🔴 需用現金 — IC 點數不足，預備 ¥3,000-5,000', '馬路窄 + 彎多 — 必帶嘔吐藥', '雨天建議取消 (但「全天候型設施」有一半)']
+    }},
+    {name: '摩耶山掬星台', lat: 34.7333, lng: 135.2306, must: true, tips: {
+      must: ['日本三大夜景 No.1 (1000 萬美元夜景)', '掬星台展望台 360° 神戶 + 大阪灣', '星の駅 2F cafe Monte702 + BBQ 套餐 ¥1,800/位'],
+      food: ['星の駅 cafe 神戶牛奶軟雪糕 ¥400 + 咖啡 ¥600'],
+      notes: ['🔴 火曜定休但 7/20-8/31 取消 → 7/29 Wed OK ✅', '🔴 7/20-8/31 纜車延後至 20:50 末班 — 預留 1 小時夜景 → 下山最遲 21:00', '山下交通：18 系統市巴士 last bus 21:00 從「摩耶ケーブル下」', '摩耶ケーブル ¥1,800 來回 (大人)']
+    }}
+  ], zoom: 11},
+    'day-4': {city: 'namba', transit: [
+    {from: 'GRIDS PREMIUM 難波 (酒店)', to: 'USJ (日本環球影城)', mode: 'JR + 夢咲線', line: 'JR 大阪環狀線 + ゆめ咲線', duration: '25 min', fare: '¥200',
+     steps: ['酒店步行 5 分到 JR 難波駅 (OCAT 大樓地下)', '搭 JR 大阪環狀線 (外環/內環) → 西九条駅 (10 分 ¥160)', '同月台轉乘 JR ゆめ咲線 (夢咲線) → ユニバーサルシティ駅 (5 分 ¥160 / 1 程 IC卡收費約 ¥200)', '出閘 → 步行 3 分到 USJ 入口'],
+     payment: 'IC卡 (ICOCA) / 現金',
+     realtime: 'https://www.jorudan.co.jp/norikae/cgi/nori.cgi?eki1=%E9%9B%A3%E6%B3%A2&eki2=%E3%83%A6%E3%83%8B%E3%83%90%E3%83%BC%E3%82%B5%E3%83%AB%E3%82%B7%E3%83%86%E3%82%A3',
+     schedule: {first: '05:00', last: '00:30',
+       frequency: [
+         {period: 'JR 大阪環狀線 7:00-10:00', every: '每 4-7 min'},
+         {period: 'JR 大阪環狀線 10:00-17:00', every: '每 6-10 min'},
+         {period: 'ゆめ咲線 (Universal City)', every: '每 7-10 min (加密!)'},
+         {period: 'USJ 散場時段 21:00-23:00', every: '夢咲線每 4-6 min (因有演出人潮)'}
+       ],
+       note: '7/30 (四) USJ 暑假平日 — Studio Pass 預先 Klook 買，Express Pass 必備 (瑪利歐整理券系統)'}},
+    {from: 'USJ (日本環球影城)', to: 'GRIDS PREMIUM 難波 (酒店)', mode: 'JR ゆめ咲線 + JR', line: '夢咲線 + JR 大阪環狀線', duration: '25 min', fare: '¥200',
+     steps: ['USJ 出口行 3 分到 ユニバーサルシティ駅', '搭 JR ゆめ咲線 → 西九条駅 (5 分)', '同月台轉 JR 大阪環狀線 (內環) → 難波駅 (10 分)', '出閘 → 步行 5 分到酒店'],
+     payment: 'IC卡 (ICOCA) / 現金',
+     realtime: 'https://www.jorudan.co.jp/norikae/cgi/nori.cgi?eki1=%E3%83%A6%E3%83%8B%E3%83%90%E3%83%BC%E3%82%B5%E3%83%AB%E3%82%B7%E3%83%86%E3%82%A3&eki2=%E9%9B%A3%E6%B3%A2'}
+  ], places: [
+    {name: '日本環球影城 (USJ)', lat: 34.6654, lng: 135.4319, must: true, tips: {
+      must: ['🎯 7/1-8/31 USJ 25 週年慶典 (限定表演 + 限定 Food)', '瑪利歐 5 週年 (Super Star 限定 Cake / Plaza 限定 meet-up)', '必玩順序：Mario Kart → Donkey Kong → Yoshi → Harry Potter → Flying Dinosaur → Jurassic Park'],
+      food: ['瑪利歐 Cafe 限定 Mushroom Pizza ¥1,800 / Princess Peach Cake ¥1,200', 'Three Broomsticks Butter Beer ¥800', '1UP 爆米花桶 ¥3,800 (瑪利歐經典)'],
+      notes: ['🔴 Express Pass 必買 ¥11,800-21,800 — 含「瑪利歐入場確約券」', '🔴 瑪利歐整理券必須用 App 抽 (只可 1 次)，開園 8:30 抽咗人龍免排隊', 'Studio Pass 必先網上 Klook/KKday 買 (比窗口平)', '7/30 Thu 暑假平日中等，Express Pass 仍值', '雨天/晴天都長龍 12:00-15:00']
+    }},
+    {name: '大阪難波駅', lat: 34.666, lng: 135.5014, tips: {
+      must: ['5 線交匯：南海 / 近鐵 / Metro 御堂筋 / Metro 千日前 / Metro 四橋'],
+      food: ['551蓬萊 豚饅 ¥200 x 6 (南海難波駅內)', 'MUMI PANCAKE 鬆餅 ¥1,200', '麺屋丈六 大阪拉麵 ¥900'],
+      notes: ['4 個站換乘時標名清楚，唔好行錯出口', '南海 Rapi:t 預約：暑假 5:50-9:00 易滿']
+    }},
+    {name: 'GRIDS PREMIUM 難波', lat: 34.6644, lng: 135.5030, tips: {
+      notes: ['7/30 晚大阪住宿']
+    }}
+  ], zoom: 12},
+  'day-5': {city: 'nara', transit: [
+    {from: 'GRIDS PREMIUM 難波 (酒店)', to: '近鐵奈良駅', mode: '近鐵', line: '近鉄奈良線 急行', duration: '35 min', fare: '¥620',
+     steps: ['酒店步行 5 分到 近鉄難波駅 (B1F/2F)', '搭 近鉄奈良線 急行 (往奈良) — 唔使轉車直達 (唔好搭普通)', '近鐵奈良駅西口出 → 旅遊案內所攞中文地圖'],
+     payment: 'IC卡 (ICOCA) / 現金 / 近鉄周遊券 (KINTETSU RAIL PASS 1-day ¥1,800)',
+     realtime: 'https://www.kintetsu.co.jp/senden/TrainTime/',
+     schedule: {first: '05:00', last: '23:30',
+       frequency: [
+         {period: '急行 7:00-10:00 早高峰', every: '每 10-15 min'},
+         {period: '急行 10:00-17:00 日間', every: '每 20-30 min'},
+         {period: '急行 17:00-20:00 晚高峰', every: '每 15-20 min'}
+       ],
+       note: '7/31 (五) 平日 — 急行班次較疏，留意過站名 (急行停近鉄奈良/大和西大寺/生駒/布施)，唔好搭錯普通'}},
+    {from: '近鐵奈良駅', to: '東大寺', mode: '市巴士', line: '奈良交通巴士 1 番 (春日大社本殿 行 / 大仏殿春日大社前 行)', duration: '10 min', fare: '¥230',
+     steps: ['近鐵奈良駅 1 番月台 搭 奈良交通巴士 (循環/春日大社本殿行)', '大仏殿春日大社前站落車 (10 分 ¥230)', '步行 2 分到東大寺南大門'],
+     payment: 'IC卡 (ICOCA) / 現金 (車上不找零，請用両替機)',
+     realtime: 'https://www.narakotsu.co.jp/routebus/nara-city/',
+     schedule: {first: '06:00', last: '21:30',
+       frequency: [
+         {period: '巴士 6:00-9:00 早', every: '每 15-20 min'},
+         {period: '巴士 9:00-17:00 日間', every: '每 12-15 min'},
+         {period: '巴士 17:00-20:00 晚', every: '每 20-30 min'}
+       ],
+       note: '🚌 ICOCA 可拍卡拍車門，但一日券 ¥1,000 較抵 (一日無限搭)'}},
+    {from: '東大寺', to: '春日大社', mode: '步行', line: '—', duration: '15 min', fare: '免費',
+     steps: ['東大寺正門出 → 步行 500m 經 春日大社參道入口', '到春日大社一之鳥居 → 步行參道 800m', '到達春日大社本殿 (¥700 入場)'],
+     payment: '—',
+     realtime: ''},
+    {from: '春日大社', to: '若草山', mode: '步行', line: '—', duration: '20 min', fare: '免費 (入山 ¥150)',
+     steps: ['春日大社本殿出 → 經 飛火野 向東行 1km', '到若草山一重目觀景台 (入山口 ¥150 現金)', '可選擇登三重目山頂 (35-40 分行山) 或一重目欣賞'],
+     payment: '入山 ¥150 現金 only',
+     realtime: ''},
+    {from: '若草山 (下山)', to: '生駒山上遊樂園', mode: '步行 + 近鐵', line: '近鉄奈良線 + 近鉄生駒線', duration: '60 min', fare: '¥880',
+     steps: ['若草山落山 → 步行 20 分回近鐵奈良駅', '搭 近鉄奈良線 急行 → 生駒駅 (15 分 ¥620)', '生駒駅步行 3 分到鳥居前纜車站', '搭 生駒ケーブル → 生駒山上駅 (8 分 ¥500 單程 / ¥1,000 來回)'],
+     payment: '近鐵纜車 IC卡 / 現金',
+     realtime: 'https://www.kintetsu.co.jp/senden/TrainTime/',
+     schedule: {first: '近鐵急行 05:00', last: '生駒ケーブル 21:30',
+       frequency: [
+         {period: '近鐵奈良線 平日', every: '每 15-30 min (急行)'},
+         {period: '生駒ケーブル 平日', every: '每 15 min (高班次)'},
+         {period: '生駒ケーブル 週末 7-8 月', every: '每 5-10 min (極密)'}
+       ],
+       note: '🔴 7/31 (五) 平日 — 生駒纜車極少人，建議 16:00 前上山睓日落 (日落 18:50)'}},
+    {from: '生駒山上遊樂園', to: 'GRIDS PREMIUM 難波 (酒店)', mode: '近鐵', line: '近鉄生駒線 + 近鉄奈良線', duration: '45 min', fare: '¥1,200',
+     steps: ['生駒山上駅 搭 生駒ケーブル → 鳥居前駅 (8 分 ¥500)', '步行 3 分到 近鉄生駒駅', '搭 近鉄奈良線 急行 → 近鉄難波駅 (25 分 ¥700)', '步行 5 分到酒店'],
+     payment: 'IC卡 (ICOCA) / 現金',
+     realtime: 'https://www.kintetsu.co.jp/senden/TrainTime/',
+     schedule: {first: '生駒ケーブル 06:30', last: '21:30',
+       frequency: [
+         {period: '生駒ケーブル 平日', every: '每 15 min'},
+         {period: '近鐵奈良線 平日', every: '每 15-30 min (急行)'},
+         {period: '末班前 21:00-22:00', every: '留意末班時間 (生駒→難波 急行末班 23:15 左右)'}
+       ],
+       note: '8/1 (六) 暑假土曜 — 纜車可能排 30-60 分，建議 18:00 前離開園區'}}
+  ], places: [
+    {name: '近鐵奈良駅', lat: 34.6851, lng: 135.8048, tips: {
+      must: ['西口旁案內所攞中文地圖 (必做)', '確認回程班次 (尾班車近鐵奈良→大阪難波約 23:30)'],
+      food: ['駅內商場：大和肉餅 ¥400/個 (肉餅名物)'],
+      notes: ['大阪難波 → 近鐵奈良 近鐵奈良線急行 35 分鐘 ¥620', '近鐵向西 (東大寺、春日大社方向) — 比 JR 奈良近 5-10 分步行', '旺季 (7-8 月) 駅前鹿群聚集，可能行出行入']
+    }},
+    {name: '春日大社', lat: 34.6808, lng: 135.8481, tips: {
+      must: ['朱紅本殿 (國寶，768 年創建)', '千基石燈籠參道 — 每基都有姓氏刻名', '藤浪之小徑 — 7 月仍有繡球 + 紫陽花尾花'],
+      events: ['ライトアッププロムナード・なら (夏季夜間常設點燈)', 'Nara for Culture ムジークフェストなら 2026 (古典音樂祭)'],
+      food: ['志津香 釜飯 (近鐵奈良駅附近，¥1,500-2,000) — 7 種釜飯'],
+      notes: ['開放 6:00-18:00 (4-9 月)，本殿 ¥700', '巴士「春日大社本殿」落車最近', '鹿會喺參道周圍聚集 — 小心手提袋']
+    }},
+    {name: '東大寺', lat: 34.6850, lng: 135.8435, tips: {
+      must: ['大佛 (盧舎那仏) — 高 15m 銅造像，奈良時代聖武天皇發願', '大佛柱「智慧の輪」— 柱底洞穿過可開智慧 (身材要夠細)', '二月堂 + 三月堂 — 附屬建築眺望奈良盆地'],
+      food: ['大佛布丁 ¥400 — 奈良最紅甜品', '大仏せんべい — 手信即烤仙貝'],
+      notes: ['大佛殿 ¥600，二月堂 ¥500', '入堂不可用閃光燈、不可用腳架', '鹿群聚集喺南大門前，鹿糞注意']
+    }},
+    {name: '若草山', lat: 34.6830, lng: 135.8513, tips: {
+      must: ['一重目觀景台 (10 分) — 近距離鹿群 + 奈良街景', '三重目山頂 (35-40 分) — 360° 奈良盆地全景', '山頂「若草山ヒルトップ」觀景台 — 日落 magic hour'],
+      events: ['🔴 8/1 (六) 開始限定 — 奈良若草山トワイライト夜景巴士 (週六日)', '一般開山 9:00-17:00 (¥150 入山料) 可自己行'],
+      food: ['山頂無餐廳 — 只有自動販賣機', '落山食：志津香釜飯、麵鬪庵豆皮烏冬'],
+      notes: ['8/1 (六) 係夜景巴士首日 — 最易滿，提早預約', '入山料只收現金 ¥150', '日落：7/31 約 18:50 / 8/1 約 18:49 (落山後 30-40 分 magic hour)', '山頂冇街燈 — 天黑前落山']
+    }},
+    {name: '奈良公園 (鹿)', lat: 34.6855, lng: 135.8431, must: true, tips: {
+      must: ['🦌 鹿せんべい 10 枚 ¥200 (露店 / 土產店 / 自動販賣機)', '東大寺南大門 — 最多鹿聚集點', '飛火野 — 草地 + 鹿群，可坐低休息'],
+      food: ['春日荷茶屋：軟雪糕 + よもぎ餅'],
+      notes: ['⚠️ 7-8 月係公鹿發情前期 — 會追人、頂人、咬人', '⚠️ 餵鹿守則：① 唔好拎塑膠袋 ② 買仙貝後立刻攤開雙手 ③ 一張一張快遞 ④ 絕對唔好俾其他食物 ⑤ 避開公鹿角仲未切嘅 ⑥ 被追時丟仙貝分散注意力', '鹿せんべい自動販賣機 (24h) — 春日大社鹿苑 + 春日大社停車場休憩所', '黃昏後鹿聚集喺飛火野，唔好主動行近 (佢哋瞓緊)']
+    }},
+    {name: '生駒山上遊樂園', lat: 34.6823, lng: 135.6899, must: true, tips: {
+      must: ['生駒纜車 (日本最古 1929) — 犬造型車廂', '入園免費 + 飛行塔 (國登錄有形文化財 ¥500)', '標高 642m 大阪平野絕景 — 晴天可見明石海峽大橋、關西空港'],
+      events: ['🔴 8 月 8、9、11、13、15、16、22 日 18:00-20:00 夜間營業 (7/31 平日無)'],
+      food: ['いこま山ビューレストラン — View Lunch (漢堡排 + 海老フライ + 香腸 ¥1,800)'],
+      notes: ['近鐵難波 → 生駒 急行 25 分鐘', '生駒駅步行 3 分鐘到鳥居前纜車站', '7/31 週五平日 — 纜車幾乎唔使排', '纜車 ¥500 單程 / ¥1,000 來回 / のりのりきっぷ ¥1,000 (纜車+入園)', '木曜日定休 (8/13 除外)']
+    }}
+  ], zoom: 12},
+  'day-6': {city: 'namba', transit: [
+    {from: 'GRIDS PREMIUM 難波 (酒店)', to: '難波八阪神社', mode: 'Metro', line: 'Osaka Metro 御堂筋線 + 四橋線', duration: '15 min', fare: '¥230',
+     steps: ['酒店步行 5 分到 Osaka Metro なんば駅 (B1F/2F)', '搭 御堂筋線 1 站到 大国町駅 (3 分 ¥180)', '同月台/步行 30 秒轉 四橋線 1 站到 難波駅 (另一個出口)', 'JR 難波駅南口出 → 步行 6-8 分到難波八阪神社 (元堀 1-25-12)'],
+     payment: 'IC卡 (ICOCA) / 現金 / Osaka Metro 1-day pass ¥820',
+     realtime: 'https://www.osakametro.co.jp/',
+     schedule: {first: '05:00', last: '00:15',
+       frequency: [
+         {period: '御堂筋線 7:00-9:00 早高峰', every: '每 2-4 min (超密!)'},
+         {period: '御堂筋線 10:00-17:00 日間', every: '每 5-7 min'},
+         {period: '御堂筋線 17:00-21:00 晚高峰', every: '每 3-5 min'},
+         {period: '四橋線 日間', every: '每 7-10 min'}
+       ],
+       note: '8/1 (六) 週六 — 11:00 前去八阪神社避開人潮 + 好光線'}},
+    {from: '難波八阪神社', to: '難波 City Par', mode: '步行', line: '—', duration: '10 min', fare: '免費',
+     steps: ['神社出 → 沿 元堀通向南 200m', '到 難波 City 入口 (難波中 2-10-70)', '可步行 5 分到 難波 Parks (連結 2 樓天橋)'],
+     payment: '—',
+     realtime: ''},
+    {from: '難波 City Par', to: '大阪難波駅', mode: '步行', line: '—', duration: '5 min', fare: '免費',
+     steps: ['難波 City 1F 連通 なんば Walk (地下街)', '跟「南海なんば」指標行 → 南海電鉄 なんば駅 / 近鉄 なんば駅 / Metro なんば駅 (5 站共用)'],
+     payment: '—',
+     realtime: ''},
+    {from: '大阪難波駅', to: '神戶空港 (UKB)', mode: '阪神 + JR + Port Liner', line: '阪神なんば線 + JR + Port Liner', duration: '70 min', fare: '¥1,030',
+     steps: ['近鉄/南海 なんば駅 步行 5 分到 Osaka Metro なんば駅', '搭 御堂筋線 1 站到 梅田駅 (5 分 ¥180)', '步行 8 分到 JR 大阪駅 (大丸梅田百貨通道)', '搭 JR 神戶線 新快速 直達 三ノ宮駅 (21 分 ¥410)', '三宮駅 步行 5 分到 貿易中心前駅 (Port Liner 月台)', '搭 Port Liner 直達 神戶空港駅 (18 分 ¥250)', '到達 UKB'],
+     payment: 'IC卡 (ICOCA) / 現金 (整段約 ¥840-1,030 取決於 IC卡 segment fare)',
+     realtime: 'https://www.jorudan.co.jp/norikae/cgi/nori.cgi?eki1=%E9%9B%A3%E6%B3%A2&eki2=%E7%A5%9E%E6%88%B1%E7%A9%BA%E6%B8%AF',
+     schedule: {first: 'Metro 05:00', last: '🔴 Port Liner 23:18',
+       frequency: [
+         {period: '御堂筋線 7:00-9:00 早高峰', every: '每 2-4 min (超密)'},
+         {period: 'JR 神戶線 平日', every: '新快速 每 10-15 min'},
+         {period: 'Port Liner 平日', every: '每 10-15 min'},
+         {period: 'Port Liner 末班 23:18', every: '🔴 三宮車出後第一班準時!'}
+       ],
+       note: '🔴🔴 8/1 (六) 19:00 機 — 必須 15:00 前離開難波，預 1 小時 buffer 到 UKB check-in (2.5 hr 開櫃)!'}}
+  ], places: [
+    {name: '難波八阪神社', lat: 34.6655, lng: 135.5028, must: true, tips: {
+      must: ['🦁 獅子殿 (12m × 11m × 10m 朱紅大獅子頭) — 大阪 No.1 打卡景點', '御朱印 ¥300 — 三巴紋 + 木瓜紋 + 獅子殿印'],
+      food: ['周邊難波商店街：立吞寿司 + 章魚燒 ¥500 均一', '裏なんば (神社南邊 5 分鐘) — 大阪老居酒屋'],
+      notes: ['主祭神：素盞嗚尊 — 厄除け、疫病退散、商売繁盛 (生意人 / 賭徒 / 考生 愛嚟)', '御守：獅子頭守 (限定) / 勝運守 / 扇子おみくじ ¥300', 'JR 難波 / Osaka Metro なんば / 南海なんば 步行 6-8 分鐘', '最佳拍照光線：早上 9-10 點 (獅子殿朝東)']
+    }},
+    {name: '難波 City Par', lat: 34.6657, lng: 135.5011, tips: {
+      must: ['地下街迷宮 — 連接難波 Walk / Parks / City / Namba Walk 4 個地下街相通', '藥妝掃貨：松本清、大國藥妝', 'Uniqlo / GU / ABC-MART 掃平嘢'],
+      events: ['🔴 7/1-8/9 サマーポイントラッシュ & サマーセール — ポイント 5x + 限定折扣'],
+      food: ['長崎堂 エッグハンバーグ + 蛋包飯 ¥1,200', '551蓬萊 豚饅 ¥200/個', 'PABLO 芝士撻 ¥300'],
+      notes: ['退稅 2F 詢問處，同店 ¥5,000 up，帶護照', '難波 City vs 難波 Parks = 不同帳，須分開退', '8/1-8/16 お盆期間大阪人多']
+    }},
+    {name: '大阪難波駅', lat: 34.666, lng: 135.5014, tips: {
+      notes: ['8/1 出發：JR 大阪 → 三宮 (新快速 21 分 ¥410) → Port Liner (18 分 ¥250) → UKB']
+    }},
+    {name: '神戶三宮駅', lat: 34.6943, lng: 135.1972, tips: {
+      notes: ['8/1 轉車點：JR 大阪 → 三宮 → Port Liner → UKB']
+    }},
+    {name: '神戶空港', lat: 34.6328, lng: 135.2239, tips: {
+      must: ['🔴 8/1 (六) 搭長榮航空 UKB → TPE — 一定要在 UKB 出發', '出發前最後衝刺：「赤い E」拍照牆 (4F 展望台)', '限定 Tottei 軟雪糕 ¥450 (神戶空港限定)'],
+      notes: ['🔴 出境 check-in：起飛前 2.5 小時開櫃，1.5 小時前 close', '🔴 網上 check-in 12 小時前可下 QR Code', '🔴 Port Liner 三宮 → 空港 末班 23:18 (深夜機 OK)', '網上 check-in 後直接到 UKB，唔使行櫃檯排長龍']
+    }}
+  ], zoom: 10},
+  'day-7': {city: 'taipei', transit: [
+    {from: '君品酒店 (台北車站)', to: '台灣大學 (公館)', mode: '捷運', line: '台北捷運 板南線 + 淡水信義線', duration: '25 min', fare: 'NT$35',
+     steps: ['酒店步行 3 分到 台北車站 (捷運 B1F 板南線月台)', '搭 板南線 (往南) 1 站到 忠孝復興站 (3 分 NT$25)', '同月台轉 淡水信義線 (往南/淡水) → 公館站 (10 分 NT$30 / 1 程收費)', '公館站 3 號出口出 → 步行 2 分到台大正門 (羅斯福路四段一段)'],
+     payment: '悠遊卡 / 單程票 / 24/48/72hr 觀光 pass (1-day NT$180)',
+     realtime: 'https://www.metro.taipei/RouteMap/travel?fromid=A01&toid=A03',
+     schedule: {first: '06:00', last: '00:00',
+       frequency: [
+         {period: '板南線 7:00-9:00 早高峰', every: '每 2-4 min'},
+         {period: '淡水信義線 7:00-9:00 早高峰', every: '每 3-6 min'},
+         {period: '淡水信義線 日間', every: '每 6-9 min'},
+         {period: '尾班車前 23:00', every: '每 10-15 min'}
+       ],
+       note: '8/2 (日) — 台大椰林大道朝早 09:00-11:00 影相最靚 (順光)'}},
+    {from: '台灣大學 (公館)', to: '中山商圈 (中山站)', mode: '捷運', line: '台北捷運 淡水信義線', duration: '15 min', fare: 'NT$30',
+     steps: ['公館站入閘 → 搭 淡水信義線 (往北/象山) 直達 中山站 (10 分 NT$30)', '中山站 4 號出口出 → 心中山線形公園 (向雙連站散步 1km 城市綠廊)'],
+     payment: '悠遊卡 / 單程票',
+     realtime: 'https://www.metro.taipei/RouteMap/travel?fromid=A03&toid=R13',
+     schedule: {first: '06:00', last: '00:15',
+       frequency: [
+         {period: '淡水信義線 日間', every: '每 6-9 min'},
+         {period: '晚高峰 17:00-19:00', every: '每 5-7 min'}
+       ],
+       note: '8/2 (日) — 中山商圈週日有 Pop-up 市集，下午 14:00 後到達最理想'}},
+    {from: '中山商圈 (中山站)', to: '君品酒店 (台北車站)', mode: '捷運', line: '台北捷運 淡水信義線 + 板南線', duration: '20 min', fare: 'NT$35',
+     steps: ['中山站入閘 → 搭 淡水信義線 (往南/淡水) 直達 台北車站 (8 分 NT$30)', '同月台轉 板南線 (往南/南港) 1 站 忠孝復興 或 直接 台北車站 (B1 出口 連通君品)'],
+     payment: '悠遊卡 / 單程票',
+     realtime: 'https://www.metro.taipei/RouteMap/travel?fromid=R13&toid=A01',
+     schedule: {first: '06:00', last: '00:15',
+       frequency: [
+         {period: '淡水信義線 晚', every: '每 8-12 min'},
+         {period: '尾班車前 23:30', every: '留意尾班時間'}
+       ],
+       note: '8/2 (日) 22:00 後返酒店 — 尾班車前到達先安全'}}
+  ], places: [
+    {name: '台灣大學', lat: 25.0169, lng: 121.5354, must: true, tips: {
+      must: ['椰林大道 (500-600m 大王椰子，東望拇指山，文青 IG 神景)', '傅園 (紀念傅斯年校長，仿希臘帕德嫩神殿設計)', '傅鐘 (每節上下課敲 21 響 —「一天 21 小時，3 小時用來思考」)'],
+      food: ['公館夜市 — 藍家割包 NT$75 (米其林必比登)', '雄記蔥抓餅 NT$40-55 (米其林必比登)', '水源市場 — 紫米芋頭糕 (賢夫美食) NT$150/6 塊', '台一牛奶大王 (70 年) 八寶冰 + 鮮奶酪 NT$80-100'],
+      notes: ['公館站 3 號出口最近台大正門，4 號出口最近公館夜市', '椰林大道正中午 32°C 暴曬 — 8 月帶水、防曬、帽', '校內「小福」茶葉蛋是台大人共同回憶']
+    }},
+    {name: '中山商圈', lat: 25.0531, lng: 121.5226, must: true, tips: {
+      must: ['心中山線形公園 (中山站 4 號出口到雙連站 1km 城市綠廊，週末主題市集)', '赤峰街 (台北文青一條街 — 日式選物店、小器生活、Everydayware & co)', '雙城街夜市 (在地人夜市，CP 值極高，夜市老饕最愛)'],
+      food: ['阿田麵 (赤峰街，1950 創業) 三合一陽春麵 NT$50-80 (10:00-15:00 限定)', '肥前屋 (七條通) 鰻重 (小) NT$300 / (大) NT$580 (排隊 30-60 分)', '鴻記水餃 (雙城街) 韭菜水餃 NT$7/顆', '晴光紅豆餅 NT$20/個 (排隊名物)', '黃記魯肉飯 (雙城街) NT$30-50 (米其林推薦)'],
+      notes: ['赤峰街小店多 14:00 後開，適合下午行', '心中山週末市集時間不固定 — 出發前查 FB「心中山線形公園」', '七條通食鰻魚飯後可散步去林森北路 (台北小東京)']
+    }},
+    {name: '君品酒店', lat: 25.0467, lng: 121.5180, tips: {
+      must: ['🔴 早餐 6F 雲軒西餐廳 — 06:30-12:00「不限次數自由進出」 (全台罕見)', '早餐必食：現燙牛肉湯、君品牛肉麵、現點歐姆蛋、肉桂捲、古早味排骨蛋炒飯、酥皮海鮮濃湯', '米其林三星頤宮 — 台灣米其林三星八連霸 (提早 1 個月訂位)'],
+      notes: ['8/3 早上可以食到 11:00 再 check-out', '酒店旁京站時尚廣場 Q Square (24hr 部分開放) — 宵夜/早餐替代', 'A1 機場捷運免費接駁 (預約制 11:00-16:00) — 8/3 早上不適用']
+    }}
+  ], zoom: 13},
+  'day-8': {city: 'taipei', transit: [
+    {from: '君品酒店 (台北車站)', to: '台北車站地下街 (Y 區 / K 區)', mode: '步行', line: '—', duration: '3 min', fare: '免費',
+     steps: ['酒店 1F → 地下連通道直達 京站時尚廣場 Q Square', '跟「台北車站地下街」指標 → Y 區 / K 區 (零食、紀念品集中地)', '微風台北車站 B1-2F — 伴手禮一級戰區'],
+     payment: '—',
+     realtime: ''},
+    {from: '台北車站地下街', to: '桃園機場 (TPE)', mode: '機場捷運', line: '桃園機場捷運 直達車 (紫)', duration: '35 min', fare: 'NT$160',
+     steps: ['台北車站 1F 中央 → 跟「機場捷運 / A1」指標落 B1F', 'A1 台北車站入閘 → 搭 直達車 (紫) → A12 第一航廈 或 A13 第二航廈 (35-39 分 NT$160)', '出閘 → 上 1F 出境層 check-in (長榮航空用 TPE T2 / 即 A13)'],
+     payment: '悠遊卡 / 信用卡感應 (免觸碰) / 現金 (售票機) / 桃捷官方 App',
+     realtime: 'https://www.tymetro.com.tw/tymetro-life/service-time',
+     schedule: {first: '06:00 (直達車) / 06:08 (普通)', last: '21:30 (尾班) / 23:00 (直達車尾班)',
+       frequency: [
+         {period: '直達車 (紫) 6:00-9:00', every: '每 15 min'},
+         {period: '直達車 9:00-16:00', every: '每 15 min'},
+         {period: '直達車 16:00-21:30', every: '每 15 min'},
+         {period: '普通車 (藍) 6:08-23:30', every: '每 15 min (尖峰 10 min)'}
+       ],
+       note: '🔴 8/3 (一) 12:00 flight — 07:30 check-out → 07:45 落 A1 → 08:00 直達車 → 08:40 到 T2 → 09:00 check-in (起飛前 3 小時)'}}
+  ], places: [
+    {name: '台北車站地下街', lat: 25.0478, lng: 121.5170, must: true, tips: {
+      must: ['微風台北車站 B1-2F — 北車伴手禮一級戰區', '添好運台北站前店 (M6 出口) — 米其林一星', '必買伴手禮：郭元益鳳梨酥、聖保羅 Q 餅、糖村牛軋糖、阿默蛋糕'],
+      food: ['添好運酥皮焗叉燒包 NT$120、炸豆腐、腸粉、蝦餃 (人均 NT$300-500)'],
+      notes: ['8/3 早上掃貨：微風台北車站超市 B2 (週日 10:00-21:30)', '必掃：台灣高山茶 (阿里山烏龍、梨山、凍頂)、金箔蜂蜜蛋糕、快車肉乾', 'check-out 後寄存行李去掃貨，最後取行李去 A1 機捷']
+    }},
+    {name: '桃園機場 (TPE)', lat: 25.0797, lng: 121.2342, tips: {
+      must: ['A1 台北車站市區預辦登機 06:00-21:30 — 華航/長榮/國泰/星宇可 check-in + 寄行李 + 領登機證', '機捷直達車 06:00 首班，35-39 分鐘到機場，NT$160', '🔴 8/3 早上時間表：06:30 食早餐 → 07:30 check-out → 07:45-08:20 機捷直達車 → 08:30 到機場 → 10:00 登機閘 close → 12:00 起飛'],
+      food: ['T1 昇恆昌免稅店 (Duty Free) + C3 咖啡 + 春水堂', 'T2 昇恆昌免稅店 + 采盟 (Duty Free) + 微風禮賓櫃'],
+      notes: ['🔴 機捷直達車有行李架 + 充電 USB', '🔴 必買：金車噶瑪蘭威士忌、台灣高山茶包、面膜 (我的美麗日記、森田藥妝)、鳳梨酥禮盒', 'A1 台北車站會員預辦登機需於起飛前 3 小時辦好']
+    }}
+  ], zoom: 11}
+};
+
+// Build weather panel HTML — uses liveWeather if available, else WEATHER_DATA fallback
+function renderWeather(cityKey, date) {
+  // Prefer live data; fall back to embedded hardcoded data
+  const liveCity = (liveWeather && liveWeather.cities) ? liveWeather.cities[cityKey] : null;
+  const city = (liveCity && !liveWeatherMeta?.is_stale) ? liveCity : WEATHER_DATA.cities[cityKey];
+  if (!city) return '';
+  const day = (city.daily || []).find(d => d.date === date);
+  if (!day) return '';
+  const icon = weatherIcon(day.precip);
+  const label = rainLabel(day.precip);
+  // Show data source note
+  const sourceNote = (liveWeather && liveCity && !liveWeatherMeta?.is_stale)
+    ? `✅ 實時天氣 · 最後更新 ${liveWeatherMeta ? new Date(liveWeatherMeta.fetched_at).toLocaleString('zh-Hant', {month:'numeric', day:'numeric', hour:'2-digit', minute:'2-digit'}) : ''}`
+    : '⚠️ 用 embedded fallback 數據 (出發前一週自動轉實時)';
+  return `
+    <div class="weather-panel">
+      <div class="now">
+        <div class="icon">${icon}</div>
+        <div class="temp">${Math.round(day.max)}°C</div>
+        <div class="range">↓ ${Math.round(day.min)}°C</div>
+      </div>
+      <div class="meta">
+        <div class="city">📍 ${city.zh}</div>
+        <div>☀ ${label} · 降雨 ${day.precip.toFixed(1)} mm</div>
+        <div style="opacity:0.7; font-size:11px; margin-top:4px;">適合戶外 ☑️｜${day.max >= 30 ? '☀️' : ''}${day.max >= 33 ? ' 多飲水 💧' : ''}${day.precip >= 5 ? '建議帶遮 ☂️' : ''}</div>
+      </div>
+    </div>
+    <div class="weather-note" id="weather-status">⏳ 載入實時天氣中…</div>
+  `;
+}
+
+// Build Google Maps embed iframe (simple q=lat,lng, output=embed)
+// Google deprecated directions URL embedding — use simple location embed instead
+function buildGMapIframe(meta, cityData, label) {
+  // Use simple q=lat,lng with the city center; user can interact with map for individual pins
+  // Multi-pin rendering is handled by HTML legend below the iframe (see buildPinLegend)
+  const places = meta.places || [];
+  // Pick the first place as map focal point (most meaningful — usually first/must-visit)
+  const focus = places.length ? places[0] : null;
+  const focusLat = focus ? focus.lat : cityData.lat;
+  const focusLng = focus ? focus.lng : cityData.lng;
+  const q = encodeURIComponent(focus?.name || cityData.zh || 'Japan');
+  // Concatenate place names for Google search to find the right spot
+  return `<iframe
+    src="https://www.google.com/maps?q=${focusLat},${focusLng}&hl=zh-Hant&z=13&output=embed&q=${q}"
+    width="100%" height="100%" style="border:0;display:block;"
+    allowfullscreen=""
+    loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+    title="${label}">
+  </iframe>`;
+}
+
+// Build numbered, color-coded landmark legend below the map
+// Each pin is a clickable link that opens individual Google Maps directions
+// Also a "全部開" button that opens the multi-stop directions
+// Color coding (per user spec):
+//   當日主城市    = red    (#ef4444)
+//   必到景點      = green  (#22c55e) — first place (mustVisit flag) OR i === 0
+//   其他景點      = blue   (#3b82f6)
+// Render tips block (expandable) for a place object
+function renderPlaceTips(place) {
+  if (!place.tips) return '';
+  const t = place.tips;
+  const sections = [];
+  if (t.must && t.must.length) {
+    sections.push(`<div class="pin-tips-section">
+      <div class="pin-tips-label">🌟 必玩</div>
+      <ul class="pin-tips-list">${t.must.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>`);
+  }
+  if (t.events && t.events.length) {
+    sections.push(`<div class="pin-tips-section">
+      <div class="pin-tips-label">🎪 季節活動</div>
+      <ul class="pin-tips-list">${t.events.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>`);
+  }
+  if (t.food && t.food.length) {
+    sections.push(`<div class="pin-tips-section">
+      <div class="pin-tips-label">🍜 必食</div>
+      <ul class="pin-tips-list">${t.food.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>`);
+  }
+  if (t.notes && t.notes.length) {
+    sections.push(`<div class="pin-tips-section">
+      <div class="pin-tips-label">⚠️ 注意</div>
+      <ul class="pin-tips-list">${t.notes.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>`);
+  }
+  if (!sections.length) return '';
+  return `<details class="pin-tips">
+    <summary>查看必玩/必食/注意</summary>
+    <div class="pin-tips-content">${sections.join('')}</div>
+  </details>`;
+}
+
+function buildPinLegend(meta, dayId) {
+  const places = meta.places || [];
+  const cityName = (WEATHER_DATA.cities[meta.city] || {}).zh || '';
+  if (!places.length) return '';
+
+  // Multi-waypoint directions URL for "全部 route"
+  let directionsUrl = '';
+  if (places.length >= 2) {
+    const origin = `${places[0].lat},${places[0].lng}`;
+    const destination = `${places[places.length - 1].lat},${places[places.length - 1].lng}`;
+    let waypoints = '';
+    if (places.length > 2) {
+      waypoints = places.slice(1, -1).map(p => `${p.lat},${p.lng}`).join('|');
+    }
+    const params = new URLSearchParams({api: '1', origin, destination, travelmode: 'driving', hl: 'zh-Hant'});
+    if (waypoints) params.set('waypoints', waypoints);
+    directionsUrl = `https://www.google.com/maps/dir/?${params.toString()}`;
+  }
+
+  // Pin classification:
+  //   距離 city center < 0.05° → 當日主城市 (red, ★)
+  //   must: true → 必到景點 (green, 🌟)
+  //   else → 其他 (blue, ·)
+  const pins = (() => {
+    // Compute which pin is "closest to city center" (likely main city / hotel)
+    let mainCityIdx = 0;
+    if (places.length > 1 && meta.city) {
+      const cx = meta.city.lat, cy = meta.city.lng;
+      let bestDist = Infinity;
+      places.forEach((p, i) => {
+        const d = Math.hypot(p.lat - cx, p.lng - cy);
+        if (d < bestDist) { bestDist = d; mainCityIdx = i; }
+      });
+    }
+    return places.map((p, i) => {
+      let color, badge, emoji;
+      if (i === mainCityIdx && meta.city) {
+        const d = Math.hypot(p.lat - meta.city.lat, p.lng - meta.city.lng);
+        if (d < 0.06) {
+          color = '#ef4444';
+          badge = '紅 當日主城市';
+          emoji = '★';
+        }
+      }
+      if (!color && p.must === true) {
+        color = '#22c55e';
+        badge = '綠 必到';
+        emoji = '🌟';
+      }
+      if (!color) {
+        color = '#3b82f6';
+        badge = '藍 其他景點';
+        emoji = '·';
+      }
+      const gmapUrl = `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}&hl=zh-Hant`;
+      // Build tips HTML (if any)
+      const tipsHtml = renderPlaceTips(p);
+      return `
+        <div class="pin-card-wrap" style="border-left:4px solid ${color};">
+          <a href="${gmapUrl}" target="_blank" rel="noopener noreferrer" class="pin-card" style="border-left:none;">
+            <div class="pin-num" style="background:${color};">${i+1}</div>
+            <div class="pin-info">
+              <div class="pin-name">${emoji} ${p.name}</div>
+              <div class="pin-coord">${p.lat.toFixed(4)}, ${p.lng.toFixed(4)} · ${badge}</div>
+            </div>
+            <div class="pin-arrow">↗</div>
+          </a>
+          ${tipsHtml}
+        </div>`;
+    }).join('');
+  })();
+
+  // Color legend at top of list (per user spec — 3 separate badges)
+  const colorLegend = `
+    <div style="display:flex;gap:6px;margin-bottom:10px;font-size:11px;flex-wrap:wrap;">
+      <span class="legend-pill"><span class="dot red"></span>當日主城市</span>
+      <span class="legend-pill"><span class="dot green"></span>必到景點</span>
+      <span class="legend-pill"><span class="dot blue"></span>其他景點</span>
+    </div>`;
+
+  const openAllBtn = directionsUrl ? `
+    <a href="${directionsUrl}" target="_blank" rel="noopener noreferrer" class="btn primary" style="margin-top: 10px; display:inline-flex; width:auto; text-align:center;">
+      🧭 開 Google Maps 全部景點 route (${places.length} stops) ↗
+    </a>` : '';
+
+  return `
+    <div class="pin-legend">
+      <div class="pin-legend-title">📍 ${cityName} · ${places.length} 個景點</div>
+      <div class="pin-legend-sub">點每個 card 開 Google Maps 單獨導航 · 點「查看必玩/必食」睇詳細 tips</div>
+      ${colorLegend}
+      ${pins}
+      ${openAllBtn}
+    </div>
+  `;
+}
+</script>
+
+<!-- ============ Today / Plan Page ============ -->
+<section class="page active" id="page-today">
+
+<div class="today-card">
+  <div class="today-date">📅 2026/07/27 — 28/7 Day 1</div>
+  <div class="today-title">✈️ 出發：澳門 → 香港 → 神戶</div>
+  <div class="today-summary">
+    Mpay 預先購巴士票 · 預約電召 07:15 到家 · 香港 T1 11:05 → 台北 T2 13:00 → 神戶 (UKB) 18:00 (長榮 BR 2 段) · 入住 Daiwa Roynet 神戶三宮 PREMIER · <strong>神户牛烤肉加虎 (已預約 🍽)</strong>
+  </div>
+</div>
+
+<div class="section-title">🛂 8 日行程總覽</div>
+
+<div class="day-card kobe">
+  <div class="day-header"><span class="date">7/27 Day 1 (一)</span><span class="city">神戶</span></div>
+  <div>🚐 澳門 → 香港機場 → 台北 T2 → 神戶空港 (UKB) (✈️ 長榮 BR 2 段)</div>
+  <div>🚠 神戶空港 → Port Liner → 三宮 (18 min)</div>
+  <div>🏨 Daiwa Roynet Hotel 神戶三宮 PREMIER</div>
+  <div class="alert danger">🍽 神户牛烤肉加虎 (預約) ⏰ 必到</div>
+</div>
+
+<div class="day-card kobe">
+  <div class="day-header"><span class="date">7/28 Day 2 (二)</span><span class="city">神戶</span></div>
+  <div>🌅 美利堅公園</div>
+  <div>🍞 面包起人博物館</div>
+  <div>🛍️ 三宮中心街 / Breeze Kobe Sannomiya (童裝)</div>
+</div>
+
+<div class="day-card kobe">
+  <div class="day-header"><span class="date">7/29 Day 3 (三)</span><span class="city">神戶</span></div>
+  <div>🎫 買六甲摩耶一日券 (¥) — 三宮站長室</div>
+  <div>🏫 神戶大學觀景台 (JR/阪急 + 16 號 六甲ケーブル下 行き → 神大国際文化学研究科前)</div>
+  <div>🐑 六甲山牧場 (注意: 星期二休息 ✋ 本星期三去 OK)</div>
+  <div>🌄 摩耶山觀景 (掬星台午餐)</div>
+  <div class="alert">⚠️ 一定要 16:00 前落山</div>
+  <div>🚊 阪神線 三宮 → 西九条 → JR夢咲線 → USJ</div>
+  <div>🏨 環球影城東方酒店</div>
+</div>
+
+<div class="day-card usj">
+  <div class="day-header"><span class="date">7/30 Day 4 (四)</span><span class="city">USJ</span></div>
+  <div>🎬 環球影城 (8:30 — 21:00 全日)</div>
+  <div class="alert">💡 Express Pass 強烈建議 (特別係 Donkey Kong / Super Nintendo World)</div>
+  <div>🏨 大阪難波 GRIDS PREMIUM 連住</div>
+</div>
+
+<div class="day-card nara">
+  <div class="day-header"><span class="date">7/31 Day 5 (五)</span><span class="city">奈良 + 生駒山</span></div>
+  <div>🎫 Klook 買近鐵一日券 (奈良 + 生駒山纜車)</div>
+  <div>🦌 奈良公園 (東 大寺 / 春日大社 / 若草山) — 喂鹿 4 包起</div>
+  <div>🍴 釜飯 奈良屋 (午餐)</div>
+  <div>🎢 生駒山上遊樂園 (纜車 + 12 項目套票 ¥3500)</div>
+  <div class="alert success">🌅 暑假延長到 19:00 — 可睇日落</div>
+  <div>🏨 大阪難波 GRIDS PREMIUM (已經 check-in, 不用再 check-in)</div>
+</div>
+
+<div class="day-card osaka">
+  <div class="day-header"><span class="date">8/1 Day 6 (六)</span><span class="city">大阪 → 神戶 → 台北</span></div>
+  <div>🏯 難波八阪神社</div>
+  <div>🛍️ 難波 City Par</div>
+  <div>🚊 15:00 → 神戶空港 (阪神+Port Liner)</div>
+  <div>✈️ 神戶 19:00 → 台北 20:55</div>
+  <div>🚆 機場捷運 → 北車站 → 京站 Q Square</div>
+  <div>🏨 君品酒店 Palais de Chine</div>
+</div>
+
+<div class="day-card taipei">
+  <div class="day-header"><span class="date">8/2 Day 7 (日)</span><span class="city">台北</span></div>
+  <div>🎓 台灣大學</div>
+  <div>🛍️ 中山商圈</div>
+</div>
+
+<div class="day-card taipei">
+  <div class="day-header"><span class="date">8/3 Day 8 (一)</span><span class="city">台北 → 澳門</span></div>
+  <div>🛍️ 台北車站地下街 (最後掃貨)</div>
+  <div>✈️ 台北 16:40 → 澳門 18:35</div>
+</div>
+
+<div class="section-title">🏨 住宿一覽</div>
+
+<div class="hotel-card">
+  <div class="hotel-icon">🏨</div>
+  <div>
+    <div class="hotel-name">Daiwa Roynet 神戶三宮 PREMIER</div>
+    <div class="hotel-dates">7/27 - 7/30 (3 晚)</div>
+  </div>
+</div>
+
+<div class="hotel-card">
+  <div class="hotel-icon">🏨</div>
+  <div>
+    <div class="hotel-name">環球影城東方酒店</div>
+    <div class="hotel-dates">7/30 check in</div>
+  </div>
+</div>
+
+<div class="hotel-card">
+  <div class="hotel-icon">🏨</div>
+  <div>
+    <div class="hotel-name">大阪難波 GRIDS PREMIUM</div>
+    <div class="hotel-dates">7/30 - 8/1 (2 晚)</div>
+  </div>
+</div>
+
+<div class="hotel-card">
+  <div class="hotel-icon">🏨</div>
+  <div>
+    <div class="hotel-name">君品酒店 Palais de Chine</div>
+    <div class="hotel-dates">8/1 - 8/3 (2 晚)</div>
+    <div class="hotel-addr">📍 台北市大同區承德路一段 3 號 (京站 Q-Square 上方, 台北車站直結)</div>
+  </div>
+</div>
+
+<div class="section-title">🚨 緊急聯絡</div>
+
+<div class="emergency-card">
+  <h3>🇯🇵 日本 (神戶 / 大阪 / 奈良)</h3>
+  <div class="emergency-item">
+    <div class="label">🚑 救護車 / 消防</div>
+    <div class="number"><a href="tel:119">119</a></div>
+  </div>
+  <div class="emergency-item">
+    <div class="label">👮 警察</div>
+    <div class="number"><a href="tel:110">110</a></div>
+  </div>
+  <div class="emergency-item">
+    <div class="label">🇨🇳 中國駐大阪總領館</div>
+    <div class="number"><a href="tel:+81664459481">+81-6-6445-9481</a></div>
+  </div>
+  <div class="emergency-item">
+    <div class="label">🇲🇴 澳門駐東京經貿辦</div>
+    <div class="number"><a href="tel:+81354030506">+81-3-5403-0506</a></div>
+  </div>
+</div>
+
+<div class="emergency-card" style="background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%);">
+  <h3>🇹🇼 台灣</h3>
+  <div class="emergency-item">
+    <div class="label">🚑 救護車 / 消防</div>
+    <div class="number"><a href="tel:119">119</a></div>
+  </div>
+  <div class="emergency-item">
+    <div class="label">👮 警察</div>
+    <div class="number"><a href="tel:110">110</a></div>
+  </div>
+  <div class="emergency-item">
+    <div class="label">🛂 旅外國人急難救助</div>
+    <div class="number"><a href="tel:+886800085095">+886-800-085-095</a></div>
+  </div>
+  <div class="emergency-item">
+    <div class="label">🇲🇴 台北經濟文化辦事處</div>
+    <div class="number"><a href="tel:+886225175286">+886-2-2517-5286</a></div>
+  </div>
+</div>
+
+<div class="section-title">📍 分享位置</div>
+
+<div class="emergency-card" style="background: linear-gradient(135deg, #047857 0%, #065f46 100%);">
+  <h3>📤 分享我嘅位置</h3>
+  <div class="alert" style="background: rgba(52, 211, 153, 0.18); border-left-color: #34d399; color: #a7f3d0;">
+    一按即用 GPS 取得實時位置，直接 WhatsApp 傳畀屋企人或朋友
+  </div>
+  <div class="share-row share-row-centered">
+    <button type="button" class="btn-share btn-share-large" id="btn-share">📤 分享位置</button>
+  </div>
+</div>
+
+</section>
+
+<!-- ============ Day-by-day Page ============ -->
+<section class="page" id="page-days">
+
+<div class="sub-tabs" id="day-tabs">
+  <button class="sub-tab active" onclick="showDay(1)">Day 1 (7/27)</button>
+  <button class="sub-tab" onclick="showDay(2)">Day 2 (7/28)</button>
+  <button class="sub-tab" onclick="showDay(3)">Day 3 (7/29)</button>
+  <button class="sub-tab" onclick="showDay(4)">Day 4 (7/30)</button>
+  <button class="sub-tab" onclick="showDay(5)">Day 5 (7/31)</button>
+  <button class="sub-tab" onclick="showDay(6)">Day 6 (8/1)</button>
+  <button class="sub-tab" onclick="showDay(7)">Day 7 (8/2)</button>
+  <button class="sub-tab" onclick="showDay(8)">Day 8 (8/3)</button>
+</div>
+
+<!-- =================== DAY 1 =================== -->
+<div class="day-page active" id="day-1">
+<div class="day-card kobe">
+  <div class="day-header"><span class="date">2026/07/27 (一)</span><span class="city">神戶</span></div>
+  <div data-day-render data-day-id="day-1" data-city="kobe" data-date="2026-07-27"></div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d1-1" id="d1-1">
+    <div class="body">
+      <div class="title">🚐 澳門 → 香港機場 直達巴士 (Mpay 預先買票)</div>
+      <div class="desc">長榮航空可托運行李</div>
+    </div>
+  </div>
+
+  <div class="alert danger">
+    <div><span class="pulse"></span><strong>07:15 到口岸</strong> (提前 75 分鐘 — 最穩)</div>
+    <div style="margin-top:4px;">07:45 停止辦理 (開車前 45 分鐘關櫃檯)</div>
+    <div style="margin-top:4px;"><strong>⏰ 必須預約電召 7:15 到家</strong></div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d1-2" id="d1-2">
+    <div class="body">
+      <div class="title">🚌 8:30 開車 (澳門 → 香港機場)</div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d1-3" id="d1-3">
+    <div class="body">
+      <div class="title">✈️ 香港 T1 11:05 → 台北 T2 13:00 (長榮 BR)</div>
+      <div class="desc">轉機等候約 1 小時 20 分</div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d1-4" id="d1-4">
+    <div class="body">
+      <div class="title">✈️ 台北 T2 14:20 → 神戶 (UKB) 18:00 (長榮 BR)</div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d1-5" id="d1-5">
+    <div class="body">
+      <div class="title">🚠 神戶空港 → 三宮 (Port Liner 港灣單軌電車)</div>
+      <div class="desc">18 分鐘 · 出機場沿指標走即可</div>
+      <div class="transit-info">
+        <a href="http://xhslink.com/o/8cg5KogPAmk" class="quick-link" target="_blank">📱 小紅書: 機場 → 三宮教學</a>
+        <a href="http://xhslink.com/o/5wW31hLrx1Z" class="quick-link" target="_blank">📱 小紅書: 購卡攻略</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d1-6" id="d1-6">
+    <div class="body">
+      <div class="title">🏨 Check-in：Daiwa Roynet Hotel 神戶三宮 PREMIER</div>
+    </div>
+  </div>
+
+  <div class="alert danger">
+    <strong>🍽 神户牛烤肉加虎 (已預約)</strong><br>
+    神户牛代表名店 — 必到!建議確認時段, 通常要預約 1-2 個月前<br>
+    三宮周邊有分店, check-in 時問前台
+  </div>
+
+</div>
+</div>
+
+<!-- =================== DAY 2 =================== -->
+<div class="day-page" id="day-2">
+<div class="day-card kobe">
+  <div class="day-header"><span class="date">2026/07/28 (二)</span><span class="city">神戶</span></div>
+  <div data-day-render data-day-id="day-2" data-city="kobe" data-date="2026-07-28"></div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d2-1" id="d2-1">
+    <div class="body">
+      <div class="title">🌅 美利堅公園</div>
+      <div class="desc">神戶港旁, 看神戶塔 + 海洋博物館, 散步影相好地方</div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d2-2" id="d2-2">
+    <div class="body">
+      <div class="title">🍞 面包起人博物館 (パン好き人間)</div>
+      <div class="desc">食長 / 烘焙迷必去</div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d2-3" id="d2-3">
+    <div class="body">
+      <div class="title">🛍️ 三宮中心街</div>
+      <div class="desc">神戶最大商店街 (藥妝 / 服飾 / 食肆)</div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d2-4" id="d2-4">
+    <div class="body">
+      <div class="title">👶 Breeze Kobe Sannomiya 童裝</div>
+      <div class="desc">Mid/upper 童裝齊</div>
+    </div>
+  </div>
+
+  <div class="tips">
+    💡 神戶夜晚可以去北野異人館看夜景, 或南京町中華街食宵夜
+  </div>
+
+</div>
+</div>
+
+<!-- =================== DAY 3 (六甲山牧場) =================== -->
+<div class="day-page" id="day-3">
+<div class="day-card kobe">
+  <div class="day-header"><span class="date">2026/07/29 (三)</span><span class="city">神戶 — 六甲山/摩耶山</span></div>
+  <div data-day-render data-day-id="day-3" data-city="rokko" data-date="2026-07-29"></div>
+
+  <div class="alert success">
+    <strong>🎫 推薦購買「六甲摩耶一日券」</strong><br>
+    巴士 + 纜車無限次乘坐·極化算<br>
+    購票地點: <strong>三宮站長室</strong>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d3-1" id="d3-1">
+    <div class="body">
+      <div class="title">🎫 三宮站長室買「六甲摩耶一日券」</div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d3-2" id="d3-2">
+    <div class="body">
+      <div class="title">🏫 神戶大學觀景台</div>
+      <div class="transit-info">
+        🚇 三宮 → (JR 3站 / 阪急 1站) → 六甲道<br>
+        🚌 六甲道 → <strong>16 號公車</strong>「六甲ケーブル下 行き」 → <strong>「神大国際文化学研究科前」</strong> (5 站) 下車後步行 5 分鐘到觀景台<br>
+        ☕ 早餐: 神戶大學星巴克
+      </div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d3-3" id="d3-3">
+    <div class="body">
+      <div class="title">🚌 → 六甲山纜車站 (16 號公車, 神大國際文化學研究科前 4 站)</div>
+      <div class="desc">纜車上山後, 出站左手邊約 10 米</div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d3-4" id="d3-4">
+    <div class="body">
+      <div class="title">🐑 六甲山牧場</div>
+      <div class="desc">喂小羊 + 食雪糕 · 大概 1 小時一班公車</div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d3-5" id="d3-5">
+    <div class="body">
+      <div class="title">🚌 → 摩耶山 (2 號公車, 4 站)</div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d3-6" id="d3-6">
+    <div class="body">
+      <div class="title">🍴 掬星台午餐 (摩耶山觀景)</div>
+      <div class="desc">日本三大夜景之一 · 千萬要帶外賣上去食</div>
+    </div>
+  </div>
+
+  <div class="alert danger">
+    ⚠️ <strong>16:00 前一定要落山</strong>!再晚公車班次疏
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d3-7" id="d3-7">
+    <div class="body">
+      <div class="title">🚠 星之站坐摩耶山纜車 → 下山</div>
+      <div class="desc">再轉 18 號公車 → 三宮 (16 站) → 回酒店攞行李</div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d3-8" id="d3-8">
+    <div class="body">
+      <div class="title">🚊 阪神線 三宮 → USJ</div>
+      <div class="transit-info">
+        <strong>Step 1:</strong> 三宮站乘 阪神本線 快速急行 (往奈良方向)<br>
+        <strong>Step 2:</strong> 直達 西九条站 (~30 min, 唔使落車/換車)<br>
+        <strong>Step 3:</strong> 西九条出站步行 → 隔壁 JR 西九条站<br>
+        <strong>Step 4:</strong> 換乘 JR 夢咲線 (又稱櫻島線) 2 站 → ユニバーサルシティ
+      </div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d3-9" id="d3-9">
+    <div class="body">
+      <div class="title">🏨 環球影城東方酒店 Check-in</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- =================== DAY 4 = USJ (7/30 Thu) =================== -->
+<div class="day-page" id="day-4">
+<div class="day-card usj">
+  <div class="day-header"><span class="date">2026/07/30 (四)</span><span class="city">USJ 全日</span></div>
+  <div data-day-render data-day-id="day-4" data-city="namba" data-date="2026-07-30"></div>
+
+  <div class="alert danger">
+    <strong>⚠️ Express Pass 強烈建議</strong><br>
+    Donkey Kong / Super Nintendo World / 哈利波特 · 旺季要 1-2 小時排隊
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d4-1" id="d4-1">
+    <div class="body">
+      <div class="title">🎬 環球影城 (08:30 - 21:00)</div>
+      <div class="desc">必玩: Donkey Kong Country, Super Nintendo World, Harry Potter, Minions</div>
+    </div>
+  </div>
+
+  <div class="tips">
+    💡 帶定輕便雨衣 (Mario Kart 入水會濕) + 充電器 + 樽水<br>
+    💡 入園即下載 USJ APP 攞地圖 + 預約整理券
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d4-2" id="d4-2">
+    <div class="body">
+      <div class="title">🌃 21:00 出園 → 酒店</div>
+      <div class="transit-info">
+        環球影城站 (Universal City) → JR 西九条 → 出站轉阪神電鐵 → 大阪難波<br>
+        (環球東方酒店可以直接由 USJ 步行 5-10 分鐘到 USJ 大門)
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- =================== DAY 5 = Nara (7/31 Fri) =================== -->
+<div class="day-page" id="day-5">
+<div class="day-card nara">
+  <div class="day-header"><span class="date">2026/07/31 (五)</span><span class="city">奈良 + 生駒山</span></div>
+  <div data-day-render data-day-id="day-5" data-city="nara" data-date="2026-07-31"></div>
+
+  <div class="alert success">
+    <strong>🎫 Klook 購: 近鐵一日券</strong> (難波 → 奈良 + 生駒山纜車往返)
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d5-1" id="d5-1">
+    <div class="body">
+      <div class="title">🚃 大阪難波 → 近鐵奈良 (近鐵奈良線 快速急行/急行)</div>
+      <div class="desc">5 號出口 → 第 2 個公車站 (轉 77 / 97 號巴士去春日大社)</div>
+      <div class="transit-info">
+        <strong>特急要額外付款</strong> — 唔好搭錯!<br>
+        快速急行 / 急行 先用近鐵一日券
+      </div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d5-2" id="d5-2">
+    <div class="body">
+      <div class="title">🦌 奈良公園 + 春日大社 + 若草山 + 東大寺</div>
+      <div class="desc">🚶 春日大社 → 若草山 → 東大寺 → 奈良公園 (慢悠悠行返車站)</div>
+      <div class="transit-info">
+        <strong>門票:</strong> 成人 ¥150 · 小童 ¥80 (9:00 - 17:00)<br>
+        <strong>鹿餅購買:</strong> 山下買!山上冇!建議 4 包起 (¥150/包)<br>
+        <strong>避開公鹿:</strong> 搵母鹿 + 小鹿, 公鹿有角易撞人<br>
+        <strong>喂食技巧:</strong> 掰細塊喂, 可「聲東擊西」(扔遠啲) 引開大鹿
+      </div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d5-3" id="d5-3">
+    <div class="body">
+      <div class="title">🍴 釜飯 奈良屋 (午餐)</div>
+      <div class="desc">奈良名物 — 釡飯 + 漬物</div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d5-4" id="d5-4">
+    <div class="body">
+      <div class="title">🎢 生駒山上遊樂園</div>
+      <div class="transit-info">
+        🚃 近鐵奈良 → 近鐵生駒 (~15 分)<br>
+        🚝 出站後有天橋連廊 → 鳥居前站<br>
+        🚠 鳥居前 → 貓貓纜車 → 寶山寺站 → 甜點纜車 → 生駒山上站 (~30 min)
+      </div>
+      <div class="alert">
+        ⏰ 營業: 10:00 - 17:00 · 暑假延至 19:00 (可睇日落)<br>
+        💴 套票 ¥3500: 12 項目, 可多人共用
+      </div>
+      <div class="tips">
+        🎢 必玩: 落日飛車 ¥600 · 漂浮大熊貓纜車 ¥500 · 飛行塔 ¥600 · 俯衝老鷹 ¥500
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- =================== DAY 6 =================== -->
+<div class="day-page" id="day-6">
+<div class="day-card osaka">
+  <div class="day-header"><span class="date">2026/08/01 (六)</span><span class="city">大阪 → 台北</span></div>
+  <div data-day-render data-day-id="day-6" data-city="namba" data-date="2026-08-01"></div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d6-1" id="d6-1">
+    <div class="body">
+      <div class="title">🏯 難波八阪神社</div>
+      <div class="desc">大阪人氣打卡神社 (巨型獅子殿)</div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d6-2" id="d6-2">
+    <div class="body">
+      <div class="title">🛍️ 難波 City Par (最後掃貨)</div>
+      <div class="desc">藥妝/零食/服飾 (建議 pre-list 慳時間)</div>
+    </div>
+  </div>
+
+  <div class="alert danger">
+    ⏰ <strong>15:00 出發去神戶機場</strong><br>
+    大阪難波 → 阪神電車 快速急行 → 神戶三宮 (~41 min, ¥540)<br>
+    三宮步行 3-5 分鐘 → Port Liner → 神戶空港 (~18 min, ¥220)
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d6-3" id="d6-3">
+    <div class="body">
+      <div class="title">✈️ 神戶空港 (UKB) 19:00 → 台北 (TPE T2) 20:55 (長榮 BR)</div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d6-4" id="d6-4">
+    <div class="body">
+      <div class="title">🚆 機場捷運 → 北車站 → 京站 Q Square</div>
+      <div class="transit-info">
+        1️⃣ A1 台北站, 跟「京站時尚廣場 / Q Square / Y 出口」<br>
+        2️⃣ 地下連通道直達京站百貨 B1<br>
+        3️⃣ 1 樓戶外廣場 → 左轉承德路
+      </div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d6-5" id="d6-5">
+    <div class="body">
+      <div class="title">🏨 君品酒店 Palais de Chine Check-in</div>
+      <div class="desc">大同區承德路一段 3 號 (京站 Q-Square), 紅色「君品 PALAIS de CHINE」招牌, 台北車站 Y5 出口直達 3-5 分鐘</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- =================== DAY 7 =================== -->
+<div class="day-page" id="day-7">
+<div class="day-card taipei">
+  <div class="day-header"><span class="date">2026/08/02 (日)</span><span class="city">台北</span></div>
+  <div data-day-render data-day-id="day-7" data-city="taipei" data-date="2026-08-02"></div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d7-1" id="d7-1">
+    <div class="body">
+      <div class="title">🎓 台灣大學</div>
+      <div class="desc">椰林大道 + 杜鵑花城 (需認識學界朋友內進)</div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d7-2" id="d7-2">
+    <div class="body">
+      <div class="title">🛍️ 中山商圈</div>
+      <div class="desc">赤峰街 · 中山北路 · 光華商場 (3C 必去) · 條通夜街</div>
+    </div>
+  </div>
+
+  <div class="tips">
+    💡 中山站一帶下午茶小店好多,可以慢慢行
+  </div>
+
+</div>
+</div>
+
+<!-- =================== DAY 8 =================== -->
+<div class="day-page" id="day-8">
+<div class="day-card taipei">
+  <div class="day-header"><span class="date">2026/08/03 (一)</span><span class="city">台北 → 澳門</span></div>
+  <div data-day-render data-day-id="day-8" data-city="taipei" data-date="2026-08-03"></div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d8-1" id="d8-1">
+    <div class="body">
+      <div class="title">🛍️ 台北車站地下街 (Y 區 / K 區)</div>
+      <div class="desc">最後掃貨: 零食 + 紀念品 (免稅有限制, 注意)</div>
+    </div>
+  </div>
+
+  <div class="alert danger">
+    ⏰ <strong>13:00 出發去桃園機場 (3 小時 buffer 給 16:40 flight)</strong><br>
+    機場捷運 直達車 → 桃園機場 (約 35-40 分)
+  </div>
+
+  <div class="activity">
+    <input type="checkbox" data-id="d8-2" id="d8-2">
+    <div class="body">
+      <div class="title">✈️ 台北 16:40 → 澳門 18:35</div>
+    </div>
+  </div>
+
+  <div class="tips">
+    💡 提早 3 小時到機場辦 check-in (暑假 + 長榮航班常爆)<br>
+    💡 澳門入境可能要過關檢查, 預鬆少少時間
+  </div>
+
+</div>
+</div>
+
+</section>
+
+<!-- ============ Pre-trip Checklist Page ============ -->
+<section class="page" id="page-pre">
+
+<div class="section-title">📋 Pre-Trip Checklist (必須 7/15 前完成)</div>
+
+<div class="category">🇯🇵 必辦事項</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-1" id="prep-1">
+  <div class="body">
+    <div class="title">❗ Mpay 預先購買 8:30 巴士票 (澳門 → 香港機場)</div>
+    <div class="desc">長榮可托運 · 確認 8:30 班次有位</div>
+  </div>
+</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-2" id="prep-2">
+  <div class="body">
+    <div class="title">❗ 預約電召 (的士) 7:15 到家</div>
+    <div class="desc">必須 7:15 上車, 趕 8:30 巴士 → 7:45 停止辦理</div>
+  </div>
+</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-3" id="prep-3">
+  <div class="body">
+    <div class="title">🍽 預約 神户牛烤肉加虎 (神戶牛名店)</div>
+    <div class="desc">建議搭機到步當晚 · 即 Check-in 後先去</div>
+  </div>
+</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-4" id="prep-4">
+  <div class="body">
+    <div class="title">🎫 Klook 買「近鐵一日券」(奈良 + 生駒山纜車)</div>
+    <div class="desc">Day 4 用 · 通常 Klook 有折扣</div>
+  </div>
+</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-5" id="prep-5">
+  <div class="body">
+    <div class="title">🎫 USJ Express Pass (4 項或 7 項)</div>
+    <div class="desc">7/30 USJ 全日 · Donkey Kong / SNW / Harry Potter priority</div>
+  </div>
+</div>
+
+<div class="category">📱 旅遊 App</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-6" id="prep-6">
+  <div class="body">
+    <div class="title">下載 USJ APP (地圖 + 整理券預約)</div>
+    <div class="desc">入園即用</div>
+  </div>
+</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-7" id="prep-7">
+  <div class="body">
+    <div class="title">Google Maps 下載離線地圖 (日本關西 + 台北)</div>
+    <div class="desc">郊區冇 4G 都用到</div>
+  </div>
+</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-8" id="prep-8">
+  <div class="body">
+    <div class="title">VoiceTra / Google Translate (日文翻譯)</div>
+    <div class="desc">餐廳 menu / 公車站牌</div>
+  </div>
+</div>
+
+<div class="category">💳 付款 + 上網</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-9" id="prep-9">
+  <div class="body">
+    <div class="title">確認 eSIM / Pocket WiFi (日本 + 台灣)</div>
+    <div class="desc">8 日 · 一張卡覆蓋兩地更方便</div>
+  </div>
+</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-10" id="prep-10">
+  <div class="body">
+    <div class="title">通知銀行: 日本 + 台灣 ATM 提款</div>
+    <div class="desc">避免咭被鎖</div>
+  </div>
+</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-11" id="prep-11">
+  <div class="body">
+    <div class="title">銀聯 / Visa / Master 海外簽賬 + 海外提款手續費</div>
+    <div class="desc">多帶 2 張咭 backup</div>
+  </div>
+</div>
+
+<div class="category">📄 文件</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-12" id="prep-12">
+  <div class="body">
+    <div class="title">護照效期 (需有 6 個月以上)</div>
+    <div class="desc">入境日 7/27 · 護照需 > 2027/01/27</div>
+  </div>
+</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-13" id="prep-13">
+  <div class="body">
+    <div class="title">列印/儲存電子機票 + 酒店確認信</div>
+  </div>
+</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-14" id="prep-14">
+  <div class="body">
+    <div class="title">旅遊保險 (覆蓋 8 日 + 醫療 + 個人意外)</div>
+  </div>
+</div>
+
+<div class="category">🎒 行李</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-15" id="prep-15">
+  <div class="body">
+    <div class="title">夏天衣物 (7-8 月關西 + 台北 35°C+)</div>
+  </div>
+</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-16" id="prep-16">
+  <div class="body">
+    <div class="title">雨具 (7 月尾日本進入梅雨)</div>
+  </div>
+</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-17" id="prep-17">
+  <div class="body">
+    <div class="title">Mobile battery + 萬能插頭</div>
+  </div>
+</div>
+
+<div class="check-item">
+  <input type="checkbox" data-id="prep-18" id="prep-18">
+  <div class="body">
+    <div class="title">輕便行山鞋 (六甲山牧場 + 生駒山)</div>
+  </div>
+</div>
+
+</section>
+
+<!-- ============ Budget Page ============ -->
+<section class="page" id="page-budget">
+
+<div class="budget-card">
+  <h3>💴 預估總預算 (HKD 港元 HK$)</h3>
+
+  <div class="budget-row">
+    <span>✈️ 來回機票 (長榮, 澳門 ↔ 神戶/台北)</span>
+    <input type="number" class="budget-input" id="bud-flight" placeholder="0" oninput="calcBudget()">
+  </div>
+
+  <div class="budget-row">
+    <span>🏨 住宿 (7 晚, 4 星)</span>
+    <input type="number" class="budget-input" id="bud-hotel" placeholder="0" oninput="calcBudget()">
+  </div>
+
+  <div class="budget-row">
+    <span>🍜 餐飲 (¥2500 × 8 日)</span>
+    <input type="number" class="budget-input" id="bud-food" placeholder="0" oninput="calcBudget()">
+  </div>
+
+  <div class="budget-row">
+    <span>🚊 交通 (JR + 近鐵 + Metro + 機場快綫)</span>
+    <input type="number" class="budget-input" id="bud-transport" placeholder="0" oninput="calcBudget()">
+  </div>
+
+  <div class="budget-row">
+    <span>🎫 門票 (USJ Express + 一日券 + 神社寺廟)</span>
+    <input type="number" class="budget-input" id="bud-tickets" placeholder="0" oninput="calcBudget()">
+  </div>
+
+  <div class="budget-row">
+    <span>🛍️ 購物 (藥妝 / 零食 / 紀念品)</span>
+    <input type="number" class="budget-input" id="bud-shopping" placeholder="0" oninput="calcBudget()">
+  </div>
+
+  <div class="budget-row">
+    <span>📡 上網 (eSIM 8 日)</span>
+    <input type="number" class="budget-input" id="bud-esa" placeholder="0" oninput="calcBudget()">
+  </div>
+
+  <div class="budget-row">
+    <span>🛡️ 旅遊保險</span>
+    <input type="number" class="budget-input" id="bud-insurance" placeholder="0" oninput="calcBudget()">
+  </div>
+
+  <div class="budget-row">
+    <span>💱 Buffer (~10% 雜費)</span>
+    <input type="number" class="budget-input" id="bud-buffer" placeholder="0" oninput="calcBudget()">
+  </div>
+
+  <div class="budget-total">
+    <span>Total</span>
+    <span id="bud-total" style="color: var(--accent);">$0</span>
+  </div>
+
+  <div style="margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border);">
+    <div style="font-size: 12px; color: var(--text-dim); margin-bottom: 6px;">💱 即時匯率 (HKD 基準 · 自動 fetch from fawazahmed0/exchange-api)</div>
+    <div id="fx-status" style="font-size: 11px; color: var(--text-dim); margin-bottom: 6px;">⏳ 載入中...</div>
+    <div class="budget-row">
+      <span>1 HKD =</span>
+      <span id="fx-hkd-jpy" style="color: var(--text-dim);">-- JPY</span>
+    </div>
+    <div class="budget-row">
+      <span>1 HKD =</span>
+      <span id="fx-hkd-twd" style="color: var(--text-dim);">-- TWD</span>
+    </div>
+    <div class="budget-row">
+      <span>1 HKD =</span>
+      <span id="fx-hkd-cny" style="color: var(--text-dim);">-- CNY</span>
+    </div>
+    <button class="btn tiny" onclick="fetchExchangeRates()" style="margin-top:8px;">🔄 Refresh 匯率</button>
+    <div id="fx-date" style="font-size: 10px; color: var(--text-dim); margin-top:4px;"></div>
+  </div>
+</div>
+
+<div class="budget-card">
+  <h3>📊 即時換算 (live HKD)</h3>
+  <div class="budget-row"><span>¥1,000 JPY =</span><span id="fx-jpy-result" style="color: var(--accent);">--</span></div>
+  <div class="budget-row"><span>NT$1,000 TWD =</span><span id="fx-twd-result" style="color: var(--accent);">--</span></div>
+  <div class="budget-row"><span>¥10,000 JPY × 8 日 =</span><span id="fx-jpy-day" style="color: var(--accent);">--</span></div>
+</div>
+
+<div class="section-title">📈 分擔費用</div>
+
+<div class="budget-card">
+  <div style="margin-bottom: 12px; font-size: 13px; color: var(--text-dim);">👥 旅伴分帳</div>
+
+  <div class="budget-row">
+    <span>總開支 (¥)</span>
+    <input type="number" class="budget-input" id="split-total-jpy" placeholder="0" oninput="calcSplit()">
+  </div>
+
+  <div class="budget-row">
+    <span>人數</span>
+    <input type="number" class="budget-input" id="split-heads" placeholder="2" oninput="calcSplit()">
+  </div>
+
+  <div class="budget-row">
+    <span>已收款 (¥)</span>
+    <input type="number" class="budget-input" id="split-collected" placeholder="0" oninput="calcSplit()">
+  </div>
+
+  <div class="budget-total">
+    <span>每人應付 (¥)</span>
+    <span id="split-each">¥0</span>
+  </div>
+
+  <div class="budget-total">
+    <span>待收 (¥)</span>
+    <span id="split-pending">¥0</span>
+  </div>
+</div>
+
+</section>
+
+<!-- ============ FX (Currency) Page ============ -->
+<section class="page" id="page-fx">
+
+<div class="section-title">💱 HKD 實時換算 (隨時計算)</div>
+
+<div class="budget-card">
+  <h3>📊 實時匯率 (Live · from fawazahmed0/exchange-api)</h3>
+  <div id="fx-status-card" style="font-size: 12px; color: var(--text-dim); margin-bottom: 10px;">⏳ 載入中...</div>
+
+  <div class="budget-row">
+    <span>🇯🇵 1 HKD =</span>
+    <span id="fx-card-jpy" style="color: var(--accent);">-- JPY</span>
+  </div>
+  <div class="budget-row">
+    <span>🇯🇵 1 HKD =</span>
+    <span id="fx-card-jpy-yen" style="color: var(--text-dim);">-- ¥</span>
+  </div>
+  <div class="budget-row">
+    <span>🇹🇼 1 HKD =</span>
+    <span id="fx-card-twd" style="color: var(--accent);">-- TWD</span>
+  </div>
+  <div class="budget-row">
+    <span>🇨🇳 1 HKD =</span>
+    <span id="fx-card-cny" style="color: var(--accent);">-- CNY</span>
+  </div>
+  <div class="budget-row">
+    <span>🇲🇴 1 HKD =</span>
+    <span id="fx-card-mop" style="color: var(--accent);">-- MOP</span>
+  </div>
+  <div class="budget-row">
+    <span>🇺🇸 1 HKD =</span>
+    <span id="fx-card-usd" style="color: var(--accent);">-- USD</span>
+  </div>
+
+  <div id="fx-card-date" style="font-size: 11px; color: var(--text-dim); margin-top: 6px;"></div>
+  <button class="btn warn tiny" style="margin-top:10px;" onclick="fetchExchangeRates()">🔄 Refresh 匯率 (抓最新)</button>
+</div>
+
+<div class="budget-card">
+  <h3>🧮 HKD 匯率計算機</h3>
+  <div style="font-size: 12px; color: var(--text-dim); margin-bottom: 12px;">輸入金額 + 選幣別，即時換 HKD</div>
+
+  <!-- From currency picker -->
+  <div class="budget-row">
+    <span>從 (From)</span>
+    <select id="calc-from" class="budget-input" style="width:130px; padding:6px 8px;" onchange="recalcFxCalc()">
+      <option value="jpy">🇯🇵 JPY (日本 ¥)</option>
+      <option value="twd">🇹🇼 TWD (台灣 NT$)</option>
+      <option value="cny">🇨🇳 CNY (人民幣 ¥)</option>
+      <option value="mop">🇲🇴 MOP (澳門 M$)</option>
+      <option value="usd">🇺🇸 USD (美元 $)</option>
+      <option value="eur">🇪🇺 EUR (歐元 €)</option>
+      <option value="gbp">🇬🇧 GBP (英鎊 £)</option>
+      <option value="aud">🇦🇺 AUD (澳元)</option>
+      <option value="krw">🇰🇷 KRW (韓圜)</option>
+      <option value="sgd">🇸🇬 SGD (新加坡)</option>
+    </select>
+  </div>
+
+  <div class="budget-row">
+    <span>金額</span>
+    <input type="number" id="calc-amount" class="budget-input" placeholder="0" oninput="recalcFxCalc()">
+  </div>
+
+  <div class="budget-row" style="background: rgba(56,189,248,0.08); padding: 12px 10px; border-radius: 6px;">
+    <span style="font-weight: 600;">↪ 折合 HKD</span>
+    <span id="calc-result" style="font-size: 18px; font-weight: 700; color: var(--accent);">HK$0.00</span>
+  </div>
+
+  <div class="budget-row">
+    <span style="font-size: 12px; color: var(--text-dim);">即時用嘅匯率</span>
+    <span id="calc-rate-used" style="font-size: 12px; color: var(--text-dim);">--</span>
+  </div>
+</div>
+
+<div class="budget-card">
+  <h3>⚡ 快速換算 (Common scenarios)</h3>
+
+  <h4 style="font-size: 13px; margin: 8px 0;">🍜 餐飲 - 神戶牛肉午餐</h4>
+  <div class="budget-row">
+    <span>¥3,500 JPY →</span>
+    <span id="quick-beef" style="color: var(--accent);">HK$--</span>
+  </div>
+
+  <h4 style="font-size: 13px; margin: 8px 0;">🛍 USJ 門票 Express Pass</h4>
+  <div class="budget-row">
+    <span>¥17,600 JPY →</span>
+    <span id="quick-usj" style="color: var(--accent);">HK$--</span>
+  </div>
+
+  <h4 style="font-size: 13px; margin: 8px 0;">🏯 生駒山上樂園套票</h4>
+  <div class="budget-row">
+    <span>¥3,500 JPY →</span>
+    <span id="quick-ikoma" style="color: var(--accent);">HK$--</span>
+  </div>
+
+  <h4 style="font-size: 13px; margin: 8px 0;">🚊 一日券 (六甲摩耶)</h4>
+  <div class="budget-row">
+    <span>¥1,500 JPY →</span>
+    <span id="quick-pass" style="color: var(--accent);">HK$--</span>
+  </div>
+
+  <h4 style="font-size: 13px; margin: 8px 0;">🍱 拉麵 (普通)</h4>
+  <div class="budget-row">
+    <span>¥1,200 JPY →</span>
+    <span id="quick-ramen" style="color: var(--accent);">HK$--</span>
+  </div>
+
+  <h4 style="font-size: 13px; margin: 8px 0;">🚕 Taxi in Osaka (~¥2,000)</h4>
+  <div class="budget-row">
+    <span>¥2,000 JPY →</span>
+    <span id="quick-taxi" style="color: var(--accent);">HK$--</span>
+  </div>
+
+  <h4 style="font-size: 13px; margin: 8px 0;">🍰 台北車站 Starbucks NT$</h4>
+  <div class="budget-row">
+    <span>NT$160 TWD →</span>
+    <span id="quick-stb" style="color: var(--accent);">HK$--</span>
+  </div>
+
+  <h4 style="font-size: 13px; margin: 8px 0;">🍜 台北牛肉麵 NT$</h4>
+  <div class="budget-row">
+    <span>NT$200 TWD →</span>
+    <span id="quick-mien" style="color: var(--accent);">HK$--</span>
+  </div>
+</div>
+
+<div class="budget-card">
+  <h3>📋 歷史匯率 (Local cache)</h3>
+  <div style="font-size: 12px; color: var(--text-dim); margin-bottom: 8px;">上次 fetch 時間 (UTC):</div>
+  <div id="fx-last-fetch" style="font-family: monospace; font-size: 12px;">--</div>
+  <button class="btn tiny" style="margin-top: 10px;" onclick="clearFxCache()">🗑 清除 cache</button>
+</div>
+
+</section>
+
+<!-- ============ Tab Bar ============ -->
+<nav class="tab-bar">
+  <button class="tab active" onclick="showPage('today')">
+    <span class="icon">🏠</span>
+    總覽
+  </button>
+  <button class="tab" onclick="showPage('days')">
+    <span class="icon">📅</span>
+    日程
+  </button>
+  <button class="tab" onclick="showPage('pre')">
+    <span class="icon">✅</span>
+    待辦
+  </button>
+  <button class="tab" onclick="showPage('budget')">
+    <span class="icon">💴</span>
+    預算
+  </button>
+  <button class="tab" onclick="showPage('fx')">
+    <span class="icon">💱</span>
+    匯率
+  </button>
+</nav>
+
+<script>
+// ============ Navigation ============
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo(0, 0);
+  localStorage.setItem('lastTab', name);
+}
+
+function showDay(n) {
+  document.querySelectorAll('.day-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('day-' + n).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ============ Countdown ============
+const TRIP_START = new Date('2026-07-27T00:00:00+08:00').getTime();
+
+// === Share location (GPS only → WhatsApp) ===
+document.getElementById('btn-share').addEventListener('click', async () => {
+  const btn = document.getElementById('btn-share');
+  const originalLabel = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '⏳ 定位中…';
+  btn.classList.remove('gps-error');
+
+  let mapUrl, label, gpsError = null;
+  try {
+    const pos = await new Promise((res, rej) => {
+      if (!navigator.geolocation) return rej({ code: 0, message: '瀏覽器唔支援 GPS' });
+      navigator.geolocation.getCurrentPosition(res, rej, { timeout: 10000, enableHighAccuracy: true });
+    });
+    mapUrl = `https://maps.google.com/?q=${pos.coords.latitude},${pos.coords.longitude}`;
+    label = '我嘅實時位置';
+  } catch (e) {
+    gpsError = e;
+  }
+
+  if (gpsError) {
+    const reason = gpsError.code === 1 ? '權限被拒絕' :
+                   gpsError.code === 2 ? 'GPS 位置唔可用' :
+                   gpsError.code === 3 ? '取位置 timeout (10秒)' :
+                   '未知錯誤';
+    const isHttps = location.protocol === 'https:';
+    const isLocalhost = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+    const httpsHint = (!isHttps && !isLocalhost) ?
+      '\n\n⚠️ 你用 LAN IP (' + location.hostname + ') 訪問，' +
+      'geolocation 喺 HTTP (non-localhost) 會被 block。' +
+      '\n請用 HTTPS 訪問 (例如 Cloudflare Tunnel) 或 localhost。' : '';
+    alert(
+      `📍 GPS 取位置失敗：${reason}\n\n` +
+      `請確認：\n` +
+      `1. iOS 設定 → Chrome → 位置 = 詢問或使用 App 時\n` +
+      `2. 用 HTTPS 或 localhost 訪問 (geolocation 需要 secure context)\n` +
+      `3. 喺空曠地方 retry，避開室內${httpsHint}\n\n` +
+      `已取消分享，請 retry。`
+    );
+    btn.classList.add('gps-error');
+    setTimeout(() => btn.classList.remove('gps-error'), 2000);
+    btn.disabled = false;
+    btn.innerHTML = originalLabel;
+    return;
+  }
+
+  const msg = `📍 我而家喺${label}！\n🗺 Google Maps: ${mapUrl}\n— 2026 神戶大阪台北 8 日遊 🇯🇵🇹🇼`;
+
+  // iPhone: whatsapp://send?text=... 直接開 WhatsApp + 帶 message 入 input box
+  // 其他: wa.me/?text=... fallback (只到對話清單)
+  // 最後: clipboard (popup blocked)
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  if (isIOS) {
+    window.location.href = `whatsapp://send?text=${encodeURIComponent(msg)}`;
+  } else {
+    const waUrl = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    const waWin = window.open(waUrl, '_blank');
+    if (!waWin) {
+      await navigator.clipboard.writeText(msg);
+      alert('已複製訊息到 clipboard，貼到 WhatsApp 即可');
+    }
+  }
+  btn.disabled = false;
+  btn.innerHTML = originalLabel;
+});
+function updateCountdown() {
+  const now = Date.now();
+  const diff = TRIP_START - now;
+  if (diff < 0) {
+    document.getElementById('countdown').innerHTML = '🎉 <strong>旅程進行中!</strong> 現在是 Day ' + (Math.floor((now - TRIP_START) / 86400000) + 1);
+    return;
+  }
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const min = Math.floor((diff % 3600000) / 60000);
+  document.getElementById('countdown').innerHTML =
+    '出發倒數：<strong>' + days + '</strong> 日 <strong>' + hours + '</strong> 時 <strong>' + min + '</strong> 分';
+}
+updateCountdown();
+setInterval(updateCountdown, 60000);
+
+// ============ Persist Checklist State ============
+function setupCheckboxes() {
+  document.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    const id = cb.dataset.id;
+    if (!id) return;
+    const saved = localStorage.getItem('cb_' + id);
+    if (saved === '1') {
+      cb.checked = true;
+      cb.closest('.activity, .check-item').classList.add('done');
+    }
+    cb.addEventListener('change', () => {
+      localStorage.setItem('cb_' + id, cb.checked ? '1' : '0');
+      cb.closest('.activity, .check-item').classList.toggle('done', cb.checked);
+    });
+  });
+}
+
+// ============ Budget ============
+function getVal(id) {
+  const el = document.getElementById(id);
+  return parseFloat(el.value) || 0;
+}
+function calcBudget() {
+  const ids = ['bud-flight','bud-hotel','bud-food','bud-transport','bud-tickets','bud-shopping','bud-esa','bud-insurance','bud-buffer'];
+  const total = ids.reduce((s, id) => s + getVal(id), 0);
+  document.getElementById('bud-total').textContent = 'HK$' + total.toFixed(0);
+  localStorage.setItem('bud_inputs', ids.map(id => getVal(id)).join(','));
+}
+
+// ============ Real-time FX (fawazahmed0/exchange-api, no key) ============
+// Stores latest rates in window.LIVE_RATES, displays in HKD baseline
+async function fetchExchangeRates() {
+  const status = document.getElementById('fx-status');
+  const dateEl = document.getElementById('fx-date');
+  status.textContent = '⏳ 抓最新匯率...';
+  status.style.color = '#94a3b8';
+  try {
+    const resp = await fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/hkd.json');
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    window.LIVE_RATES = data;
+
+    // hkd.jpy means 1 HKD = X JPY
+    const jpyRate = parseFloat(data.hkd.jpy);
+    const twdRate = parseFloat(data.hkd.twd);
+    const cnyRate = parseFloat(data.hkd.cny);
+    const mopRate = parseFloat(data.hkd.mop);
+    const usdRate = parseFloat(data.hkd.usd);
+    const krwRate = parseFloat(data.hkd.krw);
+
+    document.getElementById('fx-hkd-jpy').textContent = jpyRate.toFixed(4) + ' JPY';
+    document.getElementById('fx-hkd-twd').textContent = twdRate.toFixed(4) + ' TWD';
+    document.getElementById('fx-hkd-cny').textContent = cnyRate.toFixed(4) + ' CNY';
+
+    // 1000 JPY → HKD; 1000 TWD → HKD; 10,000 JPY × 8 days
+    document.getElementById('fx-jpy-result').textContent = (1000 / jpyRate).toFixed(2) + ' HKD';
+    document.getElementById('fx-twd-result').textContent = (1000 / twdRate).toFixed(2) + ' HKD';
+    document.getElementById('fx-jpy-day').textContent =
+      ((10000 * 8) / jpyRate).toFixed(0) + ' HKD (餐飲估算)';
+
+    status.innerHTML = '✅ Live: ' + new Date().toLocaleTimeString('zh-Hant', {hour: '2-digit', minute: '2-digit'});
+    status.style.color = '#34d399';
+    dateEl.textContent = 'Source: fawazahmed0/exchange-api · Pub date: ' + (data.date || 'today');
+    localStorage.setItem('fx_data', JSON.stringify(data));
+    localStorage.setItem('fx_time', Date.now().toString());
+
+    // Update FX tab UI (in case it's open or freshly navigated to)
+    renderFxUI(data);
+    recalcFxCalc();
+    const lastFetchEl = document.getElementById('fx-last-fetch');
+    if (lastFetchEl) lastFetchEl.textContent = new Date().toISOString() + ' (' + (data.date || 'today') + ')';
+  } catch (e) {
+    status.innerHTML = '❌ Fetch 失敗: ' + e.message;
+    status.style.color = '#f87171';
+    const statusCard = document.getElementById('fx-status-card');
+    if (statusCard) { statusCard.innerHTML = '❌ Fetch 失敗: ' + e.message; statusCard.style.color = '#f87171'; }
+    // Fall back to cached if available
+    const cached = localStorage.getItem('fx_data');
+    if (cached) {
+      try { applyFXRates(JSON.parse(cached)); } catch {}
+    }
+  }
+}
+
+function applyFXRates(data) {
+  if (!data || !data.hkd) return;
+  const jpyRate = parseFloat(data.hkd.jpy);
+  document.getElementById('fx-hkd-jpy').textContent = jpyRate.toFixed(4) + ' JPY';
+  document.getElementById('fx-hkd-twd').textContent = parseFloat(data.hkd.twd).toFixed(4) + ' TWD';
+  document.getElementById('fx-hkd-cny').textContent = parseFloat(data.hkd.cny).toFixed(4) + ' CNY';
+  document.getElementById('fx-jpy-result').textContent = (1000 / jpyRate).toFixed(2) + ' HKD';
+  document.getElementById('fx-twd-result').textContent = (1000 / parseFloat(data.hkd.twd)).toFixed(2) + ' HKD';
+  document.getElementById('fx-jpy-day').textContent =
+    ((10000 * 8) / jpyRate).toFixed(0) + ' HKD (餐飲估算)';
+  renderFxUI(data);
+  recalcFxCalc();
+}
+
+// ============ FX Tab: Live rates card + Calculator + Quick presets ============
+function renderFxUI(data) {
+  if (!data || !data.hkd) return;
+  const statusCard = document.getElementById('fx-status-card');
+  const dateEl = document.getElementById('fx-card-date');
+  if (statusCard) {
+    const ts = localStorage.getItem('fx_time');
+    const timeStr = ts ? new Date(parseInt(ts)).toLocaleTimeString('zh-Hant', {hour: '2-digit', minute: '2-digit'}) : '?';
+    statusCard.innerHTML = '✅ Live: ' + timeStr + ' (UTC auto-converted)';
+    statusCard.style.color = '#34d399';
+  }
+  if (dateEl) dateEl.textContent = 'Source: fawazahmed0/exchange-api · Pub date: ' + (data.date || 'today');
+
+  const h = data.hkd;
+
+  // Top 6 currencies we display
+  const list = [
+    { id: 'fx-card-jpy', val: parseFloat(h.jpy), flag: '🇯🇵', label: 'JPY' },
+    { id: 'fx-card-jpy-yen', val: parseFloat(h.jpy), flag: '🇯🇵', label: '¥', labelSuffix: ' (' + (parseFloat(h.jpy)).toFixed(2) + '/HKD)' },
+    { id: 'fx-card-twd', val: parseFloat(h.twd), flag: '🇹🇼', label: 'TWD' },
+    { id: 'fx-card-cny', val: parseFloat(h.cny), flag: '🇨🇳', label: 'CNY' },
+    { id: 'fx-card-mop', val: parseFloat(h.mop), flag: '🇲🇴', label: 'MOP' },
+    { id: 'fx-card-usd', val: parseFloat(h.usd), flag: '🇺🇸', label: 'USD' },
+  ];
+  list.forEach(item => {
+    const el = document.getElementById(item.id);
+    if (!el) return;
+    el.textContent = item.val.toFixed(4) + ' ' + item.label;
+  });
+
+  // Quick scenarios
+  const calc = (rate, amt) => (amt / rate).toFixed(2) + ' HKD';
+  const setQuick = (id, rate, amt) => {
+    const el = document.getElementById(id);
+    if (el && h[rate] !== undefined) el.textContent = calc(parseFloat(h[rate]), amt);
+  };
+  setQuick('quick-beef', 'jpy', 3500);
+  setQuick('quick-usj', 'jpy', 17600);
+  setQuick('quick-ikoma', 'jpy', 3500);
+  setQuick('quick-pass', 'jpy', 1500);
+  setQuick('quick-ramen', 'jpy', 1200);
+  setQuick('quick-taxi', 'jpy', 2000);
+  setQuick('quick-stb', 'twd', 160);
+  setQuick('quick-mien', 'twd', 200);
+
+  // Last fetch timestamp
+  const lastFetchEl = document.getElementById('fx-last-fetch');
+  if (lastFetchEl) {
+    const ts = localStorage.getItem('fx_time');
+    if (ts) lastFetchEl.textContent = new Date(parseInt(ts)).toISOString() + ' (' + (data.date || 'today') + ')';
+  }
+}
+
+// Calculator: live convert X amount of selected currency → HKD
+function recalcFxCalc() {
+  const data = window.LIVE_RATES;
+  if (!data || !data.hkd) {
+    document.getElementById('calc-result').textContent = 'HK$0.00 (waiting rates...)';
+    document.getElementById('calc-rate-used').textContent = '-- (尚未抓到 rates)';
+    return;
+  }
+  const from = document.getElementById('calc-from').value;
+  const amt = parseFloat(document.getElementById('calc-amount').value) || 0;
+  const rate = parseFloat(data.hkd[from]);
+  if (!rate || rate === 0) {
+    document.getElementById('calc-result').textContent = 'HK$0.00 (不支持 ' + from.toUpperCase() + ')';
+    return;
+  }
+  const hkd = amt / rate;
+  document.getElementById('calc-result').textContent = 'HK$' + hkd.toFixed(2);
+  document.getElementById('calc-rate-used').textContent =
+    '1 ' + from.toUpperCase() + ' = ' + (1 / rate).toFixed(6) + ' HKD';
+}
+
+function clearFxCache() {
+  if (confirm('清除本機匯率 cache?下次打開會重新 fetch')) {
+    localStorage.removeItem('fx_data');
+    localStorage.removeItem('fx_time');
+    document.getElementById('fx-last-fetch').textContent = '(已清空)';
+    fetchExchangeRates();
+  }
+}
+
+function calcSplit() {
+  const total = getVal('split-total-jpy');
+  const heads = Math.max(1, getVal('split-heads'));
+  const collected = getVal('split-collected');
+  const each = Math.round(total / heads);
+  const pending = Math.max(0, total - collected);
+  document.getElementById('split-each').textContent = '¥' + each;
+  document.getElementById('split-pending').textContent = '¥' + pending;
+}
+
+function restoreBudget() {
+  const saved = localStorage.getItem('bud_inputs');
+  if (saved) {
+    const vals = saved.split(',');
+    ['bud-flight','bud-hotel','bud-food','bud-transport','bud-tickets','bud-shopping','bud-esa','bud-insurance','bud-buffer']
+      .forEach((id, i) => { if (vals[i]) document.getElementById(id).value = vals[i]; });
+  }
+  calcBudget();
+}
+
+// Auto-fetch FX on load (and refresh every hour)
+function initFX() {
+  // Try cached first for instant display
+  const cached = localStorage.getItem('fx_data');
+  if (cached) {
+    try {
+      applyFXRates(JSON.parse(cached));
+      const age = Date.now() - parseInt(localStorage.getItem('fx_time') || '0');
+      if (age < 60000) {
+        document.getElementById('fx-status').innerHTML = '✅ Cached: ' +
+          new Date(parseInt(localStorage.getItem('fx_time'))).toLocaleTimeString('zh-Hant', {hour: '2-digit', minute: '2-digit'});
+        document.getElementById('fx-status').style.color = '#34d399';
+      }
+    } catch {}
+  }
+  // Fetch fresh
+  fetchExchangeRates();
+  // Auto-refresh every 30 min while page open
+  setInterval(fetchExchangeRates, 30 * 60 * 1000);
+}
+
+// Auto-fetch Weather on load (and refresh every hour). Mirrors initFX pattern.
+async function initWeather() {
+  // 1. Try cached first for instant render
+  const cached = readWeatherCache();
+  if (cached) {
+    liveWeather = cached;
+    liveWeatherMeta = { fetched_at: cached.meta.fetched_at, source: cached.meta.source, is_stale: true };
+    updateWeatherStatus();
+    // Re-render all day pages so weather panels pick up cached data
+    document.querySelectorAll('.day-page').forEach(page => {
+      const meta = CITY_LANDMARKS[page.id];
+      if (!meta) return;
+      const existing = page.querySelector('.weather-panel');
+      if (existing) {
+        // date comes from data-date on the day-page wrapper
+        const wrap = page.querySelector('[data-day-render]');
+        const date = wrap ? wrap.dataset.date : null;
+        const newHtml = renderWeather(meta.city, date);
+        if (newHtml) {
+          const tmp = document.createElement('div');
+          tmp.innerHTML = newHtml;
+          existing.parentNode.replaceChild(tmp.firstElementChild, existing);
+        }
+      }
+    });
+  }
+  // 2. Fetch fresh in background
+  try {
+    const data = await fetchWeather();
+    if (data) {
+      liveWeather = data;
+      liveWeatherMeta = { fetched_at: data.meta.fetched_at, source: data.meta.source, is_stale: false };
+      updateWeatherStatus();
+      // Re-render all day pages
+      document.querySelectorAll('.day-page').forEach(page => {
+        const meta = CITY_LANDMARKS[page.id];
+        if (!meta) return;
+        const wrap = page.querySelector('[data-day-render]');
+        const date = wrap ? wrap.dataset.date : null;
+        const existing = page.querySelector('.weather-panel');
+        if (existing) {
+          const newHtml = renderWeather(meta.city, date);
+          if (newHtml) {
+            const tmp = document.createElement('div');
+            tmp.innerHTML = newHtml;
+            existing.parentNode.replaceChild(tmp.firstElementChild, existing);
+          }
+        }
+      });
+    }
+  } catch (e) {
+    console.warn('Weather fetch failed:', e);
+    if (!cached) {
+      const statusEl = document.getElementById('weather-status');
+      if (statusEl) statusEl.textContent = '❌ Fetch 失敗，用 embedded fallback';
+    }
+  }
+  // 3. Auto-refresh every 1 hour while page open
+  setInterval(() => refreshWeather(), 60 * 60 * 1000);
+}
+
+// Render inter-spot transit segments for a day
+// meta.transit = [{ from, to, mode, line, duration, fare, payment, steps, realtime, schedule }, ...]
+// seg.schedule = { first, last, frequency: [{period, every}] } for hardcoded timetable display
+function renderTransitSegments(transit) {
+  if (!transit || !transit.length) return '';
+  const segments = transit.map((seg, i) => {
+    const modeClass = seg.modeType || (seg.mode || '').toLowerCase().includes('bus') ? 'bus' :
+                     (seg.mode || '').toLowerCase().includes('walk') ? 'walk' :
+                     (seg.mode || '').toLowerCase().includes('纜車') || (seg.mode || '').toLowerCase().includes('cable') ? 'cable' :
+                     (seg.mode || '').toLowerCase().includes('機場') || (seg.mode || '').toLowerCase().includes('brt') ? 'brt' : 'rail';
+    const stepsHtml = (seg.steps || []).map(s => `<li>${s}</li>`).join('');
+    const realtimeBtn = seg.realtime
+      ? `<a href="${seg.realtime}" target="_blank" rel="noopener" class="seg-realtime">🕐 查即時班次 ↗</a>`
+      : '';
+    // Hardcoded timetable (typical / weekday reference)
+    let scheduleHtml = '';
+    if (seg.schedule) {
+      const s = seg.schedule;
+      const rowsHtml = (s.frequency || []).map(f =>
+        `<div class="seg-schedule-row"><span>${f.period}</span><strong>${f.every}</strong></div>`
+      ).join('');
+      scheduleHtml = `
+        <details class="seg-schedule">
+          <summary>📊 班次時間表 (參考)</summary>
+          <div style="margin-top:4px;">
+            <div class="seg-schedule-title">⏰ 一般時段 (平日)</div>
+            <div class="seg-schedule-row"><span>首班</span><strong>${s.first || '—'}</strong></div>
+            <div class="seg-schedule-row"><span>末班</span><strong>${s.last || '—'}</strong></div>
+            ${rowsHtml}
+            ${s.note ? `<div class="seg-schedule-note">💡 ${s.note}</div>` : ''}
+          </div>
+        </details>`;
+    }
+    return `
+      <div class="transit-segment">
+        <div class="seg-head">
+          <span class="seg-from">${seg.from}</span>
+          <span class="seg-arrow">→</span>
+          <span class="seg-to">${seg.to}</span>
+          <span class="seg-mode ${modeClass}">${seg.mode || '—'}</span>
+        </div>
+        <div class="seg-meta">
+          ${seg.line ? `<span>🚆 <strong>${seg.line}</strong></span>` : ''}
+          ${seg.duration ? `<span>⏱ <strong>${seg.duration}</strong></span>` : ''}
+          ${seg.fare ? `<span>💴 <strong>${seg.fare}</strong></span>` : ''}
+        </div>
+        ${stepsHtml ? `<div class="seg-steps"><ol>${stepsHtml}</ol></div>` : ''}
+        ${seg.payment ? `<div class="seg-payment">💳 <strong>付款：</strong>${seg.payment}</div>` : ''}
+        ${scheduleHtml}
+        ${realtimeBtn}
+      </div>`;
+  }).join('');
+  return `
+    <div class="section-title" style="margin-top:14px;">🚆 景點之間交通 (${transit.length} 段)</div>
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px;">優先 JR/MTR/輕軌，次選巴士。展開「📊 班次時間表」睇典型班次，「🕐 查即時班次」查當前實時</div>
+    ${segments}
+  `;
+}
+
+// ============ Render Day Widgets (weather + map) ============
+function renderDayWidgets() {
+  document.querySelectorAll('[data-day-render]').forEach(el => {
+    const id = el.dataset.dayId;
+    const cityKey = el.dataset.city;
+    const date = el.dataset.date;
+    const meta = CITY_LANDMARKS[id];
+    if (!meta) return;
+
+    el.innerHTML = `
+      ${renderWeather(cityKey, date)}
+      <div class="map-header">
+        <span class="map-title">📍 ${WEATHER_DATA.cities[meta.city].zh} 路線圖 (${(meta.places||[]).length} 個景點)</span>
+        <a href="https://www.google.com/maps?q=${WEATHER_DATA.cities[meta.city].lat},${WEATHER_DATA.cities[meta.city].lng}&hl=zh-Hant&z=12" target="_blank" class="map-link">Google Maps ↗</a>
+      </div>
+      <div id="map-${id}" class="mini-map"></div>
+      ${renderTransitSegments(meta.transit)}
+    `;
+  });
+  renderDayMaps();
+}
+
+// Re-add renderDayMaps() — uses Google Maps iframe + HTML pin legend
+function renderDayMaps() {
+  document.querySelectorAll('.day-page').forEach(page => {
+    const id = page.id;
+    const meta = CITY_LANDMARKS[id];
+    if (!meta) return;
+    const cityData = WEATHER_DATA.cities[meta.city];
+    const mapEl = document.getElementById('map-' + id);
+    if (!mapEl) return;
+    // Compose: Google Maps iframe (focused on first place) + HTML pin legend
+    const legendHtml = buildPinLegend(meta, id);
+    mapEl.innerHTML = buildGMapIframe(meta, cityData, `${cityData.zh} Day ${id}`) + legendHtml;
+  });
+}
+
+// ============ Init ============
+document.addEventListener('DOMContentLoaded', () => {
+  setupCheckboxes();
+  restoreBudget();
+  renderDayWidgets();
+  initFX();
+  initWeather();  // async, runs in background
+  const lastTab = localStorage.getItem('lastTab');
+  if (lastTab) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + lastTab).classList.add('active');
+    document.querySelectorAll('.tab').forEach(t => {
+      if (t.textContent.includes(lastTab === 'today' ? '總覽' : lastTab === 'days' ? '日程' : lastTab === 'pre' ? '待辦' : '預算')) {
+        t.classList.add('active');
+      }
+    });
+  }
+});
+
+// Service worker for PWA (optional - basic)
+if ('serviceWorker' in navigator) {
+  // No-op for now
+}
+</script>
+
+</body>
+</html>
