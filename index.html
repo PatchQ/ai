@@ -1297,14 +1297,20 @@ async function refreshWeather() {
       if (existing && dayDate) {
         const newHtml = renderWeather(meta.city, dayDate);
         if (newHtml) {
-          const tmp = document.createElement('div');
-          tmp.innerHTML = newHtml;
+          // Replace .weather-panel AND adjacent .weather-status sibling atomically
+          // by wrapping both in a temp, replacing, then unwrapping
           const parent = existing.parentNode;
-          const newKids = Array.from(tmp.children);
-          newKids.forEach(k => parent.insertBefore(k, existing));
-          const oldStatus = existing.nextElementSibling && existing.nextElementSibling.classList?.contains('weather-status') ? existing.nextElementSibling : null;
+          const wrapper = document.createElement('div');
+          wrapper.innerHTML = newHtml;
+          // Remove old panel
           existing.remove();
+          // Remove old status sibling if present
+          // (We track via parent + insert position from initial render)
+          // Find any .weather-status that is a child of parent and not in wrapper
+          const oldStatus = parent.querySelector('.weather-status');
           if (oldStatus) oldStatus.remove();
+          // Insert new wrapper children at end of parent
+          while (wrapper.firstChild) parent.appendChild(wrapper.firstChild);
         }
       }
     });
@@ -1324,14 +1330,13 @@ async function refreshAllWeatherPanels() {
     if (existing && dayDate) {
       const newHtml = renderWeather(meta.city, dayDate);
       if (newHtml) {
-        const tmp = document.createElement('div');
-        tmp.innerHTML = newHtml;
         const parent = existing.parentNode;
-        const newKids = Array.from(tmp.children);
-        newKids.forEach(k => parent.insertBefore(k, existing));
-        const oldStatus = existing.nextElementSibling && existing.nextElementSibling.classList?.contains('weather-status') ? existing.nextElementSibling : null;
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = newHtml;
         existing.remove();
+        const oldStatus = parent.querySelector('.weather-status');
         if (oldStatus) oldStatus.remove();
+        while (wrapper.firstChild) parent.appendChild(wrapper.firstChild);
       }
     }
   });
@@ -3373,14 +3378,15 @@ async function initWeather() {
           // Replace both weather-panel AND weather-status siblings (they share a fragment)
           const tmp = document.createElement('div');
           tmp.innerHTML = newHtml;
-          // Insert new elements before existing, then remove existing + old sibling
+          // Replace .weather-panel AND adjacent .weather-status sibling atomically
+          // by wrapping both in a temp, replacing, then unwrapping
           const parent = existing.parentNode;
-          const newKids = Array.from(tmp.children);
-          newKids.forEach(k => parent.insertBefore(k, existing));
-          // Remove old panel AND old weather-status sibling if present
-          const oldStatus = existing.nextElementSibling && existing.nextElementSibling.classList?.contains('weather-status') ? existing.nextElementSibling : null;
+          const wrapper = document.createElement('div');
+          wrapper.innerHTML = newHtml;
           existing.remove();
+          const oldStatus = parent.querySelector('.weather-status');
           if (oldStatus) oldStatus.remove();
+          while (wrapper.firstChild) parent.appendChild(wrapper.firstChild);
         }
       }
     });
@@ -3402,14 +3408,13 @@ async function initWeather() {
         if (existing && date) {
           const newHtml = renderWeather(meta.city, date);
           if (newHtml) {
-            const tmp = document.createElement('div');
-            tmp.innerHTML = newHtml;
             const parent = existing.parentNode;
-            const newKids = Array.from(tmp.children);
-            newKids.forEach(k => parent.insertBefore(k, existing));
-            const oldStatus = existing.nextElementSibling && existing.nextElementSibling.id === 'weather-status' ? existing.nextElementSibling : null;
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = newHtml;
             existing.remove();
+            const oldStatus = parent.querySelector('.weather-status');
             if (oldStatus) oldStatus.remove();
+            while (wrapper.firstChild) parent.appendChild(wrapper.firstChild);
           }
         }
       });
