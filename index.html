@@ -1122,13 +1122,39 @@ function normalizeOMDaily(daily, cityLat, cityLng, source) {
 }
 
 // Try /v1/forecast first (real forecast, ≤16 day horizon)
+// Note: forecast horizon is today + 16 days. For trip dates beyond that, returns are useless.
+const TRIP_START_DATE = '2026-07-27';
+const TRIP_END_DATE = '2026-08-03';
 async function tryForecast(cityKey, city) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lng}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&forecast_days=8&timezone=Asia%2FTokyo`;
+  // Request as many days as possible to maximize coverage of trip dates
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lng}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&forecast_days=16&timezone=Asia%2FTokyo`;
   const res = await fetch(url, { cache: 'no-store' });
   if (!res.ok) throw new Error(`forecast HTTP ${res.status}`);
   const data = await res.json();
   if (!data.daily || !data.daily.time || data.daily.time.length === 0) throw new Error('forecast empty');
+  // Validate: must include at least trip start date — otherwise useless
+  const dates = data.daily.time;
+  const hasTripDate = dates.includes(TRIP_START_DATE) || dates.some(d => d >= TRIP_START_DATE && d <= TRIP_END_DATE);
+  if (!hasTripDate) throw new Error(`forecast no trip coverage (last=${dates[dates.length-1]})`);
   return { city: cityKey, ...normalizeOMDaily(data.daily, city.lat, city.lng, 'api.open-meteo.com/v1/forecast') };
+}
+
+// Merge forecast (partial) + climate (full) into single daily array covering entire trip range
+function mergeTripWeather(forecastDaily, climateDaily) {
+  if (!forecastDaily || forecastDaily.length === 0) return climateDaily;
+  if (!climateDaily || climateDaily.length === 0) return forecastDaily;
+  // Get forecast date set
+  const fcDates = new Set(forecastDaily.map(d => d.date));
+  // Take forecast for in-range dates, climate for missing
+  const merged = [];
+  forecastDaily.forEach(d => {
+    if (d.date >= TRIP_START_DATE && d.date <= TRIP_END_DATE) merged.push(d);
+  });
+  climateDaily.forEach(d => {
+    if (d.date >= TRIP_START_DATE && d.date <= TRIP_END_DATE && !fcDates.has(d.date)) merged.push(d);
+  });
+  merged.sort((a, b) => a.date.localeCompare(b.date));
+  return merged;
 }
 
 // Fallback /v1/climate (projection, no horizon limit, but less accurate)
@@ -1149,24 +1175,38 @@ async function fetchWeather() {
   const tried = { forecast: false, climate: false, usedCache: false };
   const cities = {};
 
-  // Build all 6 fetches in parallel
+  // Build all 6 fetches in parallel — fetch BOTH forecast + climate, then merge
   const fetchOne = async (key) => {
     const city = WEATHER_DATA.cities[key];
-    // 1. Try forecast
-    try {
-      const result = await tryForecast(key, city);
-      tried.forecast = true;
-      return result;
-    } catch (e1) {
-      // 2. Fallback to climate
-      try {
-        const result = await tryClimate(key, city);
-        tried.climate = true;
-        return result;
-      } catch (e2) {
-        return null;  // both failed for this city
-      }
-    }
+    let forecastResult = null;
+    let climateResult = null;
+    let usedForecast = false;
+    let usedClimate = false;
+    // Parallel: try forecast + climate at same time, don't depend on either
+    const [fcRes, clRes] = await Promise.allSettled([
+      tryForecast(key, city).catch(e => { throw e; }),
+      tryClimate(key, city).catch(e => { throw e; })
+    ]);
+    if (fcRes.status === 'fulfilled') { forecastResult = fcRes.value; usedForecast = true; }
+    if (clRes.status === 'fulfilled') { climateResult = clRes.value; usedClimate = true; }
+    if (!forecastResult && !climateResult) return null;
+    // Merge: forecast takes priority for trip dates, climate fills gaps
+    const mergedDaily = mergeTripWeather(
+      forecastResult ? forecastResult.daily : null,
+      climateResult ? climateResult.daily : null
+    );
+    const source = usedForecast && usedClimate ? 'forecast+climate merged'
+                  : usedForecast ? 'api.open-meteo.com/v1/forecast'
+                  : 'climate-api (projection)';
+    tried.forecast = tried.forecast || usedForecast;
+    tried.climate = tried.climate || usedClimate;
+    return {
+      city: key,
+      lat: city.lat,
+      lng: city.lng,
+      daily: mergedDaily,
+      source
+    };
   };
 
   const results = await Promise.all(cityKeys.map(fetchOne));
@@ -1267,6 +1307,47 @@ async function refreshWeather() {
     }
   } else {
     if (statusEl) statusEl.textContent = '❌ Fetch 失敗，請 retry (check 網絡)';
+  }
+}
+
+// Re-render ALL day pages (used by manual button refresh)
+async function refreshAllWeatherPanels() {
+  document.querySelectorAll('.day-page').forEach(page => {
+    const dayIdx = parseInt(page.id.replace('day-', ''));
+    const meta = CITY_LANDMARKS['day-' + dayIdx];
+    if (!meta) return;
+    const dayDate = computeDateForDay ? computeDateForDay(dayIdx) : null;
+    const existing = page.querySelector('.weather-panel');
+    if (existing) {
+      const newHtml = renderWeather(meta.city, dayDate);
+      if (newHtml) {
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = newHtml;
+        existing.parentNode.replaceChild(wrapper.firstElementChild, existing);
+      }
+    }
+  });
+}
+
+// Manual trigger from FX page button — like FX's fetchExchangeRates()
+async function refreshWeatherFromButton() {
+  const statusEl = document.getElementById('weather-refresh-status');
+  if (statusEl) statusEl.textContent = '⏳ 抓緊最新天氣…';
+  // Clear cache so we get fresh data
+  try { localStorage.removeItem(WEATHER_CACHE_KEY); } catch(e) {}
+  const data = await fetchWeather();
+  if (data) {
+    liveWeather = data;
+    liveWeatherMeta = { fetched_at: data.meta.fetched_at, source: data.meta.source, is_stale: false };
+    updateWeatherStatus();
+    await refreshAllWeatherPanels();
+    const ageMin = Math.floor((Date.now() - new Date(data.meta.fetched_at).getTime()) / 60000);
+    const sourceShort = data.meta.source.includes('climate') ? '氣候模型' : '實時預報';
+    if (statusEl) statusEl.textContent = `✅ ${ageMin < 1 ? '剛剛' : ageMin + ' 分鐘前'} · ${sourceShort}`;
+    // Auto-clear status after 5s
+    setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 5000);
+  } else {
+    if (statusEl) statusEl.textContent = '❌ Fetch 失敗 — check 網絡';
   }
 }
 
@@ -2813,6 +2894,8 @@ function buildPinLegend(meta, dayId) {
 
   <div id="fx-card-date" style="font-size: 11px; color: var(--text-dim); margin-top: 6px;"></div>
   <button class="btn warn tiny" style="margin-top:10px;" onclick="fetchExchangeRates()">🔄 Refresh 匯率 (抓最新)</button>
+  <button class="btn tiny" style="margin-top:6px;" onclick="refreshWeatherFromButton()">🌤️ 同步抓最新天氣</button>
+  <div id="weather-refresh-status" style="font-size:11px; color:var(--text-dim); margin-top:4px;"></div>
 </div>
 
 <div class="budget-card">
