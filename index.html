@@ -1303,7 +1303,8 @@ async function refreshWeather() {
           wrapper.innerHTML = newHtml;
           // Insert new children BEFORE existing first (preserves position at original slot)
           const newKids = Array.from(wrapper.children);
-          for (let i = newKids.length - 1; i >= 0; i--) {
+          // Insert new children in FORWARD order before existing (preserves array order)
+          for (let i = 0; i < newKids.length; i++) {
             parent.insertBefore(newKids[i], existing);
           }
           // Then remove old panel
@@ -1341,7 +1342,8 @@ async function refreshAllWeatherPanels() {
         wrapper.innerHTML = newHtml;
         // Insert new children BEFORE existing first (preserves position)
         const newKids = Array.from(wrapper.children);
-        for (let i = newKids.length - 1; i >= 0; i--) {
+        // Insert in FORWARD order to preserve array order (panel before status)
+        for (let i = 0; i < newKids.length; i++) {
           parent.insertBefore(newKids[i], existing);
         }
         existing.remove();
@@ -3399,7 +3401,8 @@ async function initWeather() {
           wrapper.innerHTML = newHtml;
           // Insert new children BEFORE existing first (preserves position)
           const newKids = Array.from(wrapper.children);
-          for (let i = newKids.length - 1; i >= 0; i--) {
+          // Insert new children in FORWARD order before existing (preserves array order)
+          for (let i = 0; i < newKids.length; i++) {
             parent.insertBefore(newKids[i], existing);
           }
           existing.remove();
@@ -3436,7 +3439,8 @@ async function initWeather() {
             wrapper.innerHTML = newHtml;
             // Insert new children BEFORE existing first (preserves position)
             const newKids = Array.from(wrapper.children);
-            for (let i = newKids.length - 1; i >= 0; i--) {
+            // Insert in FORWARD order to preserve array order (panel before status)
+            for (let i = 0; i < newKids.length; i++) {
               parent.insertBefore(newKids[i], existing);
             }
             existing.remove();
