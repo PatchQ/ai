@@ -1278,35 +1278,38 @@ function isStale(weatherData) {
 }
 
 async function refreshWeather() {
-  const statusEl = document.getElementById('weather-status');
-  if (statusEl) statusEl.textContent = '⏳ 抓緊最新天氣…';
+  // Update status on ALL day pages
+  const statusEls = document.querySelectorAll('.weather-status');
+  statusEls.forEach(el => el.textContent = '⏳ 抓緊最新天氣…');
   const data = await fetchWeather();
   if (data) {
     liveWeather = data;
     liveWeatherMeta = { fetched_at: data.meta.fetched_at, source: data.meta.source, is_stale: data.meta.is_stale || false };
     updateWeatherStatus();
-    // Re-render the active day page so its weather panel picks up fresh data
-    const activeDay = document.querySelector('.day-page.active');
-    if (activeDay) {
-      const dayIdx = parseInt(activeDay.id.replace('day-', ''));
-      const dayId = activeDay.id;
+    // Re-render ALL day pages so their weather panels pick up fresh data
+    document.querySelectorAll('.day-page').forEach(page => {
+      const dayIdx = parseInt(page.id.replace('day-', ''));
       const meta = CITY_LANDMARKS['day-' + dayIdx];
-      if (meta) {
-        // Read date from data-day-render element instead of relying on computeDateForDay()
-        const renderEl = activeDay.querySelector('[data-day-render]');
-        const dayDate = renderEl ? renderEl.dataset.date : null;
+      if (!meta) return;
+      const renderEl = page.querySelector('[data-day-render]');
+      const dayDate = renderEl ? renderEl.dataset.date : null;
+      const existing = renderEl ? renderEl.querySelector('.weather-panel') : null;
+      if (existing && dayDate) {
         const newHtml = renderWeather(meta.city, dayDate);
-        // Replace existing weather-panel if any
-        const existing = activeDay.querySelector('.weather-panel');
-        if (existing && newHtml) {
-          const wrapper = document.createElement('div');
-          wrapper.innerHTML = newHtml;
-          existing.parentNode.replaceChild(wrapper.firstElementChild, existing);
+        if (newHtml) {
+          const tmp = document.createElement('div');
+          tmp.innerHTML = newHtml;
+          const parent = existing.parentNode;
+          const newKids = Array.from(tmp.children);
+          newKids.forEach(k => parent.insertBefore(k, existing));
+          const oldStatus = existing.nextElementSibling && existing.nextElementSibling.classList?.contains('weather-status') ? existing.nextElementSibling : null;
+          existing.remove();
+          if (oldStatus) oldStatus.remove();
         }
       }
-    }
+    });
   } else {
-    if (statusEl) statusEl.textContent = '❌ Fetch 失敗，請 retry (check 網絡)';
+    statusEls.forEach(el => el.textContent = '❌ Fetch 失敗，請 retry (check 網絡)');
   }
 }
 
@@ -1316,14 +1319,19 @@ async function refreshAllWeatherPanels() {
     const dayIdx = parseInt((el.dataset.dayId || '').replace('day-', ''));
     const meta = CITY_LANDMARKS['day-' + dayIdx];
     if (!meta) return;
-    const dayDate = el.dataset.date || null;  // e.g. "2026-07-27"
+    const dayDate = el.dataset.date || null;
     const existing = el.querySelector('.weather-panel');
-    if (existing) {
+    if (existing && dayDate) {
       const newHtml = renderWeather(meta.city, dayDate);
       if (newHtml) {
-        const wrapper = document.createElement('div');
-        wrapper.innerHTML = newHtml;
-        existing.parentNode.replaceChild(wrapper.firstElementChild, existing);
+        const tmp = document.createElement('div');
+        tmp.innerHTML = newHtml;
+        const parent = existing.parentNode;
+        const newKids = Array.from(tmp.children);
+        newKids.forEach(k => parent.insertBefore(k, existing));
+        const oldStatus = existing.nextElementSibling && existing.nextElementSibling.classList?.contains('weather-status') ? existing.nextElementSibling : null;
+        existing.remove();
+        if (oldStatus) oldStatus.remove();
       }
     }
   });
@@ -1352,13 +1360,13 @@ async function refreshWeatherFromButton() {
 }
 
 function updateWeatherStatus() {
-  const statusEl = document.getElementById('weather-status');
-  if (!statusEl || !liveWeatherMeta) return;
+  const statusEls = document.querySelectorAll('.weather-status');
+  if (!statusEls.length || !liveWeatherMeta) return;
   const ageMin = Math.floor((Date.now() - new Date(liveWeatherMeta.fetched_at).getTime()) / 60000);
   const ageStr = ageMin < 1 ? '剛剛' : ageMin < 60 ? `${ageMin} 分鐘前` : `${Math.floor(ageMin/60)} 小時前`;
   const sourceShort = liveWeatherMeta.source.includes('climate') ? '氣候模型' : '實時預報';
   const staleTag = liveWeatherMeta.is_stale || isStale(liveWeather) ? ' ⚠️可能過時' : '';
-  statusEl.innerHTML = `🔄 最後更新：${ageStr} · 來源：${sourceShort}${staleTag}`;
+  statusEls.forEach(el => el.innerHTML = `🔄 最後更新：${ageStr} · 來源：${sourceShort}${staleTag}`);
 }
 
 // ============ Weather + Map Renderer ============
@@ -1800,7 +1808,7 @@ function renderWeather(cityKey, date) {
         <div style="opacity:0.7; font-size:11px; margin-top:4px;">適合戶外 ☑️｜${day.max >= 30 ? '☀️' : ''}${day.max >= 33 ? ' 多飲水 💧' : ''}${day.precip >= 5 ? '建議帶遮 ☂️' : ''}</div>
       </div>
     </div>
-    <div class="weather-note" id="weather-status">⏳ 載入實時天氣中…</div>
+    <div class="weather-status weather-note">⏳ 載入實時天氣中…</div>
   `;
 }
 
@@ -3356,16 +3364,23 @@ async function initWeather() {
     document.querySelectorAll('.day-page').forEach(page => {
       const meta = CITY_LANDMARKS[page.id];
       if (!meta) return;
-      const existing = page.querySelector('.weather-panel');
-      if (existing) {
-        // date comes from data-date on the day-page wrapper
-        const wrap = page.querySelector('[data-day-render]');
-        const date = wrap ? wrap.dataset.date : null;
+      const wrap = page.querySelector('[data-day-render]');
+      const date = wrap ? wrap.dataset.date : null;
+      const existing = wrap ? wrap.querySelector('.weather-panel') : null;
+      if (existing && date) {
         const newHtml = renderWeather(meta.city, date);
         if (newHtml) {
+          // Replace both weather-panel AND weather-status siblings (they share a fragment)
           const tmp = document.createElement('div');
           tmp.innerHTML = newHtml;
-          existing.parentNode.replaceChild(tmp.firstElementChild, existing);
+          // Insert new elements before existing, then remove existing + old sibling
+          const parent = existing.parentNode;
+          const newKids = Array.from(tmp.children);
+          newKids.forEach(k => parent.insertBefore(k, existing));
+          // Remove old panel AND old weather-status sibling if present
+          const oldStatus = existing.nextElementSibling && existing.nextElementSibling.classList?.contains('weather-status') ? existing.nextElementSibling : null;
+          existing.remove();
+          if (oldStatus) oldStatus.remove();
         }
       }
     });
@@ -3383,13 +3398,18 @@ async function initWeather() {
         if (!meta) return;
         const wrap = page.querySelector('[data-day-render]');
         const date = wrap ? wrap.dataset.date : null;
-        const existing = page.querySelector('.weather-panel');
-        if (existing) {
+        const existing = wrap ? wrap.querySelector('.weather-panel') : null;
+        if (existing && date) {
           const newHtml = renderWeather(meta.city, date);
           if (newHtml) {
             const tmp = document.createElement('div');
             tmp.innerHTML = newHtml;
-            existing.parentNode.replaceChild(tmp.firstElementChild, existing);
+            const parent = existing.parentNode;
+            const newKids = Array.from(tmp.children);
+            newKids.forEach(k => parent.insertBefore(k, existing));
+            const oldStatus = existing.nextElementSibling && existing.nextElementSibling.id === 'weather-status' ? existing.nextElementSibling : null;
+            existing.remove();
+            if (oldStatus) oldStatus.remove();
           }
         }
       });
@@ -3397,7 +3417,7 @@ async function initWeather() {
   } catch (e) {
     console.warn('Weather fetch failed:', e);
     if (!cached) {
-      const statusEl = document.getElementById('weather-status');
+      const statusEl = document.querySelector('.weather-status');
       if (statusEl) statusEl.textContent = '❌ Fetch 失敗，用 embedded fallback';
     }
   }
