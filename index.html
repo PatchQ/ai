@@ -3716,25 +3716,29 @@ const HOTEL_CHECKINS = {
     name: 'Daiwa Roynet 神戶三宮 PREMIER',
     pdf: 'pdfs/daiwa-roynet-kobe.pdf',
     dates: '7/27 (一) check-in',
-    shortcutsName: 'Hotel PDF - Daiwa Roynet Kobe'
+    shortcutsName: 'Hotel PDF - Daiwa Roynet Kobe',
+    filename: 'daiwa-roynet-kobe.pdf'
   },
   3: {
     name: '環球影城東方酒店 (Universal Oriental Hotel)',
     pdf: 'pdfs/usj-oriental.pdf',
     dates: '7/29 (三) check-in',
-    shortcutsName: 'Hotel PDF - USJ Oriental'
+    shortcutsName: 'Hotel PDF - USJ Oriental',
+    filename: 'usj-oriental.pdf'
   },
   4: {
     name: '大阪難波格利茲酒店 (Hotel Gracery Osaka Namba)',
     pdf: 'pdfs/grids-osaka-namba.pdf',
     dates: '7/30 (四) check-in',
-    shortcutsName: 'Hotel PDF - GRIDS Osaka Namba'
+    shortcutsName: 'Hotel PDF - GRIDS Osaka Namba',
+    filename: 'grids-osaka-namba.pdf'
   },
   6: {
     name: '君品酒店 Palais de Chine',
     pdf: 'pdfs/palais-de-chine.pdf',
     dates: '8/1 (六) check-in',
-    shortcutsName: 'Hotel PDF - Palais de Chine Taipei'
+    shortcutsName: 'Hotel PDF - Palais de Chine Taipei',
+    filename: 'palais-de-chine.pdf'
   }
 };
 
@@ -3768,13 +3772,20 @@ function renderCheckinPanel(dayIdx) {
       <details class="checkin-shortcut-setup">
         <summary>📋 iOS Shortcut 設置 (一次, 永久用)</summary>
         <ol>
-          <li>打開 iPhone <strong>Shortcuts</strong> app</li>
-          <li>右上角 <strong>+</strong> → 新增 Shortcut, 命名為 <code>${info.shortcutsName}</code></li>
-          <li>加 Actions: <strong>Get Contents of URL</strong> (URL = 傳入的 input)</li>
-          <li>加 Actions: <strong>Save File</strong> (儲存到 Files / On My iPhone / 創建 folder "Hotel PDFs")</li>
-          <li>Settings 開啟 <strong>"Show in Share Sheet"</strong> + <strong>"Allow Running When Locked"</strong></li>
-          <li>完成! 從此 tap 「⚡ iOS Shortcut」→ 自動下載+存 Files app</li>
+          <li>打開 iPhone <strong>Shortcuts</strong> app → 右上 <strong>+</strong></li>
+          <li>命名為 <code>${info.shortcutsName}</code></li>
+          <li>加 Actions (順序):
+            <ol>
+              <li><strong>Get Contents of URL</strong> → 開啟「Shortcut Input」自動接收 input</li>
+              <li><strong>Save File</strong> → Destination = <code>神戶2026/</code> folder; Filename = <code>${info.filename}</code>; Overwrite = ✅</li>
+            </ol>
+          </li>
+          <li>Settings ⚙️ → ☑️ Show in Share Sheet + ☑️ Allow Running When Locked</li>
+          <li>Done! Tap ⚡ iOS Shortcut → 自動下載 PDF → 存到 Files app 「神戶2026」</li>
         </ol>
+        <div style="margin-top:8px; padding:6px 8px; background:rgba(255,215,0,0.18); border-radius:4px;">
+          💡 <strong>懶人方案</strong>: PWA 嘅 <a href="https://patchq.github.io/ai/shortcuts/README.md" target="_blank" style="color:#fff; text-decoration:underline;">shortcuts/README.md</a> 有 Master Setup 一次過 4 個酒店嘅 Shortcut。
+        </div>
       </details>
     </div>
   `;
