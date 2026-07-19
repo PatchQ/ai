@@ -3777,11 +3777,14 @@ function renderCheckinPanel(dayIdx) {
           <li>加 Actions (順序):
             <ol>
               <li><strong>Get Contents of URL</strong> → 開啟「Shortcut Input」自動接收 input</li>
-              <li><strong>Save File</strong> → Destination = <code>神戶2026/</code> folder; Filename = <code>${info.filename}</code>; Overwrite = ✅</li>
+              <li><strong>Save File</strong> → Destination = <code>我的 iPhone / 神戶2026/</code> folder; Filename = <code>${info.filename}</code>; Overwrite = ✅</li>
+              <li><strong>Open Folder</strong> → Folder = 「我的 iPhone → 神戶2026」<br>
+                <em>💡 iOS 16+ 自動打開「檔案」app 並跳到指定 folder</em>
+              </li>
             </ol>
           </li>
           <li>Settings ⚙️ → ☑️ Show in Share Sheet + ☑️ Allow Running When Locked</li>
-          <li>Done! Tap ⚡ iOS Shortcut → 自動下載 PDF → 存到 Files app 「神戶2026」</li>
+          <li>Done! Tap ⚡ iOS Shortcut → 自動下載 PDF → 自動打開「檔案」app 到「神戶2026」folder</li>
         </ol>
         <div style="margin-top:8px; padding:6px 8px; background:rgba(255,215,0,0.18); border-radius:4px;">
           💡 <strong>懶人方案</strong>: PWA 嘅 <a href="https://patchq.github.io/ai/shortcuts/README.md" target="_blank" style="color:#fff; text-decoration:underline;">shortcuts/README.md</a> 有 Master Setup 一次過 4 個酒店嘅 Shortcut。
