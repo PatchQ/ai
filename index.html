@@ -3749,7 +3749,7 @@ const HOTEL_CHECKINS = {
 function renderCheckinPanel(dayIdx) {
   const info = HOTEL_CHECKINS[dayIdx];
   if (!info) return '';
-  const shortcutsUrl = `shortcuts://run-shortcut?name=${encodeURIComponent(info.shortcutsName)}&input=${encodeURIComponent(info.pdf)}`;
+  const shortcutsUrl = `shortcuts://run-shortcut?name=Open%20Files%20App`;
   return `
     <div class="checkin-panel">
       <div class="checkin-panel-header">
@@ -3760,34 +3760,28 @@ function renderCheckinPanel(dayIdx) {
         <span class="checkin-hotel-name">🏨 ${info.name}</span>
       </div>
       <div class="checkin-buttons">
-        <a href="${info.pdf}" target="_blank" rel="noopener" class="checkin-pdf-btn" download>
-          <span class="pdf-icon">📄</span>
-          <span>直接開 PDF</span>
-        </a>
         <a href="${shortcutsUrl}" class="checkin-pdf-btn checkin-shortcut-btn">
-          <span class="pdf-icon">⚡</span>
-          <span>iOS Shortcut</span>
+          <span class="pdf-icon">📂</span>
+          <span>打開「檔案」app</span>
         </a>
       </div>
       <details class="checkin-shortcut-setup">
         <summary>📋 iOS Shortcut 設置 (一次, 永久用)</summary>
         <ol>
           <li>打開 iPhone <strong>Shortcuts</strong> app → 右上 <strong>+</strong></li>
-          <li>命名為 <code>${info.shortcutsName}</code></li>
-          <li>加 Actions (順序):
+          <li>命名為 <code>Open Files App</code></li>
+          <li>加 Actions:
             <ol>
-              <li><strong>Get Contents of URL</strong> → 開啟「Shortcut Input」自動接收 input</li>
-              <li><strong>Save File</strong> → Destination = <code>我的 iPhone / 神戶2026/</code> folder; Filename = <code>${info.filename}</code>; Overwrite = ✅</li>
-              <li><strong>Open Folder</strong> → Folder = 「我的 iPhone → 神戶2026」<br>
+              <li><strong>Open Folder</strong> → Folder = 「我的 iPhone」 (或任何你嘅目的地)<br>
                 <em>💡 iOS 16+ 自動打開「檔案」app 並跳到指定 folder</em>
               </li>
             </ol>
           </li>
           <li>Settings ⚙️ → ☑️ Show in Share Sheet + ☑️ Allow Running When Locked</li>
-          <li>Done! Tap ⚡ iOS Shortcut → 自動下載 PDF → 自動打開「檔案」app 到「神戶2026」folder</li>
+          <li>Done! Tap 📂 button → 自動打開「檔案」app</li>
         </ol>
         <div style="margin-top:8px; padding:6px 8px; background:rgba(255,215,0,0.18); border-radius:4px;">
-          💡 <strong>懶人方案</strong>: PWA 嘅 <a href="https://patchq.github.io/ai/shortcuts/README.md" target="_blank" style="color:#fff; text-decoration:underline;">shortcuts/README.md</a> 有 Master Setup 一次過 4 個酒店嘅 Shortcut。
+          💡 <strong>懶人方案</strong>: PWA 嘅 <a href="https://patchq.github.io/ai/shortcuts/README.md" target="_blank" style="color:#fff; text-decoration:underline;">shortcuts/README.md</a> 有詳細 step-by-step + Master Setup。
         </div>
       </details>
     </div>
