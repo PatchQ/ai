@@ -6,12 +6,16 @@ PWA 簡化版: 每個 check-in day 嘅 panel 只有 1 個 button (📂 打開「
 
 ## 🚀 Setup (3 分鐘)
 
-### iPhone:
+### 預先建立 folder (重要!):
+1. iPhone **檔案** app → 「我的 iPhone」
+2. 長按空白位 → **新增檔案夾** → 命名 `神戶2026`
+
+### 創建 Shortcut:
 1. 打開 **Shortcuts** app
 2. Tap 右上 **+** → 創建新 Shortcut
 3. 命名為 **`Open Files App`** (必須完全匹配, 包括大小寫)
 4. 加 1 個 Action:
-   - **Open Folder** (iOS 16+) → Folder = 「我的 iPhone」(或任何你想打開嘅 folder)
+   - **Open Folder** (iOS 16+) → Folder = 「我的 iPhone → 神戶2026」
 5. Settings ⚙️ → ☑️ Show in Share Sheet + ☑️ Allow Running When Locked
 6. **Done** ✅
 
@@ -23,8 +27,8 @@ Trip 期間:
 1. iPhone Safari → 開 PWA `https://patchq.github.io/ai/`
 2. 📅 日程 → Day X (check-in day)
 3. 見到 🟢 綠色 check-in panel + 📂 打開「檔案」app button
-4. Tap button → iOS Shortcut 自動 trigger → 「檔案」app 自動打開
-5. 自己 navigate 去 PDF folder → 用 PDF ✅
+4. Tap button → iOS Shortcut 自動 trigger → 「檔案」app 自動打開「神戶2026」folder
+5. 直接揀 PDF 出嚟用 ✅
 
 ---
 
