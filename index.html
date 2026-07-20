@@ -1827,11 +1827,11 @@ const CITY_LANDMARKS = {
          {period: '四橋線 日間', every: '每 7-10 min'}
        ],
        note: '8/1 (六) 週六 — 11:00 前去八阪神社避開人潮 + 好光線'}},
-    {from: '難波八阪神社', to: '難波 City Par', mode: '步行', line: '—', duration: '10 min', fare: '免費',
-     steps: ['神社出 → 沿 元堀通向南 200m', '到 難波 City 入口 (難波中 2-10-70)', '可步行 5 分到 難波 Parks (連結 2 樓天橋)'],
+    {from: '難波八阪神社', to: '難波CITY 本館', mode: '步行', line: '—', duration: '10 min', fare: '免費',
+     steps: ['神社出 → 沿 元堀通向南 200m', '到 難波CITY 本館 (難波中 2-10-70)', '可步行 5 分到 難波 Parks (連結 2 樓天橋)'],
      payment: '—',
      realtime: ''},
-    {from: '難波 City Par', to: '大阪難波駅', mode: '步行', line: '—', duration: '5 min', fare: '免費',
+    {from: '難波CITY 本館', to: '大阪難波駅', mode: '步行', line: '—', duration: '5 min', fare: '免費',
      steps: ['難波 City 1F 連通 なんば Walk (地下街)', '跟「南海なんば」指標行 → 南海電鉄 なんば駅 / 近鉄 なんば駅 / Metro なんば駅 (5 站共用)'],
      payment: '—',
      realtime: ''},
@@ -1848,16 +1848,16 @@ const CITY_LANDMARKS = {
        ],
        note: '🔴🔴 8/1 (六) 19:00 機 — 必須 15:00 前離開難波，預 1 小時 buffer 到 UKB check-in (2.5 hr 開櫃)!'}}
   ], places: [
-    {name: '難波八阪神社', lat: 34.6612, lng: 135.4967, must: true, tips: {
+    {name: '難波八阪神社', lat: 34.6615592, lng: 135.4967039, must: true, tips: {
       must: ['🦁 獅子殿 (12m × 11m × 10m 朱紅大獅子頭) — 大阪 No.1 打卡景點', '御朱印 ¥300 — 三巴紋 + 木瓜紋 + 獅子殿印'],
       food: ['周邊難波商店街：立吞寿司 + 章魚燒 ¥500 均一', '裏なんば (神社南邊 5 分鐘) — 大阪老居酒屋'],
-      notes: ['主祭神：素盞嗚尊 — 厄除け、疫病退散、商売繁盛 (生意人 / 賭徒 / 考生 愛嚟)', '御守：獅子頭守 (限定) / 勝運守 / 扇子おみくじ ¥300', 'JR 難波 / Osaka Metro なんば / 南海なんば 步行 6-8 分鐘', '最佳拍照光線：早上 9-10 點 (獅子殿朝東)']
+      notes: ['主祭神：素盞嗚尊 — 厄除け、疫病退散、商売繁盛 (生意人 / 賭徒 / 考生 愛嚟)', '御守：獅子頭守 (限定) / 勝運守 / 扇子おみくじ ¥300', 'JR 難波 / Osaka Metro なんば / 南海なんば 步行 6-8 分鐘', '最佳拍照光線：早上 9-10 點 (獅子殿朝東)', 'Place ID: 0x6000e77279bd5541:0x80c374197554ea9f (Google Maps)']
     }},
-    {name: '難波 City Par', lat: 34.6657, lng: 135.5011, tips: {
-      must: ['地下街迷宮 — 連接難波 Walk / Parks / City / Namba Walk 4 個地下街相通', '藥妝掃貨：松本清、大國藥妝', 'Uniqlo / GU / ABC-MART 掃平嘢'],
+    {name: '難波CITY 本館', lat: 34.6626989, lng: 135.5020699, tips: {
+      must: ['地下街迷宮 — 連接難波 Walk / Parks / CITY / Namba Walk 4 個地下街相通', '藥妝掃貨：松本清、大國藥妝', 'Uniqlo / GU / ABC-MART 掃平嘢'],
       events: ['🔴 7/1-8/9 サマーポイントラッシュ & サマーセール — ポイント 5x + 限定折扣'],
       food: ['長崎堂 エッグハンバーグ + 蛋包飯 ¥1,200', '551蓬萊 豚饅 ¥200/個', 'PABLO 芝士撻 ¥300'],
-      notes: ['退稅 2F 詢問處，同店 ¥5,000 up，帶護照', '難波 City vs 難波 Parks = 不同帳，須分開退', '8/1-8/16 お盆期間大阪人多']
+      notes: ['退稅 2F 詢問處，同店 ¥5,000 up，帶護照', '難波CITY vs 難波 Parks = 不同帳，須分開退', '8/1-8/16 お盆期間大阪人多', 'Place ID: 0x6000e7696859de15:0x645df8a533b0f531 (Google Maps)']
     }},
     {name: '大阪難波駅', lat: 34.6668, lng: 135.4927, tips: {
       notes: ['8/1 出發：JR 大阪 → 三宮 (新快速 21 分 ¥410) → Port Liner (18 分 ¥250) → UKB']
@@ -2213,7 +2213,7 @@ function buildPinLegend(meta, dayId) {
 <div class="day-card osaka">
   <div class="day-header"><span class="date">8/1 Day 6 (六)</span><span class="city">大阪 → 神戶 → 台北</span></div>
   <div>🏯 難波八阪神社</div>
-  <div>🛍️ 難波 City Par</div>
+  <div>🛍️ 難波CITY 本館</div>
   <div>🚊 大阪難波格利茲酒店 check-out → 15:00 → 神戶空港 (阪神+Port Liner)</div>
   <div>✈️ 神戶 19:00 → 台北 20:55</div>
   <div>🚆 機場捷運 → 北車站 → 京站 Q Square</div>
@@ -2690,7 +2690,7 @@ function buildPinLegend(meta, dayId) {
   <div class="activity">
     <input type="checkbox" data-id="d6-2" id="d6-2">
     <div class="body">
-      <div class="title">🛍️ 難波 City Par (最後掃貨)</div>
+      <div class="title">🛍️ 難波CITY 本館 (最後掃貨)</div>
       <div class="desc">藥妝/零食/服飾 (建議 pre-list 慳時間)</div>
     </div>
   </div>
