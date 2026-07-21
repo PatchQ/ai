@@ -1835,18 +1835,17 @@ const CITY_LANDMARKS = {
      steps: ['難波 City 1F 連通 なんば Walk (地下街)', '跟「南海なんば」指標行 → 南海電鉄 なんば駅 / 近鉄 なんば駅 / Metro なんば駅 (5 站共用)'],
      payment: '—',
      realtime: ''},
-    {from: '大阪難波駅', to: '神戶空港 (UKB)', mode: '阪神 + JR + Port Liner', line: '阪神なんば線 + JR + Port Liner', duration: '70 min', fare: '¥1,030',
-     steps: ['近鉄/南海 なんば駅 步行 5 分到 Osaka Metro なんば駅', '搭 御堂筋線 1 站到 梅田駅 (5 分 ¥180)', '步行 8 分到 JR 大阪駅 (大丸梅田百貨通道)', '搭 JR 神戶線 新快速 直達 三ノ宮駅 (21 分 ¥410)', '三宮駅 步行 5 分到 貿易中心前駅 (Port Liner 月台)', '搭 Port Liner 直達 神戶空港駅 (18 分 ¥250)', '到達 UKB'],
-     payment: 'IC卡 (ICOCA) / 現金 (整段約 ¥840-1,030 取決於 IC卡 segment fare)',
+    {from: '大阪難波駅', to: '神戶空港 (UKB)', mode: '阪神 + Port Liner', line: '阪神本線 快速急行 + Port Liner', duration: '62 min', fare: '¥760',
+     steps: ['大阪難波駅 (阪神) 搭 阪神本線 快速急行 (往神戸三宮方向)', '直達 神戶三宮駅 (41 分 ¥540) — 唔使轉車、唔使換車', '三宮駅內步行 3-5 分鐘到 貿易中心前駅 (Port Liner 月台)', '搭 Port Liner 直達 神戶空港駅 (18 分 ¥220)', '到達 UKB'],
+     payment: 'IC卡 (ICOCA) / 現金 (整段約 ¥760)',
      realtime: 'https://www.jorudan.co.jp/norikae/cgi/nori.cgi?eki1=%E9%9B%A3%E6%B3%A2&eki2=%E7%A5%9E%E6%88%B1%E7%A9%BA%E6%B8%AF',
-     schedule: {first: 'Metro 05:00', last: '🔴 Port Liner 23:18',
+     schedule: {first: '阪神快速急行 06:00', last: '🔴 Port Liner 23:18',
        frequency: [
-         {period: '御堂筋線 7:00-9:00 早高峰', every: '每 2-4 min (超密)'},
-         {period: 'JR 神戶線 平日', every: '新快速 每 10-15 min'},
+         {period: '阪神快速急行 平日 10:00-16:00', every: '每 10-15 min'},
          {period: 'Port Liner 平日', every: '每 10-15 min'},
          {period: 'Port Liner 末班 23:18', every: '🔴 三宮車出後第一班準時!'}
        ],
-       note: '🔴🔴 8/1 (六) 19:00 機 — 必須 15:00 前離開難波，預 1 小時 buffer 到 UKB check-in (2.5 hr 開櫃)!'}}
+       note: '🔴🔴 8/1 (六) 19:00 機 — 15:00 出發難波 → 三宮 (41 分) → Port Liner (18 分) → UKB ~16:00 抵達 check-in (2.5 hr 開櫃)'}}
   ], places: [
     {name: '難波八阪神社', lat: 34.6615592, lng: 135.4967039, must: true, tips: {
       must: ['🦁 獅子殿 (12m × 11m × 10m 朱紅大獅子頭) — 大阪 No.1 打卡景點', '御朱印 ¥300 — 三巴紋 + 木瓜紋 + 獅子殿印'],
@@ -1860,7 +1859,7 @@ const CITY_LANDMARKS = {
       notes: ['退稅 2F 詢問處，同店 ¥5,000 up，帶護照', '難波CITY vs 難波 Parks = 不同帳，須分開退', '8/1-8/16 お盆期間大阪人多', 'Place ID: 0x6000e7696859de15:0x645df8a533b0f531 (Google Maps)']
     }},
     {name: '大阪難波駅', lat: 34.6670804, lng: 135.4989215, tips: {
-      notes: ['8/1 出發：JR 大阪 → 三宮 (新快速 21 分 ¥410) → Port Liner (18 分 ¥250) → UKB', 'Place ID: 0x6000e712fb69904b:0x9bed5a6713164b63 (Google Maps)']
+      notes: ['8/1 15:00 出發：阪神 快速急行 → 三宮 (41 分 ¥540) → Port Liner → UKB (18 分 ¥220)', 'Place ID: 0x6000e712fb69904b:0x9bed5a6713164b63 (Google Maps)']
     }},
     {name: '君品酒店 (終點)', lat: 25.0492706, lng: 121.5169525, tips: {
       notes: ['🔑 Day 6 check-in · 8/1 晚 21:00 抵達', '台北車站直通 · 京站 Q Square 上方']
